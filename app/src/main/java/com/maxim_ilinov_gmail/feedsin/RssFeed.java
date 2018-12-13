@@ -1,5 +1,6 @@
 package com.maxim_ilinov_gmail.feedsin;
 
+@Entity
 public class RssFeed {
 
     private String title;
