@@ -1,11 +1,12 @@
-package com.maxim_ilinov_gmail.feedsin;
+package com.maxim_ilinov_gmail.feedsin.ui;
 
+import com.maxim_ilinov_gmail.feedsin.R;
+import com.maxim_ilinov_gmail.feedsin.databinding.FragmentRssItemDetailsBinding;
 
-
-import androidx.databinding.DataBindingUtil;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -13,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.maxim_ilinov_gmail.feedsin.databinding.RssItemDetailsFragmentBinding;
 
 
 public class RssItemDetailsFragment extends Fragment {
@@ -32,7 +32,7 @@ public class RssItemDetailsFragment extends Fragment {
     public View onCreateView1(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.rss_item_details_fragment, container);
+        View v = inflater.inflate(R.layout.fragment_rss_item_details, container);
 
 
 
@@ -56,12 +56,14 @@ public class RssItemDetailsFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+
         RssItemDetailsViewModel viewModel = ViewModelProviders.of(getActivity()).get( RssItemDetailsViewModel.class);
 
 
 
-        RssItemDetailsFragmentBinding binding = DataBindingUtil.setContentView(getActivity(),
-                R.layout.rss_item_details_fragment);
+        FragmentRssItemDetailsBinding binding = DataBindingUtil.setContentView(getActivity(),
+                R.layout.fragment_rss_item_details);
 
         binding.setViewmodel(viewModel);
         binding.setLifecycleOwner(getActivity());

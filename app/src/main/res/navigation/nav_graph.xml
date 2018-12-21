@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/rssItemsListFragment">
 
+    <fragment
+        android:id="@+id/rssItemsListFragment"
+        android:name="com.maxim_ilinov_gmail.feedsin.ui.RssItemsListFragment"
+        android:label="RssItemsListFragment" >
+        <action
+            android:id="@+id/action_rssItemsListFragment_to_rssItemDetailsFragment"
+            app:destination="@id/rssItemDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/rssItemDetailsFragment"
+        android:name="com.maxim_ilinov_gmail.feedsin.ui.RssItemDetailsFragment"
+        android:label="RssItemDetailsFragment"
+        tools:layout="@layout/fragment_rss_item_details" />
 </navigation>
