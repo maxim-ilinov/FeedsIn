@@ -8,6 +8,10 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+/*
+ All elements of an item are optional, however at least one of title or description must be present.
+*/
+
 @Entity
 @Root(name = "item", strict = false)
 public class RssItem {
@@ -15,12 +19,12 @@ public class RssItem {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
-    @Element(name = "guid")
+    @Element(name = "guid",required = false)
     private String guid;
 
     private int rssFeedId;
 
-    @Element(name = "title")
+    @Element(name = "title",required = false)
     private String title;
 
 
@@ -29,10 +33,10 @@ public class RssItem {
     @Path("item")
     private String link;
 
-    @Element(name = "description")
+    @Element(name = "description",required = false)
     private String description;
 
-    @Element(name = "pubDate")
+    @Element(name = "pubDate",required = false)
     private String pubDate;
 
     private String imageUrl;
@@ -53,9 +57,7 @@ public class RssItem {
         this.title = title;
         this.link = link;
         this.description = description;
-//        this.imageUrl = imageUrl;
-//        this.guid = guid;
-//        this.rssFeedId = rssFeedId;
+
 
     }
 

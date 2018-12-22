@@ -8,8 +8,21 @@ import org.simpleframework.xml.NamespaceList;
 import org.simpleframework.xml.Path;
 import org.simpleframework.xml.Root;
 import org.simpleframework.xml.Text;
-
 import java.util.List;
+
+/*
+https://cyber.harvard.edu/rss/rss.html
+
+Required channel elements:
+
+Element	Description	            Example
+title	The name of the channel. It's how people refer to your service. If you have an HTML website that contains the same information as your RSS file, the title of your channel should be the same as the title of your website. 	GoUpstate.com News Headlines
+link	The URL to the HTML website corresponding to the channel.	http://www.goupstate.com/
+description       	Phrase or sentence describing the channel.	The latest news from GoUpstate.com, a Spartanburg Herald-Journal Web site.
+*/
+
+
+
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
@@ -23,12 +36,58 @@ import androidx.room.PrimaryKey;
 @Root(name="channel", strict=false)
 public class RssFeed {
 
+
+
     @PrimaryKey(autoGenerate = true)
     private int id;
 
     private String customTitle;
 
     private boolean isSelected;
+
+    private int rssFeedGroupId;
+
+    private String rssFeedLink;
+
+    private String imageUrl;
+
+    // Tricky part in Simple XML because the link is named twice (thanks https://gist.github.com/macsystems/01d7e80554efd344b1f9)
+    @ElementList(entry = "link", inline = true, required = false)
+    @Ignore
+    private List<Link> links;
+
+    @Path("channel")
+    @Element(name="title")
+    private String title;
+
+    @Path("channel")
+    @Element(name="description")
+    private String description;
+
+    @ElementList(entry="item", inline=true, type = RssItem.class)
+    @Path("channel")
+    @Ignore
+    private List<RssItem> rssItemList;
+
+
+
+    // empty constructor necessary for simplexml
+    public RssFeed() {
+    }
+
+
+    public RssFeed(String rssFeedLink, boolean isSelected) {
+        this.rssFeedLink = rssFeedLink;
+
+        this.isSelected= isSelected;
+
+    }
+
+    public RssFeed(String title, String rssFeedLink, String description, String imageUrl) {
+        this.title = title;
+        this.description = description;
+        this.imageUrl = imageUrl;
+    }
 
     public boolean isSelected() {
         return isSelected;
@@ -62,52 +121,6 @@ public class RssFeed {
         this.links = links;
     }
 
-    private int rssFeedGroupId;
-
-
-    private String rssFeedLink;
-
-
-    @Path("channel")
-    @Element(name="title")
-    private String title;
-
-    // Tricky part in Simple XML because the link is named twice (thanks https://gist.github.com/macsystems/01d7e80554efd344b1f9)
-    @ElementList(entry = "link", inline = true, required = false)
-    @Ignore
-    public List<Link> links;
-
-
-   @Path("channel")
-    @Element(name="description", required = false)
-    private String description;
-
-
-
-   @ElementList(entry="item", inline=true, type = RssItem.class)
-   @Path("channel")
-   @Ignore
-   private List<RssItem> rssItemList;
-
-
-
-    public static class Link {
-        @Attribute(required = false)
-        public String href;
-
-        @Attribute(required = false)
-        public String rel;
-
-        @Attribute(name = "type", required = false)
-        public String contentType;
-
-        @Text(required = false)
-        public String link;
-
-        public Link() {
-        }
-    }
-
     public List<RssItem> getRssItemList() {
         return rssItemList;
     }
@@ -116,32 +129,12 @@ public class RssFeed {
         this.rssItemList = rssItemList;
     }
 
-    private String imageUrl;
-
-    // empty constructor necessary for simplexml
-    public RssFeed() {
-    }
-
     public String getRssFeedLink() {
         return rssFeedLink;
     }
 
     public void setRssFeedLink(String rssFeedLink) {
         this.rssFeedLink = rssFeedLink;
-    }
-
-
-    public RssFeed(String rssFeedLink, boolean isSelected) {
-        this.rssFeedLink = rssFeedLink;
-
-        this.isSelected= isSelected;
-
-    }
-
-    public RssFeed(String title, String rssFeedLink, String description, String imageUrl) {
-        this.title = title;
-        this.description = description;
-        this.imageUrl = imageUrl;
     }
 
     public int getId() {
@@ -159,8 +152,6 @@ public class RssFeed {
     public void setTitle(String title) {
         this.title = title;
     }
-
-
 
     public String getDescription() {
         return description;
@@ -186,8 +177,24 @@ public class RssFeed {
                 "title = " + this.getTitle() + " " +
                 "rssFeedLink = " + this.getRssFeedLink() + " " +
                 "selected = " + this.isSelected() + " " +
-                "group id = " + this.getRssFeedGroupId()
-                ;
+                "group id = " + this.getRssFeedGroupId();
 
+    }
+
+    public static class Link {
+        @Attribute(required = false)
+        public String href;
+
+        @Attribute(required = false)
+        public String rel;
+
+        @Attribute(name = "type", required = false)
+        public String contentType;
+
+        @Text(required = false)
+        public String link;
+
+        public Link() {
+        }
     }
 }

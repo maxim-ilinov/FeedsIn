@@ -6,9 +6,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +36,7 @@ public class RssItemsListAdapter extends RecyclerView.Adapter<RssItemsListAdapte
         private final TextView rssItemPubdateTextView;
         private final TextView rssItemTitleTextView;
         private final TextView rssItemDescTextView;
+       // private final WebView rssItemDescWebView;
 
 
         private RssItem rssItem;
@@ -46,7 +49,7 @@ public class RssItemsListAdapter extends RecyclerView.Adapter<RssItemsListAdapte
             rssItemPubdateTextView = itemView.findViewById(R.id.tv_pubdate);
             rssItemTitleTextView = itemView.findViewById(R.id.tv_title);
             rssItemDescTextView =  itemView.findViewById(R.id.tv_desc);
-
+          //  rssItemDescWebView = itemView.findViewById(R.id.wv_desc);
 
 
 
@@ -57,7 +60,8 @@ public class RssItemsListAdapter extends RecyclerView.Adapter<RssItemsListAdapte
             this.rssItem = rssItem;
             this.rssItemPubdateTextView.setText(rssItem.getPubDate());
             this.rssItemTitleTextView.setText(rssItem.getTitle());
-            this.rssItemDescTextView.setText(rssItem.getDescription());
+            this.rssItemDescTextView.setText(Html.fromHtml(rssItem.getDescription(),null,null));
+         //   this.rssItemDescWebView.loadData(rssItem.getDescription(),"text/html", "UTF-8");
 
         }
 

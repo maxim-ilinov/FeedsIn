@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/rssItemsListFragment"
         android:name="com.maxim_ilinov_gmail.feedsin.ui.RssItemsListFragment"
-        android:label="RssItemsListFragment" >
+        android:label="Selected feeds">
         <action
             android:id="@+id/action_rssItemsListFragment_to_rssItemDetailsFragment"
             app:destination="@id/rssItemDetailsFragment" />

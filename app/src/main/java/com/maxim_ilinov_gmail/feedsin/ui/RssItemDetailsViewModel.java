@@ -34,6 +34,8 @@ public class RssItemDetailsViewModel extends ViewModel {
     }
 
 
+
+
     public void readMoreClicked() {
         Log.d("RssItemDetailsViewModel", "readMoreClicked ");
 

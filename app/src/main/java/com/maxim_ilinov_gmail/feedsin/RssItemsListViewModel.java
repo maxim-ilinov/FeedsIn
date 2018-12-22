@@ -80,6 +80,11 @@ public class RssItemsListViewModel extends AndroidViewModel {
         return rssFeedGroups;
     }
 
+    public void updateData()
+    {
+        rssRepository.loadRssData();
+    }
+
 
     public LiveData<List<RssItem>> getRssItemList(List<RssFeed> rssFeeds)
     {

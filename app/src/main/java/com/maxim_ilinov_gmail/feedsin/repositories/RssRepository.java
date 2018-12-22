@@ -64,9 +64,15 @@ public class RssRepository {
        rssWebservice =   RssWebserviceClient.getInstance().getRssWebservice();
 
 //TODO: remove debug and make tests
-        addNewFeed ("http://www.ixbt.com/export/articles.rss", true);
-        addNewFeed ("https://habr.com/rss/hub/apps_design/all/?hl=ru&fl=ru", true);
+       // addNewFeed ("http://www.ixbt.com/export/articles.rss", true);
+       // addNewFeed ("https://habr.com/rss/hub/apps_design/all/?hl=ru&fl=ru", true);
+       // addNewFeed ("https://www.nytimes.com/svc/collections/v1/publish/https://www.nytimes.com/section/world/rss.xml", true);
+       addNewFeed ("https://news.yandex.ru/politics.rss", true);
 
+        //atom
+      // addNewFeed ("https://www.reddit.com/r/worldnews/.rss", true);
+
+        //addNewFeed ("https://plugins.geany.org/install.html", true);
 
 
             loadRssData();
@@ -75,7 +81,7 @@ public class RssRepository {
 
     }
 
-    private void loadRssData() {
+    public void loadRssData() {
 
         executor.execute(() -> {
 
@@ -174,32 +180,42 @@ public class RssRepository {
 
                     executor.execute(()-> {
                             if (response.isSuccessful()) {
+                            //TODO check type of response
+                                Log.d(TAG,"Response raw: " + response.raw());
 
+                                Log.d(TAG,"Response message: " + response.toString());
 
                                 RssFeed rssFeed = response.body();
 
-                                Log.d(TAG,"Items in list: " + rssFeed.getRssItemList().size());
+                                Log.d(TAG, "Current feed: " + rssFeed.toString());
+
+//                                Log.d(TAG, "rssFeed is null: " + (rssFeed ==null));
 
 
 
-                                for (RssItem ri : rssFeed.getRssItemList())
-                                {
-                                    Log.d(TAG,"Item title: " + ri.getTitle());
-                                    Log.d(TAG,"Item desc: " + ri.getDescription());
-
-                                    ri.setRssFeedId(feedId);
+                                if (rssFeed.getRssItemList()!=null ) {
 
 
-                                    if (rssDao.countRssItemWithGuid(ri.getGuid())==0)
-                                    {
-                                        rssDao.insertRssItem(ri);
+
+
+
+                                    Log.d(TAG, "Items in list: " + rssFeed.getRssItemList().size());
+
+
+                                    for (RssItem ri : rssFeed.getRssItemList()) {
+                                        Log.d(TAG, "Item title: " + ri.getTitle());
+                                        Log.d(TAG, "Item desc: " + ri.getDescription());
+
+                                        ri.setRssFeedId(feedId);
+
+
+                                        if (rssDao.countRssItemWithGuid(ri.getGuid()) == 0) {
+                                            rssDao.insertRssItem(ri);
+                                        }
+
+
                                     }
-
-
-
-
                                 }
-
 
 
                             } else {
