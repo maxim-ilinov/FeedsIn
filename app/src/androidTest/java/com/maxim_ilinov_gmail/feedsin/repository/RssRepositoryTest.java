@@ -1,8 +1,6 @@
-package com.maxim_ilinov_gmail.feedsin.repositories;
+package com.maxim_ilinov_gmail.feedsin.repository;
 
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class RssRepositoryTest {
 

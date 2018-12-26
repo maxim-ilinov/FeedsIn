@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/rssItemsListFragment"
-        android:name="com.maxim_ilinov_gmail.feedsin.ui.RssItemsListFragment"
+        android:name="com.maxim_ilinov_gmail.feedsin.view.RssItemsListFragment"
         android:label="Selected feeds">
         <action
             android:id="@+id/action_rssItemsListFragment_to_rssItemDetailsFragment"
@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/rssItemDetailsFragment"
-        android:name="com.maxim_ilinov_gmail.feedsin.ui.RssItemDetailsFragment"
+        android:name="com.maxim_ilinov_gmail.feedsin.view.RssItemDetailsFragment"
         android:label="RssItemDetailsFragment"
         tools:layout="@layout/fragment_rss_item_details" />
 </navigation>

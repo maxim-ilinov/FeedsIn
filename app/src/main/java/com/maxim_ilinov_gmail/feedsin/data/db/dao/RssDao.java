@@ -1,13 +1,14 @@
-package com.maxim_ilinov_gmail.feedsin.db.dao;
+package com.maxim_ilinov_gmail.feedsin.data.db.dao;
 
 
-import com.maxim_ilinov_gmail.feedsin.db.entities.RssFeed;
-import com.maxim_ilinov_gmail.feedsin.db.entities.RssFeedGroup;
-import com.maxim_ilinov_gmail.feedsin.db.entities.RssItem;
+import com.maxim_ilinov_gmail.feedsin.model.RssFeed;
+import com.maxim_ilinov_gmail.feedsin.model.RssFeedGroup;
+import com.maxim_ilinov_gmail.feedsin.model.RssItem;
 
 import java.util.List;
 
 import androidx.lifecycle.LiveData;
+import androidx.paging.DataSource;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -45,22 +46,23 @@ public interface RssDao {
     @Query("SELECT * FROM rssfeed WHERE isSelected = 1")
     List<RssFeed> selectSelectedRssFeedsSync();
 
-    @Query("SELECT ri.* FROM rssfeed rf, rssitem ri WHERE ri.rssFeedId = rf.id and rf.isSelected = 1")
+    @Query("SELECT ri.* FROM rssfeed rf, rssitem ri WHERE ri.rssFeedId = rf.id and rf.isSelected = 1 order by pubDateNorm desc")
     LiveData <List<RssItem>> selectItemsForSelectedFeeds ();
 
+    @Query("SELECT ri.* FROM rssfeed rf, rssitem ri WHERE ri.rssFeedId = rf.id and rf.isSelected = 1 order by pubDateNorm desc")
+    DataSource.Factory<Integer, RssItem> selectItemsForSelectedFeedsPl();
+
+
+
     @Query("select count(id) from RssItem where guid=:itemGuid")
-    int countRssItemWithGuid(String itemGuid);
+    int countRssItemWithGuid(String itemGuid);//TODO rewrite, guid is optional in rss item (see rfc)
+
+    @Query("select count(id) from RssItem where title=:title and description = :desc")
+    int countRssItemWithTitleAndDesc(String title, String desc);
 
 
-
-
-
-
-
-
-
-
-
+    @Query("DELETE FROM rssitem")
+    void deleteAllRssItems();
 
 
 

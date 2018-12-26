@@ -1,7 +1,8 @@
-package com.maxim_ilinov_gmail.feedsin.ui;
+package com.maxim_ilinov_gmail.feedsin.view;
 
 import com.maxim_ilinov_gmail.feedsin.R;
 import com.maxim_ilinov_gmail.feedsin.databinding.FragmentRssItemDetailsBinding;
+import com.maxim_ilinov_gmail.feedsin.viewmodel.RssItemDetailsViewModel;
 
 import android.os.Bundle;
 import androidx.annotation.NonNull;

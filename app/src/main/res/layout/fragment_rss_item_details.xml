@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
     <variable name = "viewmodel"
-        type = "com.maxim_ilinov_gmail.feedsin.ui.RssItemDetailsViewModel"/>
+        type = "com.maxim_ilinov_gmail.feedsin.viewmodel.RssItemDetailsViewModel"/>
 
     </data>
 

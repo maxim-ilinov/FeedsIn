@@ -1,10 +1,7 @@
-package com.maxim_ilinov_gmail.feedsin.webservices;
+package com.maxim_ilinov_gmail.feedsin.data.webservices;
 
-import com.maxim_ilinov_gmail.feedsin.db.entities.RssFeed;
+import com.maxim_ilinov_gmail.feedsin.model.RssFeed;
 
-
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

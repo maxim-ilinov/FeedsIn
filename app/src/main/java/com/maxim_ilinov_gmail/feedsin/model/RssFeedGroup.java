@@ -1,11 +1,10 @@
-package com.maxim_ilinov_gmail.feedsin.db.entities;
+package com.maxim_ilinov_gmail.feedsin.model;
 
 import java.util.List;
 
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
-import androidx.room.Relation;
 
 @Entity
 public class RssFeedGroup {

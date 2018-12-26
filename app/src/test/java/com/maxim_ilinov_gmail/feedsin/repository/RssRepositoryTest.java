@@ -1,7 +1,7 @@
-package com.maxim_ilinov_gmail.feedsin.repositories;
+package com.maxim_ilinov_gmail.feedsin.repository;
 
-import com.maxim_ilinov_gmail.feedsin.RssItemsListViewModel;
-import com.maxim_ilinov_gmail.feedsin.db.entities.RssFeed;
+import com.maxim_ilinov_gmail.feedsin.viewmodel.RssItemsListViewModel;
+import com.maxim_ilinov_gmail.feedsin.model.RssFeed;
 
 import org.junit.Test;
 
@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.lifecycle.ViewModelProviders;
-
-import static org.junit.Assert.*;
 
 public class RssRepositoryTest {
 

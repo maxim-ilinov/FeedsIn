@@ -1,11 +1,12 @@
-package com.maxim_ilinov_gmail.feedsin.db.entities;
+package com.maxim_ilinov_gmail.feedsin.model;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Path;
 import org.simpleframework.xml.Root;
 
+import java.util.Date;
+
 import androidx.room.Entity;
-import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 /*
@@ -38,6 +39,9 @@ public class RssItem {
 
     @Element(name = "pubDate",required = false)
     private String pubDate;
+
+    private Date pubDateNorm;
+
 
     private String imageUrl;
 
@@ -124,5 +128,13 @@ public class RssItem {
 
     public void setPubDate(String pubDate) {
         this.pubDate = pubDate;
+    }
+
+    public Date getPubDateNorm() {
+        return pubDateNorm;
+    }
+
+    public void setPubDateNorm(Date pubDateNorm) {
+        this.pubDateNorm = pubDateNorm;
     }
 }

@@ -1,4 +1,4 @@
-package com.maxim_ilinov_gmail.feedsin.db.entities;
+package com.maxim_ilinov_gmail.feedsin.model;
 
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
@@ -61,7 +61,7 @@ public class RssFeed {
     private String title;
 
     @Path("channel")
-    @Element(name="description")
+    @Element(name="description",required = false)
     private String description;
 
     @ElementList(entry="item", inline=true, type = RssItem.class)

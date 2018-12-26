@@ -1,4 +1,4 @@
-package com.maxim_ilinov_gmail.feedsin.ui;
+package com.maxim_ilinov_gmail.feedsin.view;
 
 import android.os.Bundle;
 

@@ -1,8 +1,6 @@
-package com.maxim_ilinov_gmail.feedsin.webservices;
+package com.maxim_ilinov_gmail.feedsin.data.webservices;
 
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.converter.jaxb.JaxbConverterFactory;
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
 public class RssWebserviceClient {

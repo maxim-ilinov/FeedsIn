@@ -4,9 +4,9 @@ package com.maxim_ilinov_gmail.feedsin;
 import android.content.Context;
 
 
-import com.maxim_ilinov_gmail.feedsin.db.RssRoomDatabase;
-import com.maxim_ilinov_gmail.feedsin.db.dao.RssDao;
-import com.maxim_ilinov_gmail.feedsin.db.entities.RssItem;
+import com.maxim_ilinov_gmail.feedsin.data.db.RssRoomDatabase;
+import com.maxim_ilinov_gmail.feedsin.data.db.dao.RssDao;
+import com.maxim_ilinov_gmail.feedsin.model.RssItem;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -14,8 +14,6 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 

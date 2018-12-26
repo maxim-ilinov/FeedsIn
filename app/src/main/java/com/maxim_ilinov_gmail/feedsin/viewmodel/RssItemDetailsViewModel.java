@@ -1,9 +1,9 @@
-package com.maxim_ilinov_gmail.feedsin.ui;
+package com.maxim_ilinov_gmail.feedsin.viewmodel;
 
 import android.util.Log;
 
-import com.maxim_ilinov_gmail.feedsin.db.entities.RssFeed;
-import com.maxim_ilinov_gmail.feedsin.db.entities.RssItem;
+import com.maxim_ilinov_gmail.feedsin.model.RssFeed;
+import com.maxim_ilinov_gmail.feedsin.model.RssItem;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -15,6 +15,7 @@ public class RssItemDetailsViewModel extends ViewModel {
     public MutableLiveData<RssItem> rssItemLiveData = new MutableLiveData<>();
     public MutableLiveData<RssFeed> rssFeedLiveData= new MutableLiveData<>();
     public MutableLiveData<String> itemDescLiveData = new MutableLiveData<>();
+
 
 
 

@@ -1,4 +1,4 @@
-package com.maxim_ilinov_gmail.feedsin.ui;
+package com.maxim_ilinov_gmail.feedsin.view;
 
 
 import android.os.Bundle;
@@ -8,10 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.maxim_ilinov_gmail.feedsin.R;
-import com.maxim_ilinov_gmail.feedsin.RssItemsListViewModel;
-import com.maxim_ilinov_gmail.feedsin.db.entities.RssFeed;
-import com.maxim_ilinov_gmail.feedsin.db.entities.RssFeedGroup;
-import com.maxim_ilinov_gmail.feedsin.db.entities.RssItem;
+import com.maxim_ilinov_gmail.feedsin.viewmodel.RssItemsListViewModel;
+import com.maxim_ilinov_gmail.feedsin.model.RssFeed;
+import com.maxim_ilinov_gmail.feedsin.model.RssFeedGroup;
 
 import java.util.List;
 
@@ -30,23 +29,15 @@ public class RssItemsListFragment extends Fragment {
     private static final String TAG = "RssItemsListFragment";
     private RecyclerView recyclerView;
     private RssItemsListAdapter adapter;
+
+    private RssItemsPagedListAdapter adapterPl;
+
     private SwipeRefreshLayout rssItemsListSwipeRefreshLayout;
 
     private  RssItemsListViewModel viewModel;
 
-    public static RssItemsListFragment newInstance() {
 
-        Bundle args = new Bundle();
 
-        RssItemsListFragment fragment = new RssItemsListFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -97,7 +88,10 @@ public class RssItemsListFragment extends Fragment {
         });
 
 
-        viewModel.getCurrentRssItemsList().observe(this, new Observer<List<RssItem>>() {
+        viewModel.getCurrentRssItemsListPl().observe(this, adapterPl::submitList);
+
+
+       /* viewModel.getCurrentRssItemsList().observe(this, new Observer<List<RssItem>>() {
             @Override
             public void onChanged( @Nullable List<RssItem> rssItems) {
 
@@ -118,7 +112,8 @@ public class RssItemsListFragment extends Fragment {
 
 
             }
-        });
+        });*/
+
 
 
     }
@@ -150,7 +145,7 @@ public class RssItemsListFragment extends Fragment {
 
         adapter = new RssItemsListAdapter(getActivity());
 
-
+        adapterPl = new RssItemsPagedListAdapter();
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
                 DividerItemDecoration.VERTICAL);
@@ -159,8 +154,8 @@ public class RssItemsListFragment extends Fragment {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        recyclerView.setAdapter(adapter);
-
+      //  recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(adapterPl);
 
 
 
