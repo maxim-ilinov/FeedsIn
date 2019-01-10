@@ -1,4 +1,4 @@
-package com.maxim_ilinov_gmail.feedsin.data.db.dao;
+package com.maxim_ilinov_gmail.feedsin.model.data.db;
 
 
 import com.maxim_ilinov_gmail.feedsin.model.RssFeed;
@@ -59,6 +59,9 @@ public interface RssDao {
 
     @Query("select count(id) from RssItem where title=:title and description = :desc")
     int countRssItemWithTitleAndDesc(String title, String desc);
+
+    @Query("select count(id) from RssItem where hash=:hash")
+    int countRssItemWithHash(int hash);
 
 
     @Query("DELETE FROM rssitem")

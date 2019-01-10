@@ -1,4 +1,4 @@
-package com.maxim_ilinov_gmail.feedsin.data.db;
+package com.maxim_ilinov_gmail.feedsin.model.data.db;
 
 import java.util.Date;
 

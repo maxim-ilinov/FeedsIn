@@ -4,8 +4,8 @@ package com.maxim_ilinov_gmail.feedsin;
 import android.content.Context;
 
 
-import com.maxim_ilinov_gmail.feedsin.data.db.RssRoomDatabase;
-import com.maxim_ilinov_gmail.feedsin.data.db.dao.RssDao;
+import com.maxim_ilinov_gmail.feedsin.model.data.db.RssRoomDatabase;
+import com.maxim_ilinov_gmail.feedsin.model.data.db.RssDao;
 import com.maxim_ilinov_gmail.feedsin.model.RssItem;
 
 import org.junit.After;

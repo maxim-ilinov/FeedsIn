@@ -8,6 +8,7 @@ import org.simpleframework.xml.NamespaceList;
 import org.simpleframework.xml.Path;
 import org.simpleframework.xml.Root;
 import org.simpleframework.xml.Text;
+
 import java.util.List;
 
 /*
@@ -33,9 +34,8 @@ import androidx.room.PrimaryKey;
         @Namespace(reference = "http://www.w3.org/2005/Atom", prefix = "atom")
 })
 @Entity
-@Root(name="channel", strict=false)
+@Root(name = "channel", strict = false)
 public class RssFeed {
-
 
 
     @PrimaryKey(autoGenerate = true)
@@ -57,32 +57,29 @@ public class RssFeed {
     private List<Link> links;
 
     @Path("channel")
-    @Element(name="title")
+    @Element(name = "title")
     private String title;
 
     @Path("channel")
-    @Element(name="description",required = false)
+    @Element(name = "description", required = false)
     private String description;
 
-    @ElementList(entry="item", inline=true, type = RssItem.class)
+    @ElementList(entry = "item", inline = true, type = RssItem.class)
     @Path("channel")
     @Ignore
     private List<RssItem> rssItemList;
 
-
-
     // empty constructor necessary for simplexml
     public RssFeed() {
     }
-
-
+    @Ignore
     public RssFeed(String rssFeedLink, boolean isSelected) {
         this.rssFeedLink = rssFeedLink;
 
-        this.isSelected= isSelected;
+        this.isSelected = isSelected;
 
     }
-
+    @Ignore
     public RssFeed(String title, String rssFeedLink, String description, String imageUrl) {
         this.title = title;
         this.description = description;
@@ -174,10 +171,10 @@ public class RssFeed {
     public String toString() {
         return
                 "id = " + this.getId() + " " +
-                "title = " + this.getTitle() + " " +
-                "rssFeedLink = " + this.getRssFeedLink() + " " +
-                "selected = " + this.isSelected() + " " +
-                "group id = " + this.getRssFeedGroupId();
+                        "title = " + this.getTitle() + " " +
+                        "rssFeedLink = " + this.getRssFeedLink() + " " +
+                        "selected = " + this.isSelected() + " " +
+                        "group id = " + this.getRssFeedGroupId();
 
     }
 

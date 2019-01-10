@@ -123,7 +123,7 @@ public class RssItemsListFragment extends Fragment {
 
         viewModel.updateData();
 
-        // TODO implement a refresh
+        // TODO implement a refreshment
 
 
         rssItemsListSwipeRefreshLayout.setRefreshing(false); // Disables the refresh icon

@@ -1,16 +1,16 @@
-package com.maxim_ilinov_gmail.feedsin.repository;
+package com.maxim_ilinov_gmail.feedsin.model.repository;
 
 
 import android.content.Context;
 import android.util.Log;
 
-import com.maxim_ilinov_gmail.feedsin.data.db.RssRoomDatabase;
-import com.maxim_ilinov_gmail.feedsin.data.db.dao.RssDao;
+import com.maxim_ilinov_gmail.feedsin.model.data.db.RssRoomDatabase;
+import com.maxim_ilinov_gmail.feedsin.model.data.db.RssDao;
 import com.maxim_ilinov_gmail.feedsin.model.RssFeed;
 import com.maxim_ilinov_gmail.feedsin.model.RssFeedGroup;
 import com.maxim_ilinov_gmail.feedsin.model.RssItem;
-import com.maxim_ilinov_gmail.feedsin.data.webservices.RssWebservice;
-import com.maxim_ilinov_gmail.feedsin.data.webservices.RssWebserviceClient;
+import com.maxim_ilinov_gmail.feedsin.model.data.webservices.RssWebservice;
+import com.maxim_ilinov_gmail.feedsin.model.data.webservices.RssWebserviceClient;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -310,7 +310,9 @@ public class RssRepository {
 
                                         ri.setRssFeedId(feedId);
 
-                                        if (rssDao.countRssItemWithTitleAndDesc(ri.getTitle(),ri.getDescription()) == 0) {
+                                        if (rssDao.countRssItemWithHash(ri.hashCode()) == 0) {
+
+                                            ri.setHash(ri.hashCode());
                                             rssDao.insertRssItem(ri);
                                         }
 

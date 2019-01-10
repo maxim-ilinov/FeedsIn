@@ -13,10 +13,8 @@ public class RssItemDetailsViewModel extends ViewModel {
 
 
     public MutableLiveData<RssItem> rssItemLiveData = new MutableLiveData<>();
-    public MutableLiveData<RssFeed> rssFeedLiveData= new MutableLiveData<>();
+    public MutableLiveData<RssFeed> rssFeedLiveData = new MutableLiveData<>();
     public MutableLiveData<String> itemDescLiveData = new MutableLiveData<>();
-
-
 
 
     public RssItemDetailsViewModel() {
@@ -35,18 +33,15 @@ public class RssItemDetailsViewModel extends ViewModel {
     }
 
 
-
-
     public void readMoreClicked() {
         Log.d("RssItemDetailsViewModel", "readMoreClicked ");
 
-       // RssItem rssItem =  new RssItem("some guid2");
-      //  rssItem.setTitle("some title2");
+        // RssItem rssItem =  new RssItem("some guid2");
+        //  rssItem.setTitle("some title2");
 
-     //   itemDescLiveData.setValue("some item desc #2");
+        //   itemDescLiveData.setValue("some item desc #2");
 
 //        this.rssItemLiveData.postValue(rssItem);
-
 
 
     }

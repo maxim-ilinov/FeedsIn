@@ -17,5 +17,9 @@
         android:id="@+id/rssItemDetailsFragment"
         android:name="com.maxim_ilinov_gmail.feedsin.view.RssItemDetailsFragment"
         android:label="RssItemDetailsFragment"
-        tools:layout="@layout/fragment_rss_item_details" />
+        tools:layout="@layout/fragment_rss_item_details" >
+        <action
+            android:id="@+id/action_rssItemDetailsFragment_to_rssItemsListFragment"
+            app:destination="@id/rssItemsListFragment" />
+    </fragment>
 </navigation>

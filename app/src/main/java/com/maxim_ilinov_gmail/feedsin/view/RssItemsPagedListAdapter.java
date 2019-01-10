@@ -1,6 +1,7 @@
 package com.maxim_ilinov_gmail.feedsin.view;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,34 +15,51 @@ import androidx.recyclerview.widget.DiffUtil;
 
 public class RssItemsPagedListAdapter extends PagedListAdapter<RssItem, RssItemViewHolder> {
 
+    private static final String TAG = "RssItemsPagedListAdpt";
+
+    private static DiffUtil.ItemCallback<RssItem> DIFF_CALLBACK =
+
+            new DiffUtil.ItemCallback<RssItem>() {
+
+                private  final String TAG = "RssItemsPagedListAdpt.";
+                // Item details may have changed if reloaded from the database,
+                // but ID is fixed.
+                @Override
+                public boolean areItemsTheSame(RssItem oldRssItem, RssItem newRssItem) {
+
+                    Log.d(TAG, "areItemsTheSame");
+                    Log.d(TAG, "oldRssItem desc= " + oldRssItem.getDescription());
+                    Log.d(TAG, "newRssItem desc= " + newRssItem.getDescription());
+                    return oldRssItem.getId() == newRssItem.getId();
+
+                }
+
+                @Override
+                public boolean areContentsTheSame(RssItem oldRssItem,
+                                                  RssItem newRssItem) {
+                    Log.d(TAG, "areContentsTheSame");
+                    Log.d(TAG, "oldRssItem desc= " + oldRssItem.getDescription());
+                    Log.d(TAG, "newRssItem desc= " + newRssItem.getDescription());
+                    return oldRssItem.equals(newRssItem);
+
+                }
+            };
+
     private Context context;
 
-        private static DiffUtil.ItemCallback<RssItem> DIFF_CALLBACK =
-                new DiffUtil.ItemCallback<RssItem>() {
-                    // Item details may have changed if reloaded from the database,
-                    // but ID is fixed.
-                    @Override
-                    public boolean areItemsTheSame(RssItem oldRssItem, RssItem newRssItem) {
-                        return oldRssItem.getId() == newRssItem.getId();
-                    }
-
-                    @Override
-                    public boolean areContentsTheSame(RssItem oldRssItem,
-                                                      RssItem newRssItem) {
-                        return oldRssItem.equals(newRssItem);
-                    }
-                };
-
-
     protected RssItemsPagedListAdapter() {
-            super(DIFF_CALLBACK);
-           // this.context = context;
-        }
+
+        super(DIFF_CALLBACK);
+
+        Log.d(TAG, "RssItemsPagedListAdapter init");
+        // this.context = context;
+    }
 
     @NonNull
     @Override
     public RssItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
+        Log.d(TAG, "in onCreateViewHolder");
 
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_item, parent, false);
 
@@ -50,19 +68,24 @@ public class RssItemsPagedListAdapter extends PagedListAdapter<RssItem, RssItemV
     }
 
     @Override
-        public void onBindViewHolder(@NonNull RssItemViewHolder holder,
-                                     int position) {
-            RssItem rssItem = getItem(position);
-            if (rssItem != null) {
-                holder.bind(rssItem);
-            } else {
-                // Null defines a placeholder item - PagedListAdapter automatically
-                // invalidates this row when the actual object is loaded from the
-                // database.
-                holder.clear();
-            }
+    public void onBindViewHolder(@NonNull RssItemViewHolder holder,
+                                 int position) {
+
+        Log.d(TAG, "in onBindViewHolder");
+
+
+        RssItem rssItem = getItem(position);
+        if (rssItem != null) {
+            holder.bind(rssItem);
+        } else {
+            // Null defines a placeholder item - PagedListAdapter automatically
+            // invalidates this row when the actual object is loaded from the
+            // database.
+            holder.clear();
         }
     }
+
+}
 
 
 

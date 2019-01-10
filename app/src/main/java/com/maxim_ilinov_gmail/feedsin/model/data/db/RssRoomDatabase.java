@@ -1,10 +1,9 @@
-package com.maxim_ilinov_gmail.feedsin.data.db;
+package com.maxim_ilinov_gmail.feedsin.model.data.db;
 
 
 import android.content.Context;
 
 
-import com.maxim_ilinov_gmail.feedsin.data.db.dao.RssDao;
 import com.maxim_ilinov_gmail.feedsin.model.RssFeed;
 import com.maxim_ilinov_gmail.feedsin.model.RssFeedGroup;
 import com.maxim_ilinov_gmail.feedsin.model.RssItem;

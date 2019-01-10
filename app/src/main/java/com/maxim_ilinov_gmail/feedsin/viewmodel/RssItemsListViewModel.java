@@ -5,7 +5,7 @@ import android.app.Application;
 import com.maxim_ilinov_gmail.feedsin.model.RssFeed;
 import com.maxim_ilinov_gmail.feedsin.model.RssFeedGroup;
 import com.maxim_ilinov_gmail.feedsin.model.RssItem;
-import com.maxim_ilinov_gmail.feedsin.repository.RssRepository;
+import com.maxim_ilinov_gmail.feedsin.model.repository.RssRepository;
 
 import java.util.List;
 
@@ -23,8 +23,7 @@ public class RssItemsListViewModel extends AndroidViewModel {
     private final LiveData<PagedList<RssItem>> currentRssItemsListPl;
 
     private RssRepository rssRepository;
-    private LiveData<List<RssFeedGroup>> rssFeedGroups; // groups with feeds in them
-
+    private LiveData<List<RssFeedGroup>> rssFeedGroups;
     private LiveData<List<RssFeed>> rssFeeds;
 
     private LiveData<List<RssFeed>> selectedRssFeeds;
@@ -55,9 +54,6 @@ public class RssItemsListViewModel extends AndroidViewModel {
 
     }
 
-    public void setCurrentRssItemsList(LiveData<List<RssItem>> currentRssItemsList) {
-        this.currentRssItemsList = currentRssItemsList;
-    }
 
     public LiveData<PagedList<RssItem>> getCurrentRssItemsListPl() {
 
@@ -68,13 +64,10 @@ public class RssItemsListViewModel extends AndroidViewModel {
     public LiveData<List<RssFeed>> getRssFeeds() {
 
         return rssFeeds;
-        //return rssRepository.getRssFeeds();
+
 
     }
 
-    public void setRssFeeds(LiveData<List<RssFeed>> rssFeeds) {
-        this.rssFeeds = rssFeeds;
-    }
 
     public LiveData<List<RssFeed>> getSelectedRssFeeds() {
         return selectedRssFeeds;

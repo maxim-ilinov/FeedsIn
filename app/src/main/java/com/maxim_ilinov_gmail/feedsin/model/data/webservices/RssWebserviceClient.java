@@ -1,4 +1,4 @@
-package com.maxim_ilinov_gmail.feedsin.data.webservices;
+package com.maxim_ilinov_gmail.feedsin.model.data.webservices;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
