@@ -1,9 +1,12 @@
 package com.maxim_ilinov_gmail.feedsin.model;
 
+import android.text.Html;
+
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Path;
 import org.simpleframework.xml.Root;
 
+import java.text.DateFormat;
 import java.util.Date;
 import java.util.Objects;
 
@@ -19,6 +22,9 @@ import androidx.room.PrimaryKey;
 @Entity
 @Root(name = "item", strict = false)
 public class RssItem {
+
+    @Ignore
+    private final static int DESC_LEN = 120;
 
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -190,6 +196,40 @@ public class RssItem {
     public void setPubDateNorm(Date pubDateNorm) {
 
         this.pubDateNorm = pubDateNorm;
+    }
+
+    public String getFormattedDate()
+    {
+
+
+        //SimpleDateFormat sdf= new SimpleDateFormat("dd.MM.yy hh:mm", Locale.ge);
+
+        if (pubDateNorm != null) {
+
+            return DateFormat.getDateTimeInstance().format(pubDateNorm);
+
+        }
+
+
+        return null;
+
+
+    }
+
+
+    public String getShortDesc()
+    {
+
+
+        String desc = Html.fromHtml(description, null, null).toString().trim();
+
+        if (desc.length() > DESC_LEN) {
+
+            desc = desc.substring(0, DESC_LEN).trim() + "...";
+        }
+
+        return desc;
+
     }
 
 }

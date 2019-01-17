@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+
     android:id="@+id/nav_graph"
     app:startDestination="@id/rssItemsListFragment">
-
     <fragment
         android:id="@+id/rssItemsListFragment"
         android:name="com.maxim_ilinov_gmail.feedsin.view.RssItemsListFragment"
-        android:label="Selected feeds">
+        android:label="Rss Items list"
+        tools:layout="@layout/fragment_rss_item_list">
         <action
-            android:id="@+id/action_rssItemsListFragment_to_rssItemDetailsFragment"
-            app:destination="@id/rssItemDetailsFragment" />
+            android:id="@+id/action_to_details"
+            app:destination="@+id/rssItemDetailsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
     </fragment>
     <fragment
         android:id="@+id/rssItemDetailsFragment"
         android:name="com.maxim_ilinov_gmail.feedsin.view.RssItemDetailsFragment"
-        android:label="RssItemDetailsFragment"
-        tools:layout="@layout/fragment_rss_item_details" >
-        <action
-            android:id="@+id/action_rssItemDetailsFragment_to_rssItemsListFragment"
-            app:destination="@id/rssItemsListFragment" />
-    </fragment>
+        android:label="RssItem details"
+        tools:layout="@layout/fragment_rss_item_details" />
 </navigation>

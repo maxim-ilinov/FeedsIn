@@ -3,15 +3,16 @@ package com.maxim_ilinov_gmail.feedsin.view;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
+import androidx.paging.PagedListAdapter;
+import androidx.recyclerview.widget.DiffUtil;
 
 import com.maxim_ilinov_gmail.feedsin.R;
 import com.maxim_ilinov_gmail.feedsin.model.RssItem;
-
-import androidx.annotation.NonNull;
-import androidx.paging.PagedListAdapter;
-import androidx.recyclerview.widget.DiffUtil;
 
 public class RssItemsPagedListAdapter extends PagedListAdapter<RssItem, RssItemViewHolder> {
 
@@ -47,12 +48,12 @@ public class RssItemsPagedListAdapter extends PagedListAdapter<RssItem, RssItemV
 
     private Context context;
 
-    protected RssItemsPagedListAdapter() {
+    protected RssItemsPagedListAdapter(Context context) {
 
         super(DIFF_CALLBACK);
 
         Log.d(TAG, "RssItemsPagedListAdapter init");
-        // this.context = context;
+         this.context = context;
     }
 
     @NonNull
@@ -61,9 +62,13 @@ public class RssItemsPagedListAdapter extends PagedListAdapter<RssItem, RssItemV
 
         Log.d(TAG, "in onCreateViewHolder");
 
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_item, parent, false);
+       // View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_item, parent, false);
 
-        return new RssItemViewHolder(itemView);
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+
+        ViewDataBinding binding = DataBindingUtil.inflate(layoutInflater, R.layout.recyclerview_item, parent, false);
+
+        return new RssItemViewHolder(binding,context);
 
     }
 

@@ -2,12 +2,12 @@
 <layout>
     <data>
         <variable
-            name="viewModel"
+            name="item"
             type="com.maxim_ilinov_gmail.feedsin.model.RssItem"/>
     </data>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
         android:layout_weight="1"
         android:textStyle="bold"
         tools:text="Mars attacks!!!"
-        android:text="@{viewModel.getTitle()}"/>
+        android:text="@{item.getTitle()}"/>
 
     <TextView
         android:id="@+id/tv_pubdate"
@@ -33,6 +33,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_weight="1"
+        android:text = "@{item.getFormattedDate()}"
         tools:text="21.12.2018 12:00" />
 
     <TextView
@@ -41,6 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:layout_weight="1"
+        android:text= "@{item.getShortDesc()}"
         tools:text="Today martians began....bla-bla-bla...bla-bla-bla...bla-bla-bla...bla-bla-bla...bla-bla-bla...bla-bla-bla...bla-bla-bla...bla-bla-bla...bla-bla-bla...bla-bla-bla" />
 
 

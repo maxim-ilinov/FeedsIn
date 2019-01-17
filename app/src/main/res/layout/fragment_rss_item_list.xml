@@ -7,13 +7,30 @@
     android:id="@+id/rssItemsListSwipe">
 
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_rss_items"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem = "@layout/recyclerview_item"
-        
-        />
+        android:orientation="vertical">
+
+       <!-- <Button
+
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="Next" />-->
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_rss_items"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipChildren="false"
+
+            android:clipToPadding="false"
+            tools:listitem="@layout/recyclerview_item">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

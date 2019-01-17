@@ -72,11 +72,11 @@ public class RssRepository {
 
 //TODO: remove debug and make tests
         addNewFeed ("http://www.ixbt.com/export/articles.rss", true);
-        //addNewFeed ("https://habr.com/rss/hub/apps_design/all/?hl=ru&fl=ru", true);
+        addNewFeed ("https://habr.com/rss/hub/apps_design/all/?hl=ru&fl=ru", true);
       //  addNewFeed ("https://habr.com/rss/best/?hl=ru&fl=ru", true); //top
 
         addNewFeed ("https://habr.com/rss/all/all/?hl=ru&fl=ru", true);
-        addNewFeed ("https://bash.im/rss/", true);
+      //  addNewFeed ("https://bash.im/rss/", true);
 
 
        // addNewFeed ("https://www.nytimes.com/svc/collections/v1/publish/https://www.nytimes.com/section/world/rss.xml", true);

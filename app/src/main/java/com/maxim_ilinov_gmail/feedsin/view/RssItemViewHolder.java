@@ -1,79 +1,57 @@
 package com.maxim_ilinov_gmail.feedsin.view;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
-import android.text.Html;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.maxim_ilinov_gmail.feedsin.R;
-import com.maxim_ilinov_gmail.feedsin.model.RssItem;
-
-import java.text.DateFormat;
 
 import androidx.databinding.ViewDataBinding;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.maxim_ilinov_gmail.feedsin.BR;
+import com.maxim_ilinov_gmail.feedsin.R;
+import com.maxim_ilinov_gmail.feedsin.model.RssItem;
+
 public class RssItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     private static final String TAG = "RssItemViewHolder";
 
+    private Context context;
 
-    private static int DESC_LEN = 120;
 
-    private final TextView rssItemPubdateTextView;
+   /* private final TextView rssItemPubdateTextView;
 
     private final TextView rssItemTitleTextView;
 
     private final TextView rssItemDescTextView;
-
+*/
     private RssItem rssItem;
 
+    private final ViewDataBinding binding;
 
 
+    public RssItemViewHolder(ViewDataBinding binding, Context context) {
 
-    public RssItemViewHolder(View itemView) {
+        super(binding.getRoot());
+        this.binding = binding;
+        this.context = context;
 
-        super(itemView);
         itemView.setOnClickListener(this);
-
-        rssItemPubdateTextView = itemView.findViewById(R.id.tv_pubdate);
-        rssItemTitleTextView = itemView.findViewById(R.id.tv_title);
-
-        rssItemDescTextView = itemView.findViewById(R.id.tv_desc);
     }
 
     public void bind(RssItem rssItem) {
 
         Log.d(TAG, "in bind of RssItemViewHolder");
 
+        binding.setVariable(BR.item, rssItem);
+
+       //TODO remove later
         this.rssItem = rssItem;
 
-        //SimpleDateFormat sdf= new SimpleDateFormat("dd.MM.yy hh:mm", Locale.ge);
-
-        if (rssItem.getPubDateNorm() != null) {
-
-            String myFormattedDate =
-                    DateFormat.getDateTimeInstance().format(rssItem.getPubDateNorm());
-
-            this.rssItemPubdateTextView.setText(myFormattedDate);
-        }
-
-        this.rssItemTitleTextView.setText(rssItem.getTitle());
-
-        String desc = Html.fromHtml(rssItem.getDescription(), null, null).toString().trim();
-
-        if (desc.length() > DESC_LEN) {
-
-            desc = desc.substring(0, DESC_LEN).trim() + "...";
-        }
-
-        this.rssItemDescTextView.setText(desc);
-        //   this.rssItemDescWebView.loadData(rssItem.getDescription(),"text/html", "UTF-8");
 
     }
 
@@ -82,12 +60,18 @@ public class RssItemViewHolder extends RecyclerView.ViewHolder implements View.O
 
         Toast.makeText(v.getContext(), "Selected item: " + rssItem.getTitle(), Toast.LENGTH_SHORT).show();
 
-        NavController navController = Navigation.findNavController((Activity) v.getContext(), R.id.nav_host_fragment);
+       // Toast.makeText(context, "Selected item: " + rssItem.getTitle(), Toast.LENGTH_SHORT).show();
+
+
+       NavController navController = Navigation.findNavController((Activity) v.getContext(), R.id.nav_host_fragment);
+
+
+       // NavController navController = Navigation.findNavController((Activity) context, R.id.nav_host_fragment);
 
         Bundle bundle = new Bundle();
         // bundle.putString("countryAlpha3Code",  rssItem.alpha3Code);
 
-        navController.navigate(R.id.action_rssItemsListFragment_to_rssItemDetailsFragment, bundle);
+        navController.navigate(R.id.action_to_details);
 
         //Log.d(TAG,"Some text");
 
@@ -95,7 +79,7 @@ public class RssItemViewHolder extends RecyclerView.ViewHolder implements View.O
 
     public void clear() {
 
-        this.rssItemPubdateTextView.setText("*************");
+//        this.rssItemPubdateTextView.setText("*************");
 
     }
 
