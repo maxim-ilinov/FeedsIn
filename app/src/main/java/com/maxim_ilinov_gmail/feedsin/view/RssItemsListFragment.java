@@ -1,11 +1,16 @@
 package com.maxim_ilinov_gmail.feedsin.view;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,6 +19,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.paging.PagedList;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,6 +28,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.maxim_ilinov_gmail.feedsin.R;
 import com.maxim_ilinov_gmail.feedsin.model.RssFeed;
 import com.maxim_ilinov_gmail.feedsin.model.RssFeedGroup;
+import com.maxim_ilinov_gmail.feedsin.model.RssItem;
+import com.maxim_ilinov_gmail.feedsin.viewmodel.RssItemDetailsViewModel;
 import com.maxim_ilinov_gmail.feedsin.viewmodel.RssItemsListViewModel;
 
 import java.util.List;
@@ -32,39 +40,43 @@ public class RssItemsListFragment extends Fragment {
 
     private RecyclerView recyclerView;
 
-   // private RssItemsListAdapter adapter;
+    // private RssItemsListAdapter adapter;
 
     private RssItemsPagedListAdapter adapterPl;
 
     private SwipeRefreshLayout rssItemsListSwipeRefreshLayout;
 
     private RssItemsListViewModel viewModel;
+    private RssItemDetailsViewModel rssItemDetailsViewModelmodel;
 
- //   private Button btn;
+    //   private Button btn;
 
-    public static RssItemsListFragment newInstance() {
 
-        Bundle args = new Bundle();
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        RssItemsListFragment fragment = new RssItemsListFragment();
-        fragment.setArguments(args);
-        return fragment;
+        rssItemDetailsViewModelmodel = ViewModelProviders.of(getActivity()).get(RssItemDetailsViewModel.class);
+
+        viewModel = ViewModelProviders.of(getActivity()).get(RssItemsListViewModel.class);
+
+        setHasOptionsMenu(true);
     }
 
     public void onClickN(View v) {
 
         NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
 
-        navController.navigate(R.id.action_to_details,null);
+        navController.navigate(R.id.action_to_details, null);
     }
 
     private void updateData() {
 
+       // rssItemsListSwipeRefreshLayout.setRefreshing(true);
         viewModel.updateData();
 
-        // TODO implement a refreshment
-
-        rssItemsListSwipeRefreshLayout.setRefreshing(false); // Disables the refresh icon
+        // TODO implement a visual refreshment
+         rssItemsListSwipeRefreshLayout.setRefreshing(false); // Disables the refresh icon
     }
 
     @Nullable
@@ -73,7 +85,7 @@ public class RssItemsListFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_rss_item_list, container, false);
 
-     //   btn = v.findViewById(R.id.button);
+        //   btn = v.findViewById(R.id.button);
 /*
         btn.setOnClickListener(new View.OnClickListener() {
 
@@ -86,11 +98,39 @@ public class RssItemsListFragment extends Fragment {
 
         recyclerView = v.findViewById(R.id.rv_rss_items);
 
+       /* recyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(getActivity(),
+                                        recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View view, int position) {
+                        // do whatever
+                        Toast.makeText(v.getContext(), "Selected item: " + position, Toast.LENGTH_SHORT).show();
+
+                       // NavController navController = Navigation.findNavController((Activity) v.getContext(), R.id.nav_host_fragment);
+                       // navController.navigate(R.id.action_to_details);
+
+
+
+
+                            rssItemDetailsViewModelmodel.select(position);
+
+
+
+                    }
+
+                    @Override public void onLongItemClick(View view, int position) {
+                        // do whatever
+                    }
+                })
+
+        );
+*/
+
+
         rssItemsListSwipeRefreshLayout = v.findViewById(R.id.rssItemsListSwipe);
 
-      //  adapter = new RssItemsListAdapter(getActivity());
+        //  adapter = new RssItemsListAdapter(getActivity());
 
-        adapterPl = new RssItemsPagedListAdapter(getActivity());
+        adapterPl = new RssItemsPagedListAdapter(getActivity(), rssItemDetailsViewModelmodel);
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
                 DividerItemDecoration.VERTICAL);
@@ -111,18 +151,12 @@ public class RssItemsListFragment extends Fragment {
 
         super.onViewCreated(view, savedInstanceState);
 
-        viewModel = ViewModelProviders.of(getActivity()).get(RssItemsListViewModel.class);
 
         rssItemsListSwipeRefreshLayout.setOnRefreshListener(
-                new SwipeRefreshLayout.OnRefreshListener() {
-
-                    @Override
-                    public void onRefresh() {
-
-                        updateData();
-                    }
+                () -> {
+                    updateData();
                 }
-        );
+                 );
 
         viewModel.getRssFeedGroups().observe(this, new Observer<List<RssFeedGroup>>() {
 
@@ -154,7 +188,15 @@ public class RssItemsListFragment extends Fragment {
             }
         });
 
-        viewModel.getCurrentRssItemsListPl().observe(this, adapterPl::submitList);
+        viewModel.getCurrentRssItemsListPl().observe(this, rssItems ->
+                {
+
+            adapterPl.submitList(rssItems);
+
+        //  rssItemsListSwipeRefreshLayout.setRefreshing(false);
+
+            }
+        );
 
 
        /* viewModel.getCurrentRssItemsList().observe(this, new Observer<List<RssItem>>() {
@@ -181,6 +223,34 @@ public class RssItemsListFragment extends Fragment {
         });*/
     }
 
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
 
+       //MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+
+
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        Log.d(TAG, item.toString());
+
+        switch (item.getItemId()) {
+            case R.id.refresh:
+                updateData();
+
+                return true;
+
+                default:
+                    return super.onOptionsItemSelected(item);
+
+
+        }
+
+
+    }
 }
 

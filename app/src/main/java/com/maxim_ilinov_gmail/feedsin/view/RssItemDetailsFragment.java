@@ -18,32 +18,32 @@ import android.view.ViewGroup;
 
 public class RssItemDetailsFragment extends Fragment {
 
+    RssItemDetailsViewModel viewModel;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+       /* viewModel.getSelected().observe(this, {
+            item ->
+                // Update the UI.
+        });*/
+
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-
-        RssItemDetailsViewModel viewModel = ViewModelProviders.of(getActivity()).get(RssItemDetailsViewModel.class);
-//        FragmentRssItemDetailsBinding binding = DataBindingUtil.setContentView(getActivity(),
-  //              R.layout.fragment_rss_item_details);
-
+         viewModel = ViewModelProviders.of(getActivity()).get(RssItemDetailsViewModel.class);
 
         FragmentRssItemDetailsBinding binding = DataBindingUtil.inflate (inflater, R.layout.fragment_rss_item_details, container,false);
 
-
-
-
-
-
         binding.setViewmodel(viewModel);
+
         binding.setLifecycleOwner(getActivity());
 
         return binding.getRoot();
     }
-
-
-
-
-
 
 }

@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">FeedsIn</string>
     <string name="bt_read_more">Read more...</string>
+    <string name="refresh_menu">Refresh</string>
     </resources>

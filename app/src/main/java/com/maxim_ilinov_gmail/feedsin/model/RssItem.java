@@ -215,13 +215,18 @@ public class RssItem {
 
 
     }
+    public String getClearedDesc()
+    {
+        String desc = Html.fromHtml(description, null, null).toString().trim();
 
+        return desc;
+    }
 
     public String getShortDesc()
     {
 
 
-        String desc = Html.fromHtml(description, null, null).toString().trim();
+        String desc = getClearedDesc();
 
         if (desc.length() > DESC_LEN) {
 

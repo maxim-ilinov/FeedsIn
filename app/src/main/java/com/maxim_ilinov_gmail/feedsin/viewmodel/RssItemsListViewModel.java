@@ -30,6 +30,10 @@ public class RssItemsListViewModel extends AndroidViewModel {
 
     private LiveData<List<RssItem>> currentRssItemsList = new MutableLiveData<>();
 
+    private MutableLiveData<RssItem> selectedRssItem;
+
+    private MutableLiveData<Integer> selectedPosition;
+
     public RssItemsListViewModel(Application application) {
         super(application);
 

@@ -274,23 +274,24 @@ public class RssRepository {
                             if (response.isSuccessful()) {
                             //TODO check type of response
 
-                                Log.d(TAG,"Response raw: " + response.raw());
+                               // Log.d(TAG,"Response raw: " + response.raw());
 
-                                Log.d(TAG,"Response message: " + response.toString());
+                               // Log.d(TAG,"Response message: " + response.toString());
 
                                 RssFeed rssFeed = response.body();
 
-                                Log.d(TAG, "Current feed: " + rssFeed.toString());
+                              //  Log.d(TAG, "Current feed: " + rssFeed.toString());
+
                                 if (rssFeed.getRssItemList()!=null ) {
 
 
-                                    Log.d(TAG, "Items in list: " + rssFeed.getRssItemList().size());
+                                 //   Log.d(TAG, "Items in list: " + rssFeed.getRssItemList().size());
 
                                     for (RssItem ri : rssFeed.getRssItemList()) {
 
                                         String strDate = ri.getPubDate();
 
-                                        Log.d(TAG, "Item pubdate: " + strDate);
+                                  //      Log.d(TAG, "Item pubdate: " + strDate);
 
                                         Date pubDateNorm = parseStringToDate(strDate);
 
@@ -304,10 +305,10 @@ public class RssRepository {
                                         {
 
                                         }
-                                        Log.d(TAG, "Item pubDateNorm: " + pubDateNorm);
+                                    /*    Log.d(TAG, "Item pubDateNorm: " + pubDateNorm);
                                         Log.d(TAG, "Item title: " + ri.getTitle());
                                         Log.d(TAG, "Item desc: " + ri.getDescription());
-
+*/
                                         ri.setRssFeedId(feedId);
 
                                         if (rssDao.countRssItemWithHash(ri.hashCode()) == 0) {
@@ -322,7 +323,7 @@ public class RssRepository {
 
 
                             } else {
-                                Log.d(TAG,"response code " + response.code());
+                              //  Log.d(TAG,"response code " + response.code());
                                 //todo use this to inform user
                             }
 
