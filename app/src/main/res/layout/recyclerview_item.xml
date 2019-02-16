@@ -22,9 +22,10 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_weight="1"
+        android:text="@{item.getTitle()}"
+        android:textColor="?attr/textColorAlertDialogListItem"
         android:textStyle="bold"
-        tools:text="Mars attacks!!!"
-        android:text="@{item.getTitle()}"/>
+        tools:text="Mars attacks!!!" />
 
     <TextView
         android:id="@+id/tv_pubdate"
@@ -33,7 +34,8 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_weight="1"
-        android:text = "@{item.getFormattedDate()}"
+        android:text="@{item.getFormattedDate()}"
+        android:textColor="@color/abc_primary_text_material_light"
         tools:text="21.12.2018 12:00" />
 
     <TextView
@@ -42,7 +44,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:layout_weight="1"
-        android:text= "@{item.getShortDesc()}"
+        android:text="@{item.getShortDesc()}"
+        android:textColor="@color/abc_primary_text_material_light"
         tools:text="Today martians began....bla-bla-bla...bla-bla-bla...bla-bla-bla...bla-bla-bla...bla-bla-bla...bla-bla-bla...bla-bla-bla...bla-bla-bla...bla-bla-bla...bla-bla-bla" />
 
 

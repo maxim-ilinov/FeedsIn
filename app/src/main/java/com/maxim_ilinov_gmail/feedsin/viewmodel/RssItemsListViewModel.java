@@ -5,7 +5,7 @@ import android.app.Application;
 import com.maxim_ilinov_gmail.feedsin.model.RssFeed;
 import com.maxim_ilinov_gmail.feedsin.model.RssFeedGroup;
 import com.maxim_ilinov_gmail.feedsin.model.RssItem;
-import com.maxim_ilinov_gmail.feedsin.model.repository.RssRepository;
+import com.maxim_ilinov_gmail.feedsin.model.repository.RssItemsRepository;
 
 import java.util.List;
 
@@ -22,32 +22,27 @@ public class RssItemsListViewModel extends AndroidViewModel {
 
     private final LiveData<PagedList<RssItem>> currentRssItemsListPl;
 
-    private RssRepository rssRepository;
-    private LiveData<List<RssFeedGroup>> rssFeedGroups;
-    private LiveData<List<RssFeed>> rssFeeds;
+    private RssItemsRepository rssItemsRepository;
 
-    private LiveData<List<RssFeed>> selectedRssFeeds;
 
-    private LiveData<List<RssItem>> currentRssItemsList = new MutableLiveData<>();
+    private MutableLiveData<Integer> selectedPosition;
 
     private MutableLiveData<RssItem> selectedRssItem;
 
-    private MutableLiveData<Integer> selectedPosition;
+
+
+    private LiveData<List<RssItem>> currentRssItemsList = new MutableLiveData<>();
 
     public RssItemsListViewModel(Application application) {
         super(application);
 
-        rssRepository = new RssRepository(application);
+        rssItemsRepository = new RssItemsRepository(application);
 
-        rssFeedGroups = rssRepository.getRssFeedGroups();
 
-        rssFeeds = rssRepository.getRssFeeds();
 
-        selectedRssFeeds = rssRepository.getSelectedRssFeeds();
+        currentRssItemsList = rssItemsRepository.getItemsForSelectedFeeds();
 
-        currentRssItemsList = rssRepository.getItemsForSelectedFeeds();
-
-        currentRssItemsListPl = rssRepository.getItemsForSelectedFeedsPl();
+        currentRssItemsListPl = rssItemsRepository.getItemsForSelectedFeedsPl();
 
 
     }
@@ -65,24 +60,9 @@ public class RssItemsListViewModel extends AndroidViewModel {
 
     }
 
-    public LiveData<List<RssFeed>> getRssFeeds() {
-
-        return rssFeeds;
-
-
-    }
-
-
-    public LiveData<List<RssFeed>> getSelectedRssFeeds() {
-        return selectedRssFeeds;
-    }
-
-    public LiveData<List<RssFeedGroup>> getRssFeedGroups() {
-        return rssFeedGroups;
-    }
 
     public void updateData() {
-        rssRepository.loadRssData();
+        rssItemsRepository.loadRssData();
     }
 
 

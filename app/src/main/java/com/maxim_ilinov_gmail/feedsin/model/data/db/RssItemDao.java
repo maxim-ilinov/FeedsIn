@@ -16,13 +16,12 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 @Dao
-public interface RssDao {
+public interface RssItemDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE )
     long insertRssFeed(RssFeed rssFeed);
 
     @Insert(onConflict = OnConflictStrategy.IGNORE )
     long insertRssItem(RssItem rssItem);
-
 
     @Insert (onConflict = OnConflictStrategy.IGNORE)
     long createDefaultRssGroup (RssFeedGroup feedGroup);
@@ -32,7 +31,6 @@ public interface RssDao {
 
     @Query("select count(id) from rssfeedgroup where id=:groupId")
     int countRssFeedGroupsWithId(int groupId);
-
 
     @Query("SELECT * FROM rssfeedgroup ORDER BY id")
     LiveData <List<RssFeedGroup>> selectAllRssFeedGroups();
@@ -45,6 +43,9 @@ public interface RssDao {
 
     @Query("SELECT * FROM rssfeed WHERE isSelected = 1")
     List<RssFeed> selectSelectedRssFeedsSync();
+
+    @Query("SELECT * FROM rssfeed")
+    List<RssFeed> selectRssFeedsSync();
 
     @Query("SELECT ri.* FROM rssfeed rf, rssitem ri WHERE ri.rssFeedId = rf.id and rf.isSelected = 1 order by pubDateNorm desc")
     LiveData <List<RssItem>> selectItemsForSelectedFeeds ();

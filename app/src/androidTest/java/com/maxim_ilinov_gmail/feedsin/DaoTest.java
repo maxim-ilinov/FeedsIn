@@ -5,7 +5,7 @@ import android.content.Context;
 
 
 import com.maxim_ilinov_gmail.feedsin.model.data.db.RssRoomDatabase;
-import com.maxim_ilinov_gmail.feedsin.model.data.db.RssDao;
+import com.maxim_ilinov_gmail.feedsin.model.data.db.RssItemDao;
 import com.maxim_ilinov_gmail.feedsin.model.RssItem;
 
 import org.junit.After;
@@ -31,7 +31,7 @@ public class DaoTest {
 
     private RssRoomDatabase db;
 
-    private RssDao rssDao;
+    private RssItemDao rssItemDao;
 
 
 
@@ -45,7 +45,7 @@ public class DaoTest {
                 // Allowing main thread queries, just for testing.
                 .allowMainThreadQueries()
                 .build();
-        rssDao = db.getRssDao();
+        rssItemDao = db.getRssDao();
 
     }
 
@@ -64,8 +64,8 @@ public class DaoTest {
                     "quid",
                     1);
 
-        rssDao.insertRssItem(rssItem);
-        List<RssItem> rssItemList = LiveDataTestUtil.getValue(rssDao.selectAllItems());
+        rssItemDao.insertRssItem(rssItem);
+        List<RssItem> rssItemList = LiveDataTestUtil.getValue(rssItemDao.selectAllItems());
         Assert.assertEquals(rssItemList.get(0).getDescription(), rssItem.getDescription());
     }
 
@@ -73,10 +73,10 @@ public class DaoTest {
 //    @Test
 //    public void countryDaoGetAllCountries() throws Exception {
 //        Country country = new Country("AAA","Aaaaa", "http://aaaaa");
-//        rssDao.insert(country);
+//        rssItemDao.insert(country);
 //        Country country2 = new Country("BBB","Baaaa", "http://bbbbb");
-//        rssDao.insert(country2);
-//        List<Country> allCountries = LiveDataTestUtil.getValue(rssDao.getAllCountries());
+//        rssItemDao.insert(country2);
+//        List<Country> allCountries = LiveDataTestUtil.getValue(rssItemDao.getAllCountries());
 //        Assert.assertEquals(allCountries.get(0).name, country.name);
 //        Assert.assertEquals(allCountries.get(1).name, country2.name);
 //    }
@@ -84,11 +84,11 @@ public class DaoTest {
 //    @Test
 //    public void countryDaoDeleteAll() throws Exception {
 //        Country country = new Country("AAA","Aaaaa", "http://aaaaa");
-//        rssDao.insert(country);
+//        rssItemDao.insert(country);
 //        Country country2 = new Country("BBB","Baaaa", "http://bbbbb");
-//        rssDao.insert(country2);
-//        rssDao.deleteAll();
-//        List<Country> allWords = LiveDataTestUtil.getValue(rssDao.getAllCountries());
+//        rssItemDao.insert(country2);
+//        rssItemDao.deleteAll();
+//        List<Country> allWords = LiveDataTestUtil.getValue(rssItemDao.getAllCountries());
 //        Assert.assertTrue(allWords.isEmpty());
 //    }
 //

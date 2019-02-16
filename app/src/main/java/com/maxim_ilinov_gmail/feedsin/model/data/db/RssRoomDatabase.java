@@ -57,7 +57,7 @@ public abstract class RssRoomDatabase extends RoomDatabase {
                         super.onCreate(db);
                         Executors.newSingleThreadScheduledExecutor().execute(() ->
                                 {
-                                 getInstance(context).getRssDao().createDefaultRssGroup(RssFeedGroup.populateData());
+                                // getInstance(context).getRssDao().createDefaultRssGroup(RssFeedGroup.populateData());
 
                                 });
                     }
@@ -69,7 +69,7 @@ public abstract class RssRoomDatabase extends RoomDatabase {
     }
 
 
-    public abstract RssDao getRssDao();
+    public abstract RssItemDao getRssDao();
 /*
     public abstract CountryCurrencyJoinDao getCountryCurrencyJoinDao();
 

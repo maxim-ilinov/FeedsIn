@@ -10,7 +10,7 @@ import java.util.List;
 
 import androidx.lifecycle.ViewModelProviders;
 
-public class RssRepositoryTest {
+public class RssItemsRepositoryTest {
 
     @Test
     public void getItemsByFeeds() {

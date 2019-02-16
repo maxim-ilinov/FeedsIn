@@ -158,35 +158,7 @@ public class RssItemsListFragment extends Fragment {
                 }
                  );
 
-        viewModel.getRssFeedGroups().observe(this, new Observer<List<RssFeedGroup>>() {
 
-            @Override
-            public void onChanged(List<RssFeedGroup> rssFeedGroups) {
-
-                Log.d(TAG, "rssFeedGroup size: " + rssFeedGroups.size());
-
-                for (RssFeedGroup rfg : rssFeedGroups) {
-                    Log.d(TAG, "rssFeedGroup name: " + rfg.getName());
-                }
-
-            }
-        });
-
-        viewModel.getRssFeeds().observe(this, new Observer<List<RssFeed>>() {
-
-            @Override
-            public void onChanged(List<RssFeed> rssFeeds) {
-
-                Log.d(TAG, "rssFeeds size: " + rssFeeds.size());
-
-                for (RssFeed rf : rssFeeds) {
-                    Log.d(TAG, "rssFeed: " + rf.toString());
-
-//                    Log.d(TAG, "rssFeed link: " + rf.getRssFeedLink());
-//                    Log.d(TAG, "rssFeed selected: " + rf.isSelected());
-                }
-            }
-        });
 
         viewModel.getCurrentRssItemsListPl().observe(this, rssItems ->
                 {

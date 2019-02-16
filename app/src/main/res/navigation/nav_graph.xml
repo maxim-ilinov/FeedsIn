@@ -10,7 +10,7 @@
     <fragment
         android:id="@+id/rssItemsListFragment"
         android:name="com.maxim_ilinov_gmail.feedsin.view.RssItemsListFragment"
-        android:label="Rss Items list"
+        android:label="RssItems list"
         tools:layout="@layout/fragment_rss_item_list">
         <action
             android:id="@+id/action_to_details"
