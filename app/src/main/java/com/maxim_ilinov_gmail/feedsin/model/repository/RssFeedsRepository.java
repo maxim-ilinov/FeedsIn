@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData;
 
 import com.maxim_ilinov_gmail.feedsin.model.RssFeed;
 import com.maxim_ilinov_gmail.feedsin.model.RssFeedGroup;
-import com.maxim_ilinov_gmail.feedsin.model.data.db.RssItemDao;
+import com.maxim_ilinov_gmail.feedsin.model.data.db.RssDao;
 import com.maxim_ilinov_gmail.feedsin.model.data.db.RssRoomDatabase;
 import com.maxim_ilinov_gmail.feedsin.model.data.webservices.RssWebservice;
 import com.maxim_ilinov_gmail.feedsin.model.data.webservices.RssWebserviceClient;
@@ -20,7 +20,7 @@ public class RssFeedsRepository {
 
 
     private final RssWebservice rssWebservice;
-    private final RssItemDao rssItemDao;
+    private final RssDao rssDao;
 
 
     private final Executor executor;
@@ -35,7 +35,7 @@ public class RssFeedsRepository {
         db = RssRoomDatabase.getInstance(context);
 
 
-        this.rssItemDao = db.getRssDao();
+        this.rssDao = db.getRssDao();
 
        /* this.languageDao = db.getLanguageDao();
         this.countryLanguageJoinDao = db.getCountryLanguageJoinDao();
@@ -70,9 +70,9 @@ public class RssFeedsRepository {
     public void addNewFeed(String rssUrl, boolean selected) {
         executor.execute(() -> {
 
-            if (rssItemDao.feedWithUrlCount(rssUrl) == 0) {
+            if (rssDao.feedWithUrlCount(rssUrl) == 0) {
 
-                rssItemDao.insertRssFeed(new RssFeed(rssUrl, selected));
+                rssDao.insertRssFeed(new RssFeed(rssUrl, selected));
 
             }
         });
@@ -82,7 +82,7 @@ public class RssFeedsRepository {
     public void addFeedToGroup(int feedId, int groupId) {
         int useGroupId;
 
-        if (rssItemDao.countRssFeedGroupsWithId(groupId) > 0) {
+        if (rssDao.countRssFeedGroupsWithId(groupId) > 0) {
             useGroupId = groupId;
         } else {
             useGroupId = 0;
@@ -91,16 +91,16 @@ public class RssFeedsRepository {
 
     public LiveData<List<RssFeed>> getRssFeeds() {
 
-        return rssItemDao.selectAllRssFeeds();
+        return rssDao.selectAllRssFeeds();
     }
 
     public LiveData<List<RssFeed>> getSelectedRssFeeds() {
 
-        return rssItemDao.selectSelectedRssFeeds();
+        return rssDao.selectSelectedRssFeeds();
     }
 
     public LiveData<List<RssFeedGroup>> getRssFeedGroups() {
-        return rssItemDao.selectAllRssFeedGroups();
+        return rssDao.selectAllRssFeedGroups();
     }
 
 }

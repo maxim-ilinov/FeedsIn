@@ -4,8 +4,8 @@ package com.maxim_ilinov_gmail.feedsin;
 import android.content.Context;
 
 
+import com.maxim_ilinov_gmail.feedsin.model.data.db.RssDao;
 import com.maxim_ilinov_gmail.feedsin.model.data.db.RssRoomDatabase;
-import com.maxim_ilinov_gmail.feedsin.model.data.db.RssItemDao;
 import com.maxim_ilinov_gmail.feedsin.model.RssItem;
 
 import org.junit.After;
@@ -31,7 +31,7 @@ public class DaoTest {
 
     private RssRoomDatabase db;
 
-    private RssItemDao rssItemDao;
+    private RssDao rssItemDao;
 
 
 

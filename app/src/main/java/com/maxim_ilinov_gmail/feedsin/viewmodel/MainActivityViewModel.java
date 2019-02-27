@@ -41,8 +41,6 @@ public class MainActivityViewModel extends AndroidViewModel {
     public LiveData<List<RssFeed>> getRssFeeds() {
 
         return rssFeeds;
-
-
     }
 
 

@@ -69,7 +69,8 @@ public abstract class RssRoomDatabase extends RoomDatabase {
     }
 
 
-    public abstract RssItemDao getRssDao();
+
+    public abstract RssDao getRssDao();
 /*
     public abstract CountryCurrencyJoinDao getCountryCurrencyJoinDao();
 

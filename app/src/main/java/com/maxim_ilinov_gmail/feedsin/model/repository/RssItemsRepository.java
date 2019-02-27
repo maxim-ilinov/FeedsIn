@@ -4,7 +4,7 @@ package com.maxim_ilinov_gmail.feedsin.model.repository;
 import android.content.Context;
 import android.util.Log;
 
-import com.maxim_ilinov_gmail.feedsin.model.data.db.RssItemDao;
+import com.maxim_ilinov_gmail.feedsin.model.data.db.RssDao;
 import com.maxim_ilinov_gmail.feedsin.model.data.db.RssRoomDatabase;
 import com.maxim_ilinov_gmail.feedsin.model.RssFeed;
 import com.maxim_ilinov_gmail.feedsin.model.RssItem;
@@ -34,7 +34,7 @@ public class RssItemsRepository {
 
 
     private final RssWebservice rssWebservice;
-    private final RssItemDao rssItemDao;
+    private final RssDao rssDao;
 
 
     private final Executor executor;
@@ -49,7 +49,7 @@ public class RssItemsRepository {
        db = RssRoomDatabase.getInstance(context);
 
 
-        this.rssItemDao = db.getRssDao();
+        this.rssDao = db.getRssDao();
 
        /* this.languageDao = db.getLanguageDao();
         this.countryLanguageJoinDao = db.getCountryLanguageJoinDao();
@@ -58,45 +58,25 @@ public class RssItemsRepository {
         this.timezoneDao = db.getTimezoneDao();
         this.countryTimezoneJoinDao = db.getCountryTimezoneJoinDao();
 */
-
-
-
        this.executor =  Executors.newSingleThreadExecutor();
 
        rssWebservice =   RssWebserviceClient.getInstance().getRssWebservice();
 
-            loadRssData();
+       loadRssData();
 
     }
 
-    public void loadRssData() {
 
-        executor.execute(() -> {
-
-            //for test purposes
-           // rssItemDao.deleteAllRssItems();
-           // rssItemDao.deleteAllFeeds();
-
-           List<RssFeed> rssFeeds = rssItemDao.selectRssFeedsSync();
-
-           for (RssFeed rf : rssFeeds)
-           {
-               loadRssItemsFromWeb(rf.getId(), rf.getRssFeedLink());
-           }
-
-        });
-
-    }
 
     public LiveData<PagedList<RssItem>> getItemsForSelectedFeedsPl()
     {
         return   new LivePagedListBuilder<>(
-                rssItemDao.selectItemsForSelectedFeedsPl(), /* page size */ 20).build();
+                rssDao.selectItemsForSelectedFeedsPl(), /* page size */ 20).build();
 
     }
 
     public LiveData<List<RssItem>> getItemsForSelectedFeeds() {
-        return   rssItemDao.selectItemsForSelectedFeeds();
+        return   rssDao.selectItemsForSelectedFeeds();
     }
 
 
@@ -152,10 +132,10 @@ public class RssItemsRepository {
 */
                                         ri.setRssFeedId(feedId);
 
-                                        if (rssItemDao.countRssItemWithHash(ri.hashCode()) == 0) {
+                                        if (rssDao.countRssItemWithHash(ri.hashCode()) == 0) {
 
                                             ri.setHash(ri.hashCode());
-                                            rssItemDao.insertRssItem(ri);
+                                            rssDao.insertRssItem(ri);
                                         }
 
 
@@ -182,6 +162,23 @@ public class RssItemsRepository {
 
     }
 
+    public void loadRssData() {
 
+        executor.execute(() -> {
+
+            //for test purposes
+            // rssDao.deleteAllRssItems();
+            // rssDao.deleteAllFeeds();
+
+            List<RssFeed> rssFeeds = rssDao.selectRssFeedsSync();
+
+            for (RssFeed rf : rssFeeds)
+            {
+                loadRssItemsFromWeb(rf.getId(), rf.getRssFeedLink());
+            }
+
+        });
+
+    }
 
 }

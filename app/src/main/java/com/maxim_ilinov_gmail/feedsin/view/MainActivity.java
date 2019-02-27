@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
+
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         nvDrawer = findViewById(R.id.nav_view);
@@ -66,9 +67,6 @@ public class MainActivity extends AppCompatActivity {
 
             //MenuItem groupItem = drawerMenu.add("Group"+j);
             Menu groupMenu = drawerMenu.addSubMenu("Group"+j);
-
-
-
 
             for (int i = 1; i <= 3; i++) {
                 MenuItem  menuItem= groupMenu.add("Feed" + i);
@@ -91,8 +89,6 @@ public class MainActivity extends AppCompatActivity {
 
         //NavigationUI.setupWithNavController(toolbar, navController);//setupWithNavController(this, navController);
 
-
-
       //  actionbar.setDisplayHomeAsUpEnabled(true);
 
        // actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
@@ -107,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(List<RssFeedGroup> rssFeedGroups) {
 
-                Log.d(TAG, "rssFeedGroup size: " + rssFeedGroups.size());
+                Log.d(TAG, "rssFeedGroups size: " + rssFeedGroups.size());
 
                 for (RssFeedGroup rfg : rssFeedGroups) {
                     Log.d(TAG, "rssFeedGroup name: " + rfg.getName());
