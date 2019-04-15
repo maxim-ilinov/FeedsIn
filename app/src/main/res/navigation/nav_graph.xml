@@ -10,8 +10,13 @@
     <fragment
         android:id="@+id/rssItemsListFragment"
         android:name="com.maxim_ilinov_gmail.feedsin.view.RssItemsListFragment"
-        android:label="RssItems list"
+
+
+
         tools:layout="@layout/fragment_rss_item_list">
+
+
+
         <action
             android:id="@+id/action_to_details"
             app:destination="@+id/rssItemDetailsFragment"
@@ -19,11 +24,25 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_rssItemsListFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_rssItemsListFragment_to_organizeFeedsFragment"
+            app:destination="@id/organizeFeedsFragment" />
 
     </fragment>
     <fragment
         android:id="@+id/rssItemDetailsFragment"
         android:name="com.maxim_ilinov_gmail.feedsin.view.RssItemDetailsFragment"
-        android:label="RssItem details"
+
         tools:layout="@layout/fragment_rss_item_details" />
+    <fragment
+        android:id="@+id/organizeFeedsFragment"
+        android:name="com.maxim_ilinov_gmail.feedsin.view.OrganizeFeedsFragment"
+        tools:layout="@layout/organize_feeds_fragment" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.maxim_ilinov_gmail.feedsin.view.SettingsFragment"
+        tools:layout="@layout/settings_fragment" />
 </navigation>

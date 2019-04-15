@@ -1,6 +1,5 @@
 package com.maxim_ilinov_gmail.feedsin.view;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,30 +8,25 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.paging.PagedList;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.maxim_ilinov_gmail.feedsin.R;
+import com.maxim_ilinov_gmail.feedsin.model.FeedGroupWithFeeds;
 import com.maxim_ilinov_gmail.feedsin.model.RssFeed;
-import com.maxim_ilinov_gmail.feedsin.model.RssFeedGroup;
-import com.maxim_ilinov_gmail.feedsin.model.RssItem;
 import com.maxim_ilinov_gmail.feedsin.viewmodel.RssItemDetailsViewModel;
 import com.maxim_ilinov_gmail.feedsin.viewmodel.RssItemsListViewModel;
-
-import java.util.List;
 
 public class RssItemsListFragment extends Fragment {
 
@@ -126,6 +120,11 @@ public class RssItemsListFragment extends Fragment {
 */
 
 
+
+
+
+
+
         rssItemsListSwipeRefreshLayout = v.findViewById(R.id.rssItemsListSwipe);
 
         //  adapter = new RssItemsListAdapter(getActivity());
@@ -142,6 +141,8 @@ public class RssItemsListFragment extends Fragment {
         //  recyclerView.setAdapter(adapter);
         recyclerView.setAdapter(adapterPl);
 
+
+
         return v;
 
     }
@@ -152,9 +153,33 @@ public class RssItemsListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
+
+        /*NavController navController = Navigation.findNavController(view);
+
+        NavDestination navDestination= navController.getCurrentDestination();
+
+        Toast.makeText(getActivity(),navDestination.getLabel(),Toast.LENGTH_LONG).show();
+
+
+        navDestination.setLabel("dfsdfsdf");
+
+        Toast.makeText(getActivity(),"two :" + navDestination.getLabel(),Toast.LENGTH_LONG).show();*/
+
+       // ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("FeedGroupName");
+
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle("FeedGroupName subtitle");
+
+
+
+
+
+
+
         rssItemsListSwipeRefreshLayout.setOnRefreshListener(
                 () -> {
                     updateData();
+
+
                 }
                  );
 
@@ -169,6 +194,49 @@ public class RssItemsListFragment extends Fragment {
 
             }
         );
+
+        viewModel.getCheckedFeedGroups().observe(this, feedGroups ->
+        {
+
+            Log.d(TAG,"getCheckedFeedGroups().observed called back...");
+
+            if (feedGroups!=null) {
+
+                Log.d(TAG,"FeedGroups() size is: " + feedGroups.size());
+
+                ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+
+                String title="";
+                String subtitle="";
+
+                for(FeedGroupWithFeeds fgwf : feedGroups)
+                {
+                    Log.d(TAG,"fgwf.getName() = " + fgwf.getName());
+
+
+                    title = title + fgwf.getName() +", "; //todo make more elegant
+
+                    for(RssFeed rf : fgwf.getRssFeeds())
+                    {
+                        subtitle = subtitle + rf.getCustomTitle() +", ";//todo make more elegant
+                    }
+
+                }
+
+
+                Log.d(TAG,"title  = " + title);
+
+                Log.d(TAG,"subtitle  = " + subtitle);
+
+                actionBar.setTitle(title);
+                actionBar.setSubtitle(subtitle);
+
+           }
+           else
+           {
+               Log.d(TAG,"getCheckedFeedGroups().observed but feedGroup id null...");
+           }
+        });
 
 
        /* viewModel.getCurrentRssItemsList().observe(this, new Observer<List<RssItem>>() {

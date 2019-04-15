@@ -9,7 +9,9 @@ import org.simpleframework.xml.Path;
 import org.simpleframework.xml.Root;
 import org.simpleframework.xml.Text;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /*
 https://cyber.harvard.edu/rss/rss.html
@@ -43,9 +45,9 @@ public class RssFeed {
 
     private String customTitle;
 
-    private boolean isSelected;
+    private boolean toBeShown;
 
-    private int rssFeedGroupId;
+    private long feedGroupId;
 
     private String rssFeedLink;
 
@@ -72,26 +74,40 @@ public class RssFeed {
     // empty constructor necessary for simplexml
     public RssFeed() {
     }
-    @Ignore
-    public RssFeed(String rssFeedLink, boolean isSelected) {
-        this.rssFeedLink = rssFeedLink;
 
-        this.isSelected = isSelected;
+    @Ignore
+    public RssFeed(String customTitle, String feedLink) {
+        this.customTitle = customTitle;
+        this.rssFeedLink = feedLink;
+    }
+
+    @Ignore
+    public RssFeed(String customTitle, String feedLink, long groupId) {
+        this.customTitle = customTitle;
+        this.rssFeedLink = feedLink;
+        this.setFeedGroupId(groupId);
+    }
+    @Ignore
+    public RssFeed(String feedLink) {
+
+        this.rssFeedLink = feedLink;
+
 
     }
     @Ignore
-    public RssFeed(String title, String rssFeedLink, String description, String imageUrl) {
+    public RssFeed(String title, String feedLink, String description, String imageUrl) {
         this.title = title;
+        this.rssFeedLink = feedLink;
         this.description = description;
         this.imageUrl = imageUrl;
     }
 
-    public boolean isSelected() {
-        return isSelected;
+    public boolean isToBeShown() {
+        return toBeShown;
     }
 
-    public void setIsSelected(boolean isSelected) {
-        this.isSelected = isSelected;
+    public void setToBeShown(boolean isSelected) {
+        this.toBeShown = isSelected;
     }
 
     public String getCustomTitle() {
@@ -102,12 +118,12 @@ public class RssFeed {
         this.customTitle = customTitle;
     }
 
-    public int getRssFeedGroupId() {
-        return rssFeedGroupId;
+    public long getFeedGroupId() {
+        return feedGroupId;
     }
 
-    public void setRssFeedGroupId(int rssFeedGroupId) {
-        this.rssFeedGroupId = rssFeedGroupId;
+    public void setFeedGroupId(long feedGroupId) {
+        this.feedGroupId = feedGroupId;
     }
 
     public List<Link> getLinks() {
@@ -173,8 +189,8 @@ public class RssFeed {
                 "id = " + this.getId() + " " +
                         "title = " + this.getTitle() + " " +
                         "rssFeedLink = " + this.getRssFeedLink() + " " +
-                        "selected = " + this.isSelected() + " " +
-                        "group id = " + this.getRssFeedGroupId();
+                        "selected = " + this.isToBeShown() + " " +
+                        "group id = " + this.getFeedGroupId();
 
     }
 
@@ -194,4 +210,37 @@ public class RssFeed {
         public Link() {
         }
     }
+    public static List<RssFeed> populateData(long[] groupIds) {
+
+        Random rand = new Random();
+
+        List<RssFeed> rssFeeds = new ArrayList();
+
+       int groupsCount = groupIds.length;
+
+      // long  i = groupIds[groupsCount];
+
+
+        rssFeeds.add(new RssFeed("ixbt", "http://www.ixbt.com/export/articles.rss", groupIds[rand.nextInt(groupsCount)]));
+        rssFeeds.add(new RssFeed("habr 1","https://habr.com/rss/hub/apps_design/all/?hl=ru&fl=ru",groupIds[rand.nextInt(groupsCount)]));
+        rssFeeds.add(new RssFeed("habr 2","https://habr.com/rss/all/all/?hl=ru&fl=ru",groupIds[rand.nextInt(groupsCount)]));
+        rssFeeds.add(new RssFeed("bash","https://bash.im/rss/",groupIds[rand.nextInt(groupsCount)]));
+
+        rssFeeds.add(new RssFeed("yandex","https://news.yandex.ru/politics.rss",groupIds[rand.nextInt(groupsCount)]));
+
+        return rssFeeds;
+
+
+
+        //  addFeed ("https://bash.im/rss/", true);
+        //  addFeed ("https://habr.com/rss/best/?hl=ru&fl=ru", true); //top
+        // addFeed ("https://www.nytimes.com/svc/collections/v1/publish/https://www.nytimes.com/section/world/rss.xml", true);
+        // addFeed ("https://news.yandex.ru/politics.rss", true);
+
+        //atom
+        // addFeed ("https://www.reddit.com/r/worldnews/.rss", true);
+        //addFeed ("https://plugins.geany.org/install.html", true);
+    }
+
+
 }

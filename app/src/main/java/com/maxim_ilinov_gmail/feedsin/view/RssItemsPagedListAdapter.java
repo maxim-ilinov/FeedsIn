@@ -36,9 +36,9 @@ public class RssItemsPagedListAdapter extends PagedListAdapter<RssItem, RssItemV
                 @Override
                 public boolean areItemsTheSame(RssItem oldRssItem, RssItem newRssItem) {
 
-                    Log.d(TAG, "areItemsTheSame");
+                   /* Log.d(TAG, "areItemsTheSame");
                     Log.d(TAG, "oldRssItem desc= " + oldRssItem.getDescription());
-                    Log.d(TAG, "newRssItem desc= " + newRssItem.getDescription());
+                    Log.d(TAG, "newRssItem desc= " + newRssItem.getDescription());*/
                     return oldRssItem.getId() == newRssItem.getId();
 
                 }
@@ -46,9 +46,9 @@ public class RssItemsPagedListAdapter extends PagedListAdapter<RssItem, RssItemV
                 @Override
                 public boolean areContentsTheSame(RssItem oldRssItem,
                                                   RssItem newRssItem) {
-                    Log.d(TAG, "areContentsTheSame");
+                   /* Log.d(TAG, "areContentsTheSame");
                     Log.d(TAG, "oldRssItem desc= " + oldRssItem.getDescription());
-                    Log.d(TAG, "newRssItem desc= " + newRssItem.getDescription());
+                    Log.d(TAG, "newRssItem desc= " + newRssItem.getDescription());*/
                     return oldRssItem.equals(newRssItem);
 
                 }
@@ -60,7 +60,7 @@ public class RssItemsPagedListAdapter extends PagedListAdapter<RssItem, RssItemV
 
         super(DIFF_CALLBACK);
 
-        Log.d(TAG, "RssItemsPagedListAdapter init");
+       // Log.d(TAG, "RssItemsPagedListAdapter init");
 
         rssItemDetailsViewModel =viewModel;
          this.context = context;
@@ -70,7 +70,7 @@ public class RssItemsPagedListAdapter extends PagedListAdapter<RssItem, RssItemV
     @Override
     public RssItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        Log.d(TAG, "in onCreateViewHolder");
+      //  Log.d(TAG, "in onCreateViewHolder");
 
        // View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_item, parent, false);
 
@@ -86,7 +86,7 @@ public class RssItemsPagedListAdapter extends PagedListAdapter<RssItem, RssItemV
     public void onBindViewHolder(@NonNull RssItemViewHolder holder,
                                  int position) {
 
-        Log.d(TAG, "in onBindViewHolder");
+       // Log.d(TAG, "in onBindViewHolder");
 
 
 

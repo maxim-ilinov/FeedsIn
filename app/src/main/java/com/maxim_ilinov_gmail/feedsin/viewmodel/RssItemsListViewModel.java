@@ -2,8 +2,8 @@ package com.maxim_ilinov_gmail.feedsin.viewmodel;
 
 import android.app.Application;
 
+import com.maxim_ilinov_gmail.feedsin.model.FeedGroupWithFeeds;
 import com.maxim_ilinov_gmail.feedsin.model.RssFeed;
-import com.maxim_ilinov_gmail.feedsin.model.RssFeedGroup;
 import com.maxim_ilinov_gmail.feedsin.model.RssItem;
 import com.maxim_ilinov_gmail.feedsin.model.repository.RssItemsRepository;
 
@@ -56,7 +56,7 @@ public class RssItemsListViewModel extends AndroidViewModel {
 
     public LiveData<PagedList<RssItem>> getCurrentRssItemsListPl() {
 
-        return currentRssItemsListPl;
+        return rssItemsRepository.getItemsForSelectedFeedsPl();
 
     }
 
@@ -71,4 +71,9 @@ public class RssItemsListViewModel extends AndroidViewModel {
     }
 
 
+    public LiveData<List<FeedGroupWithFeeds>> getCheckedFeedGroups() {
+
+        return rssItemsRepository.getCheckedFeedGroups();
+
+    }
 }

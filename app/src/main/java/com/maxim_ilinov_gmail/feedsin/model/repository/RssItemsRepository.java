@@ -4,6 +4,7 @@ package com.maxim_ilinov_gmail.feedsin.model.repository;
 import android.content.Context;
 import android.util.Log;
 
+import com.maxim_ilinov_gmail.feedsin.model.FeedGroupWithFeeds;
 import com.maxim_ilinov_gmail.feedsin.model.data.db.RssDao;
 import com.maxim_ilinov_gmail.feedsin.model.data.db.RssRoomDatabase;
 import com.maxim_ilinov_gmail.feedsin.model.RssFeed;
@@ -30,8 +31,6 @@ public class RssItemsRepository {
 
 
     private static final String TAG = "RssItemsRepository";
-
-
 
     private final RssWebservice rssWebservice;
     private final RssDao rssDao;
@@ -71,7 +70,7 @@ public class RssItemsRepository {
     public LiveData<PagedList<RssItem>> getItemsForSelectedFeedsPl()
     {
         return   new LivePagedListBuilder<>(
-                rssDao.selectItemsForSelectedFeedsPl(), /* page size */ 20).build();
+                rssDao.selectItemsForSelectedFeedsPl(), /* page size */ 10).build();
 
     }
 
@@ -145,7 +144,7 @@ public class RssItemsRepository {
 
                             } else {
                               //  Log.d(TAG,"response code " + response.code());
-                                //todo use this to inform user
+                                //todo place code to inform user
                             }
                     });
                 }
@@ -181,4 +180,9 @@ public class RssItemsRepository {
 
     }
 
+    public LiveData<List<FeedGroupWithFeeds>> getCheckedFeedGroups() {
+
+       return rssDao.getCheckedFeedGroups();
+
+    }
 }

@@ -3,19 +3,20 @@
 
     <group android:id="@+id/drawer_menu_main">
 
-                <item android:id="@+id/add_new_feed"
-                    android:icon="@drawable/ic_add_circle_black_24dp"
-                android:title="Add new feed" >
+        <item
+            android:id="@+id/drawer_organize_feeds"
+            android:icon="@drawable/ic_add_circle_black_24dp"
+            android:title="Organize feeds">
 
-                </item>
-            <item android:id="@+id/settings"
+        </item>
+        <item
+            android:id="@+id/drawer_settings"
             android:icon="@drawable/ic_settings_black_24dp"
-            android:title="Settings" >
+            android:title="Settings">
 
         </item>
 
     </group>
-
 
 
 </menu>
