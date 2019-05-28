@@ -1,16 +1,7 @@
 package com.maxim_ilinov_gmail.feedsin.model;
 
-import androidx.room.Entity;
-import androidx.room.Ignore;
-import androidx.room.Index;
-import androidx.room.PrimaryKey;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
-
-public class FeedGroupForDrawerMenu {
+public class GroupForDrawerMenu {
 
 
     private int id;
@@ -36,8 +27,8 @@ public class FeedGroupForDrawerMenu {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof FeedGroupForDrawerMenu)) return false;
-        FeedGroupForDrawerMenu that = (FeedGroupForDrawerMenu) o;
+        if (!(o instanceof GroupForDrawerMenu)) return false;
+        GroupForDrawerMenu that = (GroupForDrawerMenu) o;
         return getId() == that.getId() &&
                 getName().equals(that.getName());
     }

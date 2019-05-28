@@ -3,7 +3,7 @@
     <data>
         <variable
             name="item"
-            type="com.maxim_ilinov_gmail.feedsin.model.RssItem"/>
+            type="com.maxim_ilinov_gmail.feedsin.model.Article"/>
     </data>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

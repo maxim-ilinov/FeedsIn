@@ -4,11 +4,11 @@ package com.maxim_ilinov_gmail.feedsin.model.repository;
 import android.content.Context;
 import android.util.Log;
 
-import com.maxim_ilinov_gmail.feedsin.model.FeedGroupWithFeeds;
+import com.maxim_ilinov_gmail.feedsin.model.Article;
+import com.maxim_ilinov_gmail.feedsin.model.FeedEntity;
+import com.maxim_ilinov_gmail.feedsin.model.GroupWithFeeds;
 import com.maxim_ilinov_gmail.feedsin.model.data.db.RssDao;
 import com.maxim_ilinov_gmail.feedsin.model.data.db.RssRoomDatabase;
-import com.maxim_ilinov_gmail.feedsin.model.RssFeed;
-import com.maxim_ilinov_gmail.feedsin.model.RssItem;
 import com.maxim_ilinov_gmail.feedsin.model.data.webservices.RssWebservice;
 import com.maxim_ilinov_gmail.feedsin.model.data.webservices.RssWebserviceClient;
 
@@ -27,10 +27,10 @@ import retrofit2.Response;
 import static com.maxim_ilinov_gmail.feedsin.model.DateUtils.parseStringToDate;
 
 
-public class RssItemsRepository {
+public class ArticleRepository {
 
 
-    private static final String TAG = "RssItemsRepository";
+    private static final String TAG = "ArticleRepository";
 
     private final RssWebservice rssWebservice;
     private final RssDao rssDao;
@@ -43,7 +43,7 @@ public class RssItemsRepository {
     private int defaultRssFeedGroupId;
 
 
-    public RssItemsRepository(Context context) {
+    public ArticleRepository(Context context) {
 
        db = RssRoomDatabase.getInstance(context);
 
@@ -67,14 +67,14 @@ public class RssItemsRepository {
 
 
 
-    public LiveData<PagedList<RssItem>> getItemsForSelectedFeedsPl()
+    public LiveData<PagedList<Article>> getItemsForSelectedFeedsPl()
     {
         return   new LivePagedListBuilder<>(
                 rssDao.selectItemsForSelectedFeedsPl(), /* page size */ 10).build();
 
     }
 
-    public LiveData<List<RssItem>> getItemsForSelectedFeeds() {
+    public LiveData<List<Article>> getItemsForSelectedFeeds() {
         return   rssDao.selectItemsForSelectedFeeds();
     }
 
@@ -84,11 +84,11 @@ public class RssItemsRepository {
 
         executor.execute(() -> {
 
-            Call<RssFeed> rssFeedCall = rssWebservice.getItems(rssLink);
+            Call<FeedEntity> rssFeedCall = rssWebservice.getItems(rssLink);
 
-            rssFeedCall.enqueue(new Callback<RssFeed>() {
+            rssFeedCall.enqueue(new Callback<FeedEntity>() {
                 @Override
-                public void onResponse(Call<RssFeed> call, final Response<RssFeed> response) {
+                public void onResponse(Call<FeedEntity> call, final Response<FeedEntity> response) {
 
                     executor.execute(()-> {
                             if (response.isSuccessful()) {
@@ -98,16 +98,16 @@ public class RssItemsRepository {
 
                                // Log.d(TAG,"Response message: " + response.toString());
 
-                                RssFeed rssFeed = response.body();
+                                FeedEntity rssFeedEntity = response.body();
 
-                              //  Log.d(TAG, "Current feed: " + rssFeed.toString());
+                              //  Log.d(TAG, "Current feed: " + rssFeedEntity.toString());
 
-                                if (rssFeed.getRssItemList()!=null ) {
+                                if (rssFeedEntity.getArticleList()!=null ) {
 
 
-                                 //   Log.d(TAG, "Items in list: " + rssFeed.getRssItemList().size());
+                                 //   Log.d(TAG, "Items in list: " + rssFeedEntity.getArticleList().size());
 
-                                    for (RssItem ri : rssFeed.getRssItemList()) {
+                                    for (Article ri : rssFeedEntity.getArticleList()) {
 
                                         String strDate = ri.getPubDate();
 
@@ -149,7 +149,7 @@ public class RssItemsRepository {
                     });
                 }
                 @Override
-                public void onFailure(Call<RssFeed> call, Throwable t) {
+                public void onFailure(Call<FeedEntity> call, Throwable t) {
                     Log.d(TAG,"failure " + t);
                 }
 
@@ -169,9 +169,9 @@ public class RssItemsRepository {
             // rssDao.deleteAllRssItems();
             // rssDao.deleteAllFeeds();
 
-            List<RssFeed> rssFeeds = rssDao.selectRssFeedsSync();
+            List<FeedEntity> feedEntities = rssDao.selectRssFeedsSync();
 
-            for (RssFeed rf : rssFeeds)
+            for (FeedEntity rf : feedEntities)
             {
                 loadRssItemsFromWeb(rf.getId(), rf.getRssFeedLink());
             }
@@ -180,7 +180,7 @@ public class RssItemsRepository {
 
     }
 
-    public LiveData<List<FeedGroupWithFeeds>> getCheckedFeedGroups() {
+    public LiveData<List<GroupWithFeeds>> getCheckedFeedGroups() {
 
        return rssDao.getCheckedFeedGroups();
 

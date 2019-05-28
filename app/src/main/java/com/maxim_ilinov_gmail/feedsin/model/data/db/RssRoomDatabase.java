@@ -4,9 +4,9 @@ package com.maxim_ilinov_gmail.feedsin.model.data.db;
 import android.content.Context;
 
 
-import com.maxim_ilinov_gmail.feedsin.model.RssFeed;
-import com.maxim_ilinov_gmail.feedsin.model.FeedGroup;
-import com.maxim_ilinov_gmail.feedsin.model.RssItem;
+import com.maxim_ilinov_gmail.feedsin.model.Article;
+import com.maxim_ilinov_gmail.feedsin.model.FeedEntity;
+import com.maxim_ilinov_gmail.feedsin.model.Group;
 
 import java.util.concurrent.Executors;
 
@@ -19,9 +19,9 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 
 @Database(entities = {
-        RssFeed.class,
-        RssItem.class,
-        FeedGroup.class
+        FeedEntity.class,
+        Article.class,
+        Group.class
         /*Country.class,
         CountryCurrencyJoin.class,
         CountryLanguageJoin.class,
@@ -60,8 +60,8 @@ public abstract class RssRoomDatabase extends RoomDatabase {
                                     long[] groupIds;
                                     int[] feedIds;
 
-                                    groupIds= getInstance(context).getRssDao().insertFeedGroups(FeedGroup.populateData());
-                                    getInstance(context).getRssDao().insertRssFeeds(RssFeed.populateData(groupIds));
+                                    groupIds= getInstance(context).getRssDao().insertFeedGroups(Group.populateData());
+                                    getInstance(context).getRssDao().insertRssFeeds(FeedEntity.populateData(groupIds));
 
                                     //getInstance(context).getRssDao().updateFeed();
 

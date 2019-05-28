@@ -2,11 +2,9 @@ package com.maxim_ilinov_gmail.feedsin.view;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -17,50 +15,47 @@ import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 
 import com.maxim_ilinov_gmail.feedsin.R;
-import com.maxim_ilinov_gmail.feedsin.model.RssItem;
-import com.maxim_ilinov_gmail.feedsin.viewmodel.RssItemDetailsViewModel;
+import com.maxim_ilinov_gmail.feedsin.model.Article;
+import com.maxim_ilinov_gmail.feedsin.viewmodel.ArticleDetailsViewModel;
 
-public class RssItemsPagedListAdapter extends PagedListAdapter<RssItem, RssItemViewHolder> {
+public class ArticleListAdapter extends PagedListAdapter<Article, ArticleViewHolder> {
 
     private static final String TAG = "RssItemsPagedListAdpt";
+    private static DiffUtil.ItemCallback<Article> DIFF_CALLBACK =
 
-    private RssItemDetailsViewModel rssItemDetailsViewModel;
+            new DiffUtil.ItemCallback<Article>() {
 
-    private static DiffUtil.ItemCallback<RssItem> DIFF_CALLBACK =
-
-            new DiffUtil.ItemCallback<RssItem>() {
-
-                private  final String TAG = "RssItemsPagedListAdpt.";
+                private  final String TAG = "RssItemsPagedListAdpt";
                 // Item details may have changed if reloaded from the database,
                 // but ID is fixed.
                 @Override
-                public boolean areItemsTheSame(RssItem oldRssItem, RssItem newRssItem) {
+                public boolean areItemsTheSame(Article oldArticle, Article newArticle) {
 
                    /* Log.d(TAG, "areItemsTheSame");
-                    Log.d(TAG, "oldRssItem desc= " + oldRssItem.getDescription());
-                    Log.d(TAG, "newRssItem desc= " + newRssItem.getDescription());*/
-                    return oldRssItem.getId() == newRssItem.getId();
+                    Log.d(TAG, "oldArticle desc= " + oldArticle.getDescription());
+                    Log.d(TAG, "newArticle desc= " + newArticle.getDescription());*/
+                    return oldArticle.getId() == newArticle.getId();
 
                 }
 
                 @Override
-                public boolean areContentsTheSame(RssItem oldRssItem,
-                                                  RssItem newRssItem) {
+                public boolean areContentsTheSame(Article oldArticle,
+                                                  Article newArticle) {
                    /* Log.d(TAG, "areContentsTheSame");
-                    Log.d(TAG, "oldRssItem desc= " + oldRssItem.getDescription());
-                    Log.d(TAG, "newRssItem desc= " + newRssItem.getDescription());*/
-                    return oldRssItem.equals(newRssItem);
+                    Log.d(TAG, "oldArticle desc= " + oldArticle.getDescription());
+                    Log.d(TAG, "newArticle desc= " + newArticle.getDescription());*/
+                    return oldArticle.equals(newArticle);
 
                 }
             };
-
+    private ArticleDetailsViewModel rssItemDetailsViewModel;
     private Context context;
 
-    protected RssItemsPagedListAdapter(Context context, RssItemDetailsViewModel viewModel) {
+    protected ArticleListAdapter(Context context, ArticleDetailsViewModel viewModel) {
 
         super(DIFF_CALLBACK);
 
-       // Log.d(TAG, "RssItemsPagedListAdapter init");
+       // Log.d(TAG, "ArticleListAdapter init");
 
         rssItemDetailsViewModel =viewModel;
          this.context = context;
@@ -68,29 +63,27 @@ public class RssItemsPagedListAdapter extends PagedListAdapter<RssItem, RssItemV
 
     @NonNull
     @Override
-    public RssItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ArticleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
       //  Log.d(TAG, "in onCreateViewHolder");
 
-       // View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_item, parent, false);
-
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
 
-        ViewDataBinding binding = DataBindingUtil.inflate(layoutInflater, R.layout.recyclerview_item, parent, false);
+        ViewDataBinding binding = DataBindingUtil.inflate(layoutInflater, R.layout.item_article, parent, false);
 
-        return new RssItemViewHolder(binding,context);
+        return new ArticleViewHolder(binding,context);
 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RssItemViewHolder holder,
+    public void onBindViewHolder(@NonNull ArticleViewHolder holder,
                                  int position) {
 
        // Log.d(TAG, "in onBindViewHolder");
 
 
 
-        RssItem rssItem = getItem(position);
+        Article rssItem = getItem(position);
         if (rssItem != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

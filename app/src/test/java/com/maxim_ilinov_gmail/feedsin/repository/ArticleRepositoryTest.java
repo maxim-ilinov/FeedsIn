@@ -1,7 +1,7 @@
 package com.maxim_ilinov_gmail.feedsin.repository;
 
-import com.maxim_ilinov_gmail.feedsin.viewmodel.RssItemsListViewModel;
-import com.maxim_ilinov_gmail.feedsin.model.RssFeed;
+import com.maxim_ilinov_gmail.feedsin.model.FeedEntity;
+import com.maxim_ilinov_gmail.feedsin.viewmodel.ArticleListViewModel;
 
 import org.junit.Test;
 
@@ -10,21 +10,21 @@ import java.util.List;
 
 import androidx.lifecycle.ViewModelProviders;
 
-public class RssItemsRepositoryTest {
+public class ArticleRepositoryTest {
 
     @Test
     public void getItemsByFeeds() {
 
 
-        RssItemsListViewModel viewModel = ViewModelProviders.of(getActivity()).get(RssItemsListViewModel.class);
+        ArticleListViewModel viewModel = ViewModelProviders.of(getActivity()).get(ArticleListViewModel.class);
 
-        List<RssFeed> feedList = new ArrayList<RssFeed>(1) ;
+        List<FeedEntity> feedEntityList = new ArrayList<FeedEntity>(1) ;
 
-        RssFeed feed = new RssFeed("Bash.im","https://bash.im/", "Цитатник Рунета", "");
+        FeedEntity feedEntity = new FeedEntity("Bash.im","https://bash.im/", "Цитатник Рунета", "");
 
-        feedList.add(feed);
+        feedEntityList.add(feedEntity);
 
-        viewModel.getRssItemList(feedList);
+        viewModel.getRssItemList(feedEntityList);
 
 
     }

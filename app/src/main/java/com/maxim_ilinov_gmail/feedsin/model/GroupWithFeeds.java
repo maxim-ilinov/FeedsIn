@@ -4,13 +4,13 @@ import androidx.room.Relation;
 
 import java.util.List;
 
-public class FeedGroupWithFeeds {
+public class GroupWithFeeds {
 
     private int id;
     private String name;
 
     @Relation(parentColumn = "id", entityColumn = "feedGroupId")
-    private List<RssFeed> rssFeeds;
+    private List<FeedEntity> feedEntities;
 
     public int getId() {
         return id;
@@ -28,11 +28,11 @@ public class FeedGroupWithFeeds {
         this.name = name;
     }
 
-    public List<RssFeed> getRssFeeds() {
-        return rssFeeds;
+    public List<FeedEntity> getFeedEntities() {
+        return feedEntities;
     }
 
-    public void setRssFeeds(List<RssFeed> rssFeeds) {
-        this.rssFeeds = rssFeeds;
+    public void setFeedEntities(List<FeedEntity> feedEntities) {
+        this.feedEntities = feedEntities;
     }
 }

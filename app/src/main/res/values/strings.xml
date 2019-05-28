@@ -2,4 +2,8 @@
     <string name="app_name">FeedsIn</string>
     <string name="bt_read_more">Read more...</string>
     <string name="refresh_menu">Refresh</string>
-    </resources>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="organize_feeds">Organize feedEntities</string>
+</resources>

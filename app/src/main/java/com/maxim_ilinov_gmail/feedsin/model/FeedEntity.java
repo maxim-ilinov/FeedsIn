@@ -37,7 +37,7 @@ import androidx.room.PrimaryKey;
 })
 @Entity
 @Root(name = "channel", strict = false)
-public class RssFeed {
+public class FeedEntity {
 
 
     @PrimaryKey(autoGenerate = true)
@@ -66,36 +66,36 @@ public class RssFeed {
     @Element(name = "description", required = false)
     private String description;
 
-    @ElementList(entry = "item", inline = true, type = RssItem.class)
+    @ElementList(entry = "item", inline = true, type = Article.class)
     @Path("channel")
     @Ignore
-    private List<RssItem> rssItemList;
+    private List<Article> articleList;
 
     // empty constructor necessary for simplexml
-    public RssFeed() {
+    public FeedEntity() {
     }
 
     @Ignore
-    public RssFeed(String customTitle, String feedLink) {
+    public FeedEntity(String customTitle, String feedLink) {
         this.customTitle = customTitle;
         this.rssFeedLink = feedLink;
     }
 
     @Ignore
-    public RssFeed(String customTitle, String feedLink, long groupId) {
+    public FeedEntity(String customTitle, String feedLink, long groupId) {
         this.customTitle = customTitle;
         this.rssFeedLink = feedLink;
         this.setFeedGroupId(groupId);
     }
     @Ignore
-    public RssFeed(String feedLink) {
+    public FeedEntity(String feedLink) {
 
         this.rssFeedLink = feedLink;
 
 
     }
     @Ignore
-    public RssFeed(String title, String feedLink, String description, String imageUrl) {
+    public FeedEntity(String title, String feedLink, String description, String imageUrl) {
         this.title = title;
         this.rssFeedLink = feedLink;
         this.description = description;
@@ -134,12 +134,12 @@ public class RssFeed {
         this.links = links;
     }
 
-    public List<RssItem> getRssItemList() {
-        return rssItemList;
+    public List<Article> getArticleList() {
+        return articleList;
     }
 
-    public void setRssItemList(List<RssItem> rssItemList) {
-        this.rssItemList = rssItemList;
+    public void setArticleList(List<Article> articleList) {
+        this.articleList = articleList;
     }
 
     public String getRssFeedLink() {
@@ -210,25 +210,25 @@ public class RssFeed {
         public Link() {
         }
     }
-    public static List<RssFeed> populateData(long[] groupIds) {
+    public static List<FeedEntity> populateData(long[] groupIds) {
 
         Random rand = new Random();
 
-        List<RssFeed> rssFeeds = new ArrayList();
+        List<FeedEntity> feedEntities = new ArrayList<>();
 
        int groupsCount = groupIds.length;
 
       // long  i = groupIds[groupsCount];
 
 
-        rssFeeds.add(new RssFeed("ixbt", "http://www.ixbt.com/export/articles.rss", groupIds[rand.nextInt(groupsCount)]));
-        rssFeeds.add(new RssFeed("habr 1","https://habr.com/rss/hub/apps_design/all/?hl=ru&fl=ru",groupIds[rand.nextInt(groupsCount)]));
-        rssFeeds.add(new RssFeed("habr 2","https://habr.com/rss/all/all/?hl=ru&fl=ru",groupIds[rand.nextInt(groupsCount)]));
-        rssFeeds.add(new RssFeed("bash","https://bash.im/rss/",groupIds[rand.nextInt(groupsCount)]));
+        feedEntities.add(new FeedEntity("ixbt", "http://www.ixbt.com/export/articles.rss", groupIds[rand.nextInt(groupsCount)]));
+        feedEntities.add(new FeedEntity("habr 1","https://habr.com/rss/hub/apps_design/all/?hl=ru&fl=ru",groupIds[rand.nextInt(groupsCount)]));
+        feedEntities.add(new FeedEntity("habr 2","https://habr.com/rss/all/all/?hl=ru&fl=ru",groupIds[rand.nextInt(groupsCount)]));
+        feedEntities.add(new FeedEntity("bash","https://bash.im/rss/",groupIds[rand.nextInt(groupsCount)]));
 
-        rssFeeds.add(new RssFeed("yandex","https://news.yandex.ru/politics.rss",groupIds[rand.nextInt(groupsCount)]));
+        feedEntities.add(new FeedEntity("yandex","https://news.yandex.ru/politics.rss",groupIds[rand.nextInt(groupsCount)]));
 
-        return rssFeeds;
+        return feedEntities;
 
 
 

@@ -8,7 +8,6 @@ import org.simpleframework.xml.Root;
 
 import java.text.DateFormat;
 import java.util.Date;
-import java.util.Objects;
 
 import androidx.annotation.Nullable;
 import androidx.room.Entity;
@@ -21,7 +20,7 @@ import androidx.room.PrimaryKey;
 
 @Entity
 @Root(name = "item", strict = false)
-public class RssItem {
+public class Article {
 
     @Ignore
     private final static int DESC_LEN = 120;
@@ -80,21 +79,21 @@ public class RssItem {
         if (obj == null) {
             return false;
         }
-        if (!(obj instanceof RssItem)) {
+        if (!(obj instanceof Article)) {
             return false;
         }
 
-        RssItem other = (RssItem) obj;
+        Article other = (Article) obj;
 
         return this.title.equals(other.title) && this.description.equals(other.description);
 
     }
 
-    public RssItem() { //empty constructor is necessary for simplexml
+    public Article() { //empty constructor is necessary for simplexml
     }
 
     @Ignore
-    public RssItem(String pubDate,
+    public Article(String pubDate,
                    String title,
                    String link,
                    String description,

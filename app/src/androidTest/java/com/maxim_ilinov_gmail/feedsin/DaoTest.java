@@ -4,9 +4,9 @@ package com.maxim_ilinov_gmail.feedsin;
 import android.content.Context;
 
 
+import com.maxim_ilinov_gmail.feedsin.model.Article;
 import com.maxim_ilinov_gmail.feedsin.model.data.db.RssDao;
 import com.maxim_ilinov_gmail.feedsin.model.data.db.RssRoomDatabase;
-import com.maxim_ilinov_gmail.feedsin.model.RssItem;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -56,7 +56,7 @@ public class DaoTest {
 
     @Test
     public void rssDaoInsertAndGetItem() throws Exception {
-        RssItem rssItem = new RssItem(
+        Article rssItem = new Article(
                 new Date(), "title",
                 "http://link",
                 "desc",
@@ -65,8 +65,8 @@ public class DaoTest {
                     1);
 
         rssItemDao.insertRssItem(rssItem);
-        List<RssItem> rssItemList = LiveDataTestUtil.getValue(rssItemDao.selectAllItems());
-        Assert.assertEquals(rssItemList.get(0).getDescription(), rssItem.getDescription());
+        List<Article> articleList = LiveDataTestUtil.getValue(rssItemDao.selectAllItems());
+        Assert.assertEquals(articleList.get(0).getDescription(), rssItem.getDescription());
     }
 
 //

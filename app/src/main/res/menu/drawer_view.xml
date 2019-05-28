@@ -5,14 +5,20 @@
 
         <item
             android:id="@+id/drawer_organize_feeds"
-            android:icon="@drawable/ic_add_circle_black_24dp"
-            android:title="Organize feeds">
+            android:icon="@drawable/ic_assignment_black_24dp"
+            android:title="@string/organize_feeds">
 
         </item>
         <item
             android:id="@+id/drawer_settings"
             android:icon="@drawable/ic_settings_black_24dp"
             android:title="Settings">
+
+        </item>
+        <item
+            android:id="@+id/drawer_about"
+            android:icon="@drawable/ic_info_black_24dp"
+            android:title="About">
 
         </item>
 

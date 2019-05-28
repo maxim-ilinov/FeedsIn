@@ -1,10 +1,9 @@
 package com.maxim_ilinov_gmail.feedsin.view;
 
 import com.maxim_ilinov_gmail.feedsin.R;
-import com.maxim_ilinov_gmail.feedsin.databinding.FragmentRssItemDetailsBinding;
-import com.maxim_ilinov_gmail.feedsin.model.FeedGroupWithFeeds;
-import com.maxim_ilinov_gmail.feedsin.model.RssFeed;
-import com.maxim_ilinov_gmail.feedsin.viewmodel.RssItemDetailsViewModel;
+
+import com.maxim_ilinov_gmail.feedsin.databinding.FragmentArticleDetailsBinding;
+import com.maxim_ilinov_gmail.feedsin.viewmodel.ArticleDetailsViewModel;
 
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -16,21 +15,33 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import static androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_LOCKED_CLOSED;
 
-public class RssItemDetailsFragment extends Fragment {
 
-   private RssItemDetailsViewModel viewModel;
+public class ArticleDetailsFragment extends Fragment {
+
+   private ArticleDetailsViewModel viewModel;
+
+    private DrawerLayout mDrawer;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        setupToolbar();
 
+
+        //  ((AppCompatActivity) getActivity()).getDrawerToggleDelegate()
+
+    }
+
+    private void setupToolbar() {
+        mDrawer = (DrawerLayout)getActivity().findViewById(R.id.drawer_layout);
+        mDrawer.setDrawerLockMode(LOCK_MODE_LOCKED_CLOSED);
 
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
 
@@ -38,15 +49,8 @@ public class RssItemDetailsFragment extends Fragment {
         String subtitle="some subtitle";
 
 
-
         actionBar.setTitle(title);
         actionBar.setSubtitle(subtitle);
-
-
-
-
-      //  ((AppCompatActivity) getActivity()).getDrawerToggleDelegate()
-
     }
 
     @Override
@@ -74,9 +78,9 @@ public class RssItemDetailsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-         viewModel = ViewModelProviders.of(getActivity()).get(RssItemDetailsViewModel.class);
+         viewModel = ViewModelProviders.of(getActivity()).get(ArticleDetailsViewModel.class);
 
-        FragmentRssItemDetailsBinding binding = DataBindingUtil.inflate (inflater, R.layout.fragment_rss_item_details, container,false);
+        FragmentArticleDetailsBinding binding = DataBindingUtil.inflate (inflater, R.layout.fragment_article_details, container,false);
 
         binding.setViewmodel(viewModel);
 

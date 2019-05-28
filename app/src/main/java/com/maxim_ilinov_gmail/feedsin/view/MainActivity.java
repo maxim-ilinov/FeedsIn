@@ -8,28 +8,23 @@ import android.widget.TextView;
 
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.NotificationCompatSideChannelService;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
 import com.maxim_ilinov_gmail.feedsin.R;
-import com.maxim_ilinov_gmail.feedsin.model.FeedGroupForDrawerMenu;
-import com.maxim_ilinov_gmail.feedsin.model.RssFeed;
+import com.maxim_ilinov_gmail.feedsin.model.GroupForDrawerMenu;
+import com.maxim_ilinov_gmail.feedsin.model.FeedEntity;
 import com.maxim_ilinov_gmail.feedsin.viewmodel.MainActivityViewModel;
 
 import java.util.List;
-
-import static androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_LOCKED_CLOSED;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -39,10 +34,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Toolbar toolbar;
     private NavigationView nvDrawer;
     private Menu drawerMenu;
-    private List<FeedGroupForDrawerMenu> localFeedGroups;
+    private List<GroupForDrawerMenu> localFeedGroups;
 
-    //private Menu drawerFeedsMenu;
-    private List<RssFeed> localFeeds;
+    private List<FeedEntity> localFeedEntities;
 
     private ActionBarDrawerToggle drawerToggle;
     private MainActivityViewModel viewModel;
@@ -50,8 +44,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-
         super.onCreate(savedInstanceState);
+
 
         setContentView(R.layout.activity_main);
 
@@ -59,12 +53,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         nvDrawer = findViewById(R.id.nav_view);
 
+
+
+
         nvDrawer.setNavigationItemSelectedListener(this);
 
         drawerMenu = nvDrawer.getMenu();
-
-        // drawerFeedsMenu = drawerMenu.addSubMenu("Feeds");
-
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -73,65 +67,42 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mDrawer);
-
+/*
 
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
                                                           @Override
                                                           public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
-                                                              toolbar.setTitle("navController title");
-                                                              toolbar.setSubtitle("navController subtitle");
+                                                              //toolbar.setTitle("navController title");
+                                                              //toolbar.setSubtitle("navController subtitle");
 
                                                               if(destination.getId() == R.id.rssItemDetailsFragment ||
                                                                       destination.getId() == R.id.organizeFeedsFragment ||
                                                                       destination.getId() == R.id.settingsFragment ) {
 
                                                                 //  mDrawer.setEnabled(false);
-                                                                  mDrawer.setDrawerLockMode(LOCK_MODE_LOCKED_CLOSED);
+                                                                 // mDrawer.setDrawerLockMode(LOCK_MODE_LOCKED_CLOSED);
                                                               }
                                                               else
                                                               {
                                                                 //  mDrawer.setEnabled(true);
-                                                                 mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                                                                // mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                                                               }
 
 
                                                           }
                                                       }
-        );
-
-
-        //NavigationUI.setupWithNavController(toolbar, navController);//setupWithNavController(this, navController);
-
-        //  actionbar.setDisplayHomeAsUpEnabled(true);
-
-        // actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
-
-        //  NavigationUI.setup
+        );*/
 
         viewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
-
-
-        //  viewModel.getGroupIdByName("userGroup1");
-
-        // TODO remove after
-        // addTestMenuItems();
-
-
-        //viewModel.addGroup("Group 2");
 
         viewModel.getMenuGroups().observe(this, feedGroupForDrawerMenus -> {
 
             localFeedGroups = feedGroupForDrawerMenus;
-            // rebuild menus
+
             buildMenu();
         });
 
-       /* viewModel.getFeeds().observe(this, new Observer<List<RssFeed>>() {
-            @Override
-            public void onChanged(List<RssFeed> rssFeeds) {
-                localFeeds = rssFeeds;
-            }
-        });*/
+
 
 
     }
@@ -149,13 +120,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
            //     mDrawer.openDrawer(GravityCompat.START);
 
                 return true;
-
         }
-
-
-
         return super.onOptionsItemSelected(item);
-
     }*/
     @Override
     public boolean onSupportNavigateUp() {
@@ -187,10 +153,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         setMenuCounter(mi.getItemId(), 155);
 
-        for (FeedGroupForDrawerMenu rfg : localFeedGroups) {
+        for (GroupForDrawerMenu rfg : localFeedGroups) {
             Log.d(TAG, "added rssFeedGroup name: " + rfg.getName());
 
-            //  Log.d(TAG, "rssFeedGroup.FeedListSize: " + rfg.getRssFeeds().size());
+            //  Log.d(TAG, "rssFeedGroup.FeedListSize: " + rfg.getFeedEntities().size());
 
             feedsMenu.add(R.id.drawer_menu_main, rfg.getId(), 0, rfg.getName()).setIcon(R.drawable.ic_description_black_24dp);
 
@@ -227,7 +193,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Log.d(TAG, "Selected MenuItem Name: " + menuItem.getTitle());
         Log.d(TAG, "Selected MenuItem ID: " + menuItem.getItemId());
 
-        // List <RssFeed> selectedFeeds
+        // List <FeedEntity> selectedFeeds
         int itemId = menuItem.getItemId();
 
 
@@ -236,7 +202,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         {
             case 99:
                 Log.d(TAG, "Checked all");
-                for (FeedGroupForDrawerMenu fg : localFeedGroups) {
+                for (GroupForDrawerMenu fg : localFeedGroups) {
 
 
                     Log.d(TAG, "Set feed group as checked with id : " + fg.getId());
@@ -254,9 +220,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 break;
 
+            case R.id.drawer_about:
+                navController.navigate(R.id.action_rssItemsListFragment_to_aboutFragment);
+
+                break;
+
+
+
 
             default:
-                for (FeedGroupForDrawerMenu fg : localFeedGroups) {
+                for (GroupForDrawerMenu fg : localFeedGroups) {
                     viewModel.unsetFeedGroupChecked(fg.getId());
                 }
 

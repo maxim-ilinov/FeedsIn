@@ -4,7 +4,7 @@ import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 
-import com.maxim_ilinov_gmail.feedsin.model.FeedGroupWithFeeds;
+import com.maxim_ilinov_gmail.feedsin.model.GroupWithFeeds;
 import com.maxim_ilinov_gmail.feedsin.model.data.db.RssDao;
 import com.maxim_ilinov_gmail.feedsin.model.data.db.RssRoomDatabase;
 
@@ -31,7 +31,7 @@ public class MenuRepository {
 
     }
 
-    public LiveData<List<FeedGroupWithFeeds>> getGroupsWithAllFeeds() {
+    public LiveData<List<GroupWithFeeds>> getGroupsWithAllFeeds() {
 
 
         return rssDao.selectGroupsWithAllFeeds();

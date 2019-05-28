@@ -5,7 +5,7 @@
 
     <data>
         <variable name = "viewmodel"
-            type = "com.maxim_ilinov_gmail.feedsin.viewmodel.RssItemDetailsViewModel"/>
+            type = "com.maxim_ilinov_gmail.feedsin.viewmodel.ArticleDetailsViewModel"/>
 
     </data>
 

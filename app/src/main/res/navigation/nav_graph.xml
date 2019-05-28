@@ -8,41 +8,80 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/rssItemsListFragment">
     <fragment
-        android:id="@+id/rssItemsListFragment"
-        android:name="com.maxim_ilinov_gmail.feedsin.view.RssItemsListFragment"
-
-
-
-        tools:layout="@layout/fragment_rss_item_list">
-
-
-
-        <action
-            android:id="@+id/action_to_details"
-            app:destination="@+id/rssItemDetailsFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
-        <action
-            android:id="@+id/action_rssItemsListFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
-        <action
-            android:id="@+id/action_rssItemsListFragment_to_organizeFeedsFragment"
-            app:destination="@id/organizeFeedsFragment" />
-
-    </fragment>
-    <fragment
         android:id="@+id/rssItemDetailsFragment"
-        android:name="com.maxim_ilinov_gmail.feedsin.view.RssItemDetailsFragment"
+        android:name="com.maxim_ilinov_gmail.feedsin.view.ArticleDetailsFragment"
 
-        tools:layout="@layout/fragment_rss_item_details" />
-    <fragment
-        android:id="@+id/organizeFeedsFragment"
-        android:name="com.maxim_ilinov_gmail.feedsin.view.OrganizeFeedsFragment"
-        tools:layout="@layout/organize_feeds_fragment" />
+        tools:layout="@layout/fragment_article_details" />
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.maxim_ilinov_gmail.feedsin.view.SettingsFragment"
         tools:layout="@layout/settings_fragment" />
+    <fragment
+        android:id="@+id/feedgroupPropsFragment"
+        android:name="com.maxim_ilinov_gmail.feedsin.view.GroupPropsFragment"
+        tools:layout="@layout/fragment_group_props" />
+
+        <fragment
+            android:id="@+id/rssItemsListFragment"
+            android:name="com.maxim_ilinov_gmail.feedsin.view.ArticleListFragment"
+
+
+            tools:layout="@layout/fragment_article_list">
+
+
+            <action
+                android:id="@+id/action_to_details"
+                app:destination="@+id/rssItemDetailsFragment"
+                app:enterAnim="@anim/slide_in_right"
+                app:exitAnim="@anim/slide_out_left"
+                app:popEnterAnim="@anim/slide_in_left"
+                app:popExitAnim="@anim/slide_out_right" />
+            <action
+                android:id="@+id/action_rssItemsListFragment_to_settingsFragment"
+                app:destination="@id/settingsFragment" />
+            <action
+                android:id="@+id/action_rssItemsListFragment_to_organizeFeedsFragment"
+                app:destination="@id/organizeFeedsFragment" />
+            <action
+                android:id="@+id/action_rssItemsListFragment_to_aboutFragment"
+                app:destination="@id/aboutFragment" />
+
+
+        </fragment>
+
+
+
+
+                <fragment
+                    android:id="@+id/organizeFeedsFragment"
+                    android:name="com.maxim_ilinov_gmail.feedsin.view.FeedsAndGroupsList.FeedAndGroupListFragment"
+                    tools:layout="@layout/fragment_feeds_and_groups_list">
+                    <action
+                        android:id="@+id/action_organizeFeedsFragment_to_feedgroupPropsFragment"
+                        app:destination="@id/feedgroupPropsFragment" />
+                    <action
+                        android:id="@+id/action_organizeFeedsFragment_to_feedPropsFragment"
+                        app:destination="@id/feedPropsFragment" />
+                    <action
+                        android:id="@+id/action_organizeFeedsFragment_to_seacrhContentFragment"
+                        app:destination="@id/seacrhContentFragment" />
+                </fragment>
+    <fragment
+        android:id="@+id/feedPropsFragment"
+        android:name="com.maxim_ilinov_gmail.feedsin.view.FeedPropsFragment"
+        tools:layout="@layout/fragment_feed_props" />
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.maxim_ilinov_gmail.feedsin.view.AboutFragment"
+        tools:layout="@layout/fragment_about" />
+    <fragment
+        android:id="@+id/seacrhContentFragment"
+        android:name="com.maxim_ilinov_gmail.feedsin.view.SearchContentFragment"
+        tools:layout="@layout/fragment_seacrh_content">
+        <action
+            android:id="@+id/action_seacrhContentFragment_to_feedPropsFragment"
+            app:destination="@id/feedPropsFragment" />
+    </fragment>
+
+
 </navigation>
