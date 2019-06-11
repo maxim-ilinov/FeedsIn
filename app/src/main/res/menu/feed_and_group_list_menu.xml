@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/search_for_content"
+
+        android:icon="@drawable/ic_search_black_24dp"
+        android:title="@string/search_for_content"
+
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/create_feed"
+
+        android:icon="@drawable/ic_note_add_black_24dp"
+        android:title="@string/create_feed"
+
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/create_group"
+
+        android:icon="@drawable/ic_create_new_folder_black_24dp"
+        android:title="@string/create_group"
+
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/import_opml"
+
+        android:icon="@drawable/ic_file_download_black_24dp"
+        android:title="@string/import_opml"
+
+      app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/delete_item"
+
+        android:icon="@drawable/ic_delete_black_24dp"
+        android:title="@string/delete_item"
+
+        app:showAsAction="ifRoom"/>
+
+
+
+
+</menu>

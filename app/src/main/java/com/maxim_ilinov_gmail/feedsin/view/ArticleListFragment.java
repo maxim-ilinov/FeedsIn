@@ -163,7 +163,7 @@ public class ArticleListFragment extends Fragment {
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
 
 
-        inflater.inflate(R.menu.main_menu, menu);
+        inflater.inflate(R.menu.article_list_menu, menu);
 
 
         super.onCreateOptionsMenu(menu, inflater);

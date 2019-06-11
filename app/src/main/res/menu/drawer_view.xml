@@ -4,21 +4,21 @@
     <group android:id="@+id/drawer_menu_main">
 
         <item
-            android:id="@+id/drawer_organize_feeds"
+            android:id="@+id/drawer_manage_content"
             android:icon="@drawable/ic_assignment_black_24dp"
-            android:title="@string/organize_feeds">
+            android:title="@string/manage_content">
 
         </item>
         <item
             android:id="@+id/drawer_settings"
             android:icon="@drawable/ic_settings_black_24dp"
-            android:title="Settings">
+            android:title="@string/settings">
 
         </item>
         <item
             android:id="@+id/drawer_about"
             android:icon="@drawable/ic_info_black_24dp"
-            android:title="About">
+            android:title="@string/about">
 
         </item>
 

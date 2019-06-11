@@ -10,17 +10,17 @@ import com.maxim_ilinov_gmail.feedsin.model.GroupForList;
 import com.maxim_ilinov_gmail.feedsin.model.RvItem;
 import com.maxim_ilinov_gmail.feedsin.model.repository.FeedsAndGroupsRepository;
 
-public class FeedsAndGroupsListViewModel extends AndroidViewModel {
+public class FeedAndGroupListViewModel extends AndroidViewModel {
 
 
-    private static final String TAG = "FeedsAndGroupsListViewModel";
+    private static final String TAG = "FeedAndGroupListViewModel";
 
    // private final LiveData<PagedList<GroupForList>> groups;
 
     private FeedsAndGroupsRepository feedsAndGroupsRepository;
 
 
-    public FeedsAndGroupsListViewModel(Application application) {
+    public FeedAndGroupListViewModel(Application application) {
         super(application);
 
         feedsAndGroupsRepository = new FeedsAndGroupsRepository(application);

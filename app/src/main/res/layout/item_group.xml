@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
 
 
@@ -15,34 +16,50 @@
             type="com.maxim_ilinov_gmail.feedsin.model.GroupForList"/>
     </data>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
 
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    android:gravity="center"
-    android:orientation="vertical">
-
-
-    <TextView
-        android:id="@+id/tv_name_with_id"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_weight="1"
-        android:text="@{item.getName() + '(' + Integer.toString(item.getId())+ ')'}"
-        android:textColor="?attr/textColorAlertDialogListItem"
-        android:textStyle="bold"
-        tools:text="Group Id" />
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:gravity="center"
+        android:baselineAligned="false">
 
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_name_with_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:text="@{item.getName() + ' ' + '#' + Integer.toString(item.getId())}"
+                android:textColor="?attr/textColorAlertDialogListItem"
+                android:textStyle="bold"
+                tools:text="Group Name" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <CheckBox
+                android:id="@+id/cbGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
 
 
-
-
-</LinearLayout>
+    </LinearLayout>
 </layout>
 
 <!--

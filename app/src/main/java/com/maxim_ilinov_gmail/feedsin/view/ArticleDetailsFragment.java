@@ -3,6 +3,7 @@ package com.maxim_ilinov_gmail.feedsin.view;
 import com.maxim_ilinov_gmail.feedsin.R;
 
 import com.maxim_ilinov_gmail.feedsin.databinding.FragmentArticleDetailsBinding;
+import com.maxim_ilinov_gmail.feedsin.model.Article;
 import com.maxim_ilinov_gmail.feedsin.viewmodel.ArticleDetailsViewModel;
 
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.view.LayoutInflater;
@@ -45,12 +47,23 @@ public class ArticleDetailsFragment extends Fragment {
 
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
 
-        String title="Detailed info";
+        /*String title="Detailed info";
         String subtitle="some subtitle";
 
-
         actionBar.setTitle(title);
-        actionBar.setSubtitle(subtitle);
+        actionBar.setSubtitle(subtitle);*/
+
+        viewModel.getSelected().observe(this, new Observer<Article>() {
+            @Override
+            public void onChanged(Article article) {
+
+
+                actionBar.setTitle(article.getTitle());
+                actionBar.setSubtitle(article.getPubDate());
+            }
+        });
+
+
     }
 
     @Override

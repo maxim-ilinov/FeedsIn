@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             localFeedGroups = feedGroupForDrawerMenus;
 
-            buildMenu();
+            buildDrawerMenu();
         });
 
 
@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    private void buildMenu() {
+    private void buildDrawerMenu() {
 
         //TODO remove hardcoded text
         drawerMenu.clear();
@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         MenuItem mi = feedsMenu.add(R.id.drawer_menu_main, 99, 0, "All");
-        mi.setIcon(R.drawable.ic_view_module_black_24dp);
+        mi.setIcon(R.drawable.ic_show_all_black_24dp);
 
         mi.setActionView(R.layout.menu_counter);
 
@@ -215,7 +215,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 navController.navigate(R.id.action_rssItemsListFragment_to_settingsFragment);
                 break;
 
-            case R.id.drawer_organize_feeds:
+            case R.id.drawer_manage_content:
                 navController.navigate(R.id.action_rssItemsListFragment_to_organizeFeedsFragment);
 
                 break;
@@ -250,7 +250,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
    /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu, menu);
+        inflater.inflate(R.menu.article_list_menu, menu);
         return true;
     }*/
 

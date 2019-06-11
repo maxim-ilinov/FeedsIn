@@ -1,7 +1,12 @@
 package com.maxim_ilinov_gmail.feedsin.view.FeedsAndGroupsList;
 
+import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -12,18 +17,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.maxim_ilinov_gmail.feedsin.R;
-import com.maxim_ilinov_gmail.feedsin.viewmodel.FeedsAndGroupsListViewModel;
+import com.maxim_ilinov_gmail.feedsin.viewmodel.FeedAndGroupListViewModel;
 
+import static android.view.ViewGroup.getChildMeasureSpec;
 import static androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_LOCKED_CLOSED;
 
 public class FeedAndGroupListFragment extends Fragment {
 
-    private FeedsAndGroupsListViewModel viewModel;
+
+
+    private static final String TAG = "FeedAndGroupListFrag";
+    private FeedAndGroupListViewModel viewModel;
     private DrawerLayout mDrawer;
 
     private RecyclerView recyclerView;
@@ -37,14 +48,23 @@ public class FeedAndGroupListFragment extends Fragment {
     }
 
     @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        recyclerView = view.findViewById(R.id.rv_groupsfeeds_items);
+        setupToolbar();
+        setHasOptionsMenu(true);
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+//        getActivity().invalidateOptionsMenu();
 
 
 
-
-        viewModel = ViewModelProviders.of(this).get(FeedsAndGroupsListViewModel.class);
+        viewModel = ViewModelProviders.of(this).get(FeedAndGroupListViewModel.class);
 
 
         adapter = new FeedAndGroupListAdapter(getActivity(), viewModel);
@@ -75,12 +95,68 @@ public class FeedAndGroupListFragment extends Fragment {
 
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
 
-        recyclerView = view.findViewById(R.id.rv_groupsfeeds_items);
-        setupToolbar();
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+
+
+
+        inflater.inflate(R.menu.feed_and_group_list_menu, menu);
+
+        super.onCreateOptionsMenu(menu, inflater);
+
+       // menu.clear();
+
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        Log.d(TAG, item.toString());
+
+        NavController navController = Navigation.findNavController((Activity)getActivity(), R.id.nav_host_fragment);
+
+        switch (item.getItemId()) {
+
+
+            case R.id.search_for_content:
+
+
+                navController.navigate(R.id.action_organizeFeedsFragment_to_seacrhContentFragment);
+
+                return true;
+
+
+            case R.id.create_feed:
+
+
+                navController.navigate(R.id.action_organizeFeedsFragment_to_feedPropsFragment);
+
+                return true;
+
+            case R.id.create_group:
+
+
+                navController.navigate(R.id.action_organizeFeedsFragment_to_feedgroupPropsFragment);
+
+                return true;
+
+            case R.id.import_opml:
+
+
+                return true;
+
+
+
+
+            default:
+                return super.onOptionsItemSelected(item);
+
+
+        }
+
 
     }
 
@@ -90,8 +166,11 @@ public class FeedAndGroupListFragment extends Fragment {
 
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
 
-        String title="FeedAndGroupListFragment";
-        String subtitle="subtitle in FeedAndGroupListFragment";
+        //todo replace hardcoded
+        String title="Manage content";
+        String subtitle="add, remove, edit";
+
+
 
 
         actionBar.setTitle(title);
