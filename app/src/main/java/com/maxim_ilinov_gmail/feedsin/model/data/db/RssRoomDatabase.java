@@ -3,13 +3,6 @@ package com.maxim_ilinov_gmail.feedsin.model.data.db;
 
 import android.content.Context;
 
-
-import com.maxim_ilinov_gmail.feedsin.model.Article;
-import com.maxim_ilinov_gmail.feedsin.model.FeedEntity;
-import com.maxim_ilinov_gmail.feedsin.model.Group;
-
-import java.util.concurrent.Executors;
-
 import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
@@ -17,18 +10,18 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.maxim_ilinov_gmail.feedsin.model.Article;
+import com.maxim_ilinov_gmail.feedsin.model.FeedEntity;
+import com.maxim_ilinov_gmail.feedsin.model.Group;
+
+import java.util.concurrent.Executors;
+
 
 @Database(entities = {
         FeedEntity.class,
         Article.class,
         Group.class
-        /*Country.class,
-        CountryCurrencyJoin.class,
-        CountryLanguageJoin.class,
-        CountryTimezoneJoin.class,
-        Currency.class,
-        Language.class,
-        Timezone.class,*/
+
         }, version = 1, exportSchema = false)
 @TypeConverters({DateConverter.class})
 public abstract class RssRoomDatabase extends RoomDatabase {
@@ -60,8 +53,8 @@ public abstract class RssRoomDatabase extends RoomDatabase {
                                     long[] groupIds;
                                     int[] feedIds;
 
-                                    groupIds= getInstance(context).getRssDao().insertFeedGroups(Group.populateData());
-                                    getInstance(context).getRssDao().insertRssFeeds(FeedEntity.populateData(groupIds));
+                                    groupIds= getInstance(context).getGroupDao().insertFeedGroups(Group.populateData());
+                                    getInstance(context).getFeedDao().insertRssFeeds(FeedEntity.populateData(groupIds));
 
                                     //getInstance(context).getRssDao().updateFeed();
 
@@ -76,18 +69,9 @@ public abstract class RssRoomDatabase extends RoomDatabase {
 
 
 
-    public abstract RssDao getRssDao();
-/*
-    public abstract CountryCurrencyJoinDao getCountryCurrencyJoinDao();
+    public abstract ArticleDao getArticleDao();
+    public abstract FeedDao getFeedDao();
+    public abstract GroupDao getGroupDao();
 
-    public abstract CountryLanguageJoinDao getCountryLanguageJoinDao();
-
-    public abstract CountryTimezoneJoinDao getCountryTimezoneJoinDao();
-
-    public abstract CurrencyDao getCurrencyDao();
-
-    public abstract LanguageDao getLanguageDao();
-
-    public abstract TimezoneDao getTimezoneDao();*/
 
 }

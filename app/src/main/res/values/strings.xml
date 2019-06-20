@@ -18,4 +18,5 @@
     <string name="feed_url">URL:</string>
     <string name="search_for_content">Search for content</string>
     <string name="save_feed">Save feed</string>
+    <string name="feed_group_title">Group:</string>
 </resources>

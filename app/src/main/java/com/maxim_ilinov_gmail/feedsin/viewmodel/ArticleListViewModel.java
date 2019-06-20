@@ -2,17 +2,16 @@ package com.maxim_ilinov_gmail.feedsin.viewmodel;
 
 import android.app.Application;
 
-import com.maxim_ilinov_gmail.feedsin.model.Article;
-import com.maxim_ilinov_gmail.feedsin.model.FeedEntity;
-import com.maxim_ilinov_gmail.feedsin.model.GroupWithFeeds;
-import com.maxim_ilinov_gmail.feedsin.model.repository.ArticleRepository;
-
-import java.util.List;
-
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.paging.PagedList;
+
+import com.maxim_ilinov_gmail.feedsin.model.Article;
+import com.maxim_ilinov_gmail.feedsin.model.GroupWithFeeds;
+import com.maxim_ilinov_gmail.feedsin.model.repository.ArticleRepository;
+import com.maxim_ilinov_gmail.feedsin.model.repository.FeedAndGroupRepository;
+
+import java.util.List;
 
 
 public class ArticleListViewModel extends AndroidViewModel {
@@ -21,7 +20,9 @@ public class ArticleListViewModel extends AndroidViewModel {
     private static final String TAG = "ArticleListViewModel";
 
 
-    private ArticleRepository rssItemsRepository;
+    private ArticleRepository articleRepository;
+
+    private FeedAndGroupRepository feedAndGroupRepository;
 
     //  private final LiveData<PagedList<Article>> currentRssItemsListPl;
 
@@ -31,50 +32,37 @@ public class ArticleListViewModel extends AndroidViewModel {
     private MutableLiveData<Article> selectedRssItem;*/
 
 
-
-    private LiveData<List<Article>> currentRssItemsList = new MutableLiveData<>();
+    // private LiveData<List<Article>> currentArticleList = new MutableLiveData<>();
 
     public ArticleListViewModel(Application application) {
         super(application);
 
-        rssItemsRepository = new ArticleRepository(application);
+        articleRepository = ArticleRepository.getInstance(application);
 
+        feedAndGroupRepository = FeedAndGroupRepository.getInstance(application);
+        // currentArticleList = articleRepository.getItemsForSelectedFeeds();
 
-
-       // currentRssItemsList = rssItemsRepository.getItemsForSelectedFeeds();
-
-        //currentRssItemsListPl = rssItemsRepository.getItemsForSelectedFeedsPl();
+        //currentRssItemsListPl = articleRepository.getItemsForSelectedFeedsPl();
 
 
     }
 
-    public LiveData<List<Article>> getCurrentRssItemsList() {
-
-        return currentRssItemsList;
-
-    }
 
 
     public LiveData<PagedList<Article>> getCurrentRssItemsListPl() {
 
-        return rssItemsRepository.getItemsForSelectedFeedsPl();
+        return articleRepository.getItemsForSelectedFeedsPl();
 
     }
 
 
     public void updateData() {
-        rssItemsRepository.loadRssData();
+        articleRepository.loadRssData();
     }
-
-
-    public LiveData<List<Article>> getRssItemList(List<FeedEntity> feedEntities) {
-        return currentRssItemsList;
-    }
-
 
     public LiveData<List<GroupWithFeeds>> getCheckedFeedGroups() {
 
-        return rssItemsRepository.getCheckedFeedGroups();
+        return feedAndGroupRepository.getCheckedFeedGroups();
 
     }
 }

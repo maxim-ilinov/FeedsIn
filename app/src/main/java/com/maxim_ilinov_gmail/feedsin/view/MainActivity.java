@@ -29,16 +29,23 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "MainActivity";
+
     private NavController navController;
+
     private DrawerLayout mDrawer;
+
     private Toolbar toolbar;
+
     private NavigationView nvDrawer;
+
     private Menu drawerMenu;
+
     private List<GroupForDrawerMenu> localFeedGroups;
 
     private List<FeedEntity> localFeedEntities;
 
     private ActionBarDrawerToggle drawerToggle;
+
     private MainActivityViewModel viewModel;
 
     @Override

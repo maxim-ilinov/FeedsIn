@@ -9,7 +9,8 @@ import androidx.lifecycle.LiveData;
 import com.maxim_ilinov_gmail.feedsin.model.FeedEntity;
 import com.maxim_ilinov_gmail.feedsin.model.Group;
 import com.maxim_ilinov_gmail.feedsin.model.GroupForDrawerMenu;
-import com.maxim_ilinov_gmail.feedsin.model.repository.FeedsAndGroupsRepository;
+import com.maxim_ilinov_gmail.feedsin.model.repository.ArticleRepository;
+import com.maxim_ilinov_gmail.feedsin.model.repository.FeedAndGroupRepository;
 
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class MainActivityViewModel extends AndroidViewModel {
 
     //   private MenuRepository menuRepository;
 
-    private FeedsAndGroupsRepository feedsAndGroupsRepository;
+    private FeedAndGroupRepository feedAndGroupRepository;
 
     // private LiveData<List<GroupWithFeeds>> menuGroups;
     //  private LiveData<List<FeedEntity>> rssFeeds;
@@ -31,7 +32,7 @@ public class MainActivityViewModel extends AndroidViewModel {
         super(application);
 
 
-        feedsAndGroupsRepository = new FeedsAndGroupsRepository(application);
+        feedAndGroupRepository = FeedAndGroupRepository.getInstance(application);
 
         //  menuRepository = new MenuRepository(application);
 
@@ -39,52 +40,52 @@ public class MainActivityViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<GroupForDrawerMenu>> getMenuGroups() {
-        return feedsAndGroupsRepository.selectGroupsForDrawerMenu();
+        return feedAndGroupRepository.selectGroupsForDrawerMenu();
     }
 
     public LiveData<List<FeedEntity>> getFeeds() {
-        return feedsAndGroupsRepository.getRssFeeds();
+        return feedAndGroupRepository.getRssFeeds();
     }
 
     public void addGroup(String groupName) {
-        feedsAndGroupsRepository.addGroup(groupName);
+        feedAndGroupRepository.addGroup(groupName);
     }
 
     public void addFeed(String feedName, String feedUrl) {
 
-        feedsAndGroupsRepository.addFeed(feedName, feedUrl);
+        feedAndGroupRepository.addFeed(feedName, feedUrl);
     }
 
 
     public void addFeedToGroup(FeedEntity rssFeedEntity, int groupId) {
-        feedsAndGroupsRepository.addFeedToGroup(rssFeedEntity, groupId);
+        feedAndGroupRepository.addFeedToGroup(rssFeedEntity, groupId);
     }
 
     public void selectFeeds(List<FeedEntity> feedEntities) {
 
 
-        feedsAndGroupsRepository.setFeedsSelected(feedEntities);
+        feedAndGroupRepository.setFeedsSelected(feedEntities);
     }
 
     public void setFeedGroupChecked(long feedGroupId) {
 
-        feedsAndGroupsRepository.setFeedGroupChecked(feedGroupId);
+        feedAndGroupRepository.setFeedGroupChecked(feedGroupId);
     }
 
     public void unsetFeedGroupChecked(long feedGroupId) {
 
-        feedsAndGroupsRepository.unsetFeedGroupChecked(feedGroupId);
+        feedAndGroupRepository.unsetFeedGroupChecked(feedGroupId);
 
     }
 
     public void setFeedsToBeShownForGroup(Group fg) {
 
-        feedsAndGroupsRepository.setFeedsToBeShownForGroup(fg);
+        feedAndGroupRepository.setFeedsToBeShownForGroup(fg);
     }
 
     public void unsetFeedsToBeShownForGroup(Group fg) {
 
-        feedsAndGroupsRepository.unsetFeedsToBeShownForGroup(fg);
+        feedAndGroupRepository.unsetFeedsToBeShownForGroup(fg);
     }
 
 

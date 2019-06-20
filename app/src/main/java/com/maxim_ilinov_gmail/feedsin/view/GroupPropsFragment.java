@@ -51,8 +51,8 @@ public class GroupPropsFragment extends Fragment {
 
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
 
-        String title="About";
-        String subtitle="some subtitle in about frag";
+        String title="Group props";
+        String subtitle="create or edit";
 
 
         actionBar.setTitle(title);

@@ -53,8 +53,8 @@ public class FeedPropsFragment extends Fragment {
 
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
 
-        String title="FeedPropsFragment";
-        String subtitle="subtitle in FeedPropsFragment";
+        String title="Feed props";
+        String subtitle="enter new or edit";
 
         actionBar.setHomeAsUpIndicator(R.drawable.ic_close_black_24dp);
 
