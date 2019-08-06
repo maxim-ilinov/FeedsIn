@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
-            name="item"
+            name="itemArticle"
             type="com.maxim_ilinov_gmail.feedsin.model.Article"/>
     </data>
 
@@ -22,7 +22,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_weight="1"
-        android:text="@{item.getTitle()}"
+        android:text="@{itemArticle.getTitle()}"
         android:textColor="?attr/textColorAlertDialogListItem"
         android:textStyle="bold"
         tools:text="Mars attacks!!!" />
@@ -40,7 +40,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_weight="1"
-            android:text="@{item.getFormattedDate()}"
+            android:text="@{itemArticle.getFormattedDate()}"
             android:textColor="?attr/editTextColor"
             tools:text="21.12.2018 12:00" />
 
@@ -61,7 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:layout_weight="1"
-        android:text="@{item.getShortDesc()}"
+        android:text="@{itemArticle.getShortDesc()}"
         android:textColor="?attr/editTextColor"
         tools:text="Today martians began....bla-bla-bla...bla-bla-bla...bla-bla-bla...bla-bla-bla...bla-bla-bla...bla-bla-bla...bla-bla-bla...bla-bla-bla...bla-bla-bla...bla-bla-bla" />
 

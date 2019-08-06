@@ -1,5 +1,11 @@
 package com.maxim_ilinov_gmail.feedsin.model;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
@@ -24,20 +30,12 @@ link	The URL to the HTML website corresponding to the channel.	http://www.goupst
 description       	Phrase or sentence describing the channel.	The latest news from GoUpstate.com, a Spartanburg Herald-Journal Web site.
 */
 
-
-
-
-import androidx.annotation.NonNull;
-import androidx.room.Entity;
-import androidx.room.Ignore;
-import androidx.room.PrimaryKey;
-
 @NamespaceList({
         @Namespace(reference = "http://www.w3.org/2005/Atom", prefix = "atom")
 })
 @Entity
 @Root(name = "channel", strict = false)
-public class FeedEntity {
+public class FeedEntity implements RvItem {
 
 
     @PrimaryKey(autoGenerate = true)
@@ -52,6 +50,7 @@ public class FeedEntity {
     private String rssFeedLink;
 
     private String imageUrl;
+
 
     // Tricky part in Simple XML because the link is named twice (thanks https://gist.github.com/macsystems/01d7e80554efd344b1f9)
     @ElementList(entry = "link", inline = true, required = false)
@@ -87,6 +86,7 @@ public class FeedEntity {
         this.rssFeedLink = feedLink;
         this.setFeedGroupId(groupId);
     }
+
     @Ignore
     public FeedEntity(String feedLink) {
 
@@ -94,6 +94,7 @@ public class FeedEntity {
 
 
     }
+
     @Ignore
     public FeedEntity(String title, String feedLink, String description, String imageUrl) {
         this.title = title;
@@ -102,12 +103,35 @@ public class FeedEntity {
         this.imageUrl = imageUrl;
     }
 
-    public boolean isToBeShown() {
-        return toBeShown;
-    }
+    public static List<FeedEntity> populateData(long[] groupIds) {
 
-    public void setToBeShown(boolean isSelected) {
-        this.toBeShown = isSelected;
+        Random rand = new Random();
+
+        List<FeedEntity> feedEntities = new ArrayList<>();
+
+        int groupsCount = groupIds.length;
+
+        // long  i = groupIds[groupsCount];
+
+
+        feedEntities.add(new FeedEntity("ixbt", "http://www.ixbt.com/export/articles.rss", groupIds[rand.nextInt(groupsCount)]));
+        feedEntities.add(new FeedEntity("habr 1", "https://habr.com/rss/hub/apps_design/all/?hl=ru&fl=ru", groupIds[rand.nextInt(groupsCount)]));
+        feedEntities.add(new FeedEntity("habr 2", "https://habr.com/rss/all/all/?hl=ru&fl=ru", groupIds[rand.nextInt(groupsCount)]));
+        feedEntities.add(new FeedEntity("bash", "https://bash.im/rss/", groupIds[rand.nextInt(groupsCount)]));
+
+        feedEntities.add(new FeedEntity("yandex", "https://news.yandex.ru/politics.rss", groupIds[rand.nextInt(groupsCount)]));
+
+        return feedEntities;
+
+
+        //  addFeed ("https://bash.im/rss/", true);
+        //  addFeed ("https://habr.com/rss/best/?hl=ru&fl=ru", true); //top
+        // addFeed ("https://www.nytimes.com/svc/collections/v1/publish/https://www.nytimes.com/section/world/rss.xml", true);
+        // addFeed ("https://news.yandex.ru/politics.rss", true);
+
+        //atom
+        // addFeed ("https://www.reddit.com/r/worldnews/.rss", true);
+        //addFeed ("https://plugins.geany.org/install.html", true);
     }
 
     public String getCustomTitle() {
@@ -116,14 +140,6 @@ public class FeedEntity {
 
     public void setCustomTitle(String customTitle) {
         this.customTitle = customTitle;
-    }
-
-    public long getFeedGroupId() {
-        return feedGroupId;
-    }
-
-    public void setFeedGroupId(long feedGroupId) {
-        this.feedGroupId = feedGroupId;
     }
 
     public List<Link> getLinks() {
@@ -142,30 +158,6 @@ public class FeedEntity {
         this.articleList = articleList;
     }
 
-    public String getRssFeedLink() {
-        return rssFeedLink;
-    }
-
-    public void setRssFeedLink(String rssFeedLink) {
-        this.rssFeedLink = rssFeedLink;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -182,6 +174,34 @@ public class FeedEntity {
         this.imageUrl = imageUrl;
     }
 
+    @Override
+    public int hashCode() {
+
+        return 7 * (rssFeedLink != null ? rssFeedLink.hashCode() : 0);
+
+        //return Objects.hash(getId(), getFeedGroupId(), getTitle(), getCustomTitle(), getDescription(), getRssFeedLink());
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof FeedEntity)) {
+            return false;
+        }
+
+        FeedEntity other = (FeedEntity) obj;
+
+        return this.rssFeedLink.equals(other.rssFeedLink);
+
+    }
+
     @NonNull
     @Override
     public String toString() {
@@ -192,6 +212,46 @@ public class FeedEntity {
                         "selected = " + this.isToBeShown() + " " +
                         "group id = " + this.getFeedGroupId();
 
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getRssFeedLink() {
+        return rssFeedLink;
+    }
+
+    public boolean isToBeShown() {
+        return toBeShown;
+    }
+
+    public void setToBeShown(boolean isSelected) {
+        this.toBeShown = isSelected;
+    }
+
+    public long getFeedGroupId() {
+        return feedGroupId;
+    }
+
+    public void setFeedGroupId(long feedGroupId) {
+        this.feedGroupId = feedGroupId;
+    }
+
+    public void setRssFeedLink(String rssFeedLink) {
+        this.rssFeedLink = rssFeedLink;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public static class Link {
@@ -210,37 +270,5 @@ public class FeedEntity {
         public Link() {
         }
     }
-    public static List<FeedEntity> populateData(long[] groupIds) {
-
-        Random rand = new Random();
-
-        List<FeedEntity> feedEntities = new ArrayList<>();
-
-       int groupsCount = groupIds.length;
-
-      // long  i = groupIds[groupsCount];
-
-
-        feedEntities.add(new FeedEntity("ixbt", "http://www.ixbt.com/export/articles.rss", groupIds[rand.nextInt(groupsCount)]));
-        feedEntities.add(new FeedEntity("habr 1","https://habr.com/rss/hub/apps_design/all/?hl=ru&fl=ru",groupIds[rand.nextInt(groupsCount)]));
-        feedEntities.add(new FeedEntity("habr 2","https://habr.com/rss/all/all/?hl=ru&fl=ru",groupIds[rand.nextInt(groupsCount)]));
-        feedEntities.add(new FeedEntity("bash","https://bash.im/rss/",groupIds[rand.nextInt(groupsCount)]));
-
-        feedEntities.add(new FeedEntity("yandex","https://news.yandex.ru/politics.rss",groupIds[rand.nextInt(groupsCount)]));
-
-        return feedEntities;
-
-
-
-        //  addFeed ("https://bash.im/rss/", true);
-        //  addFeed ("https://habr.com/rss/best/?hl=ru&fl=ru", true); //top
-        // addFeed ("https://www.nytimes.com/svc/collections/v1/publish/https://www.nytimes.com/section/world/rss.xml", true);
-        // addFeed ("https://news.yandex.ru/politics.rss", true);
-
-        //atom
-        // addFeed ("https://www.reddit.com/r/worldnews/.rss", true);
-        //addFeed ("https://plugins.geany.org/install.html", true);
-    }
-
 
 }

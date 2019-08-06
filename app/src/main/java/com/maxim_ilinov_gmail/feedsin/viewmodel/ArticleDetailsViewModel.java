@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModel;
 
 public class ArticleDetailsViewModel extends ViewModel {
 
-    private final MutableLiveData<Article> selected = new MutableLiveData<Article>();
+    private final MutableLiveData<Article> selected = new MutableLiveData<>();
 
     public void select(Article item) {
 
@@ -21,6 +21,7 @@ public class ArticleDetailsViewModel extends ViewModel {
     }
 
     public LiveData<Article> getSelected() {
+
         return selected;
     }
 

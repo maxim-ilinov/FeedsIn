@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
-            name="item"
-            type="com.maxim_ilinov_gmail.feedsin.model.FeedForList"/>
+            name="itemFeedEntity"
+            type="com.maxim_ilinov_gmail.feedsin.model.FeedEntity"/>
     </data>
 
     <LinearLayout
@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
-                android:text="@{item.getCustomTitle()}"
+                android:text="@{itemFeedEntity.getCustomTitle()}"
                 android:textColor="?attr/textColorAlertDialogListItem"
                 android:textStyle="bold"
                 tools:text="feed title" />
@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
-                android:text="@{item.getRssFeedLink()}"
+                android:text="@{itemFeedEntity.getRssFeedLink()}"
                 android:textColor="@android:color/black"
                 tools:text="feed url" />
 

@@ -1,10 +1,11 @@
-package com.maxim_ilinov_gmail.feedsin.view;
+package com.maxim_ilinov_gmail.feedsin.view.ArticleList;
 
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -48,7 +49,7 @@ public class ArticleListAdapter extends PagedListAdapter<Article, ArticleViewHol
 
                 }
             };
-    private ArticleDetailsViewModel rssItemDetailsViewModel;
+    private ArticleDetailsViewModel articleDetailsViewModel;
     private Context context;
 
     protected ArticleListAdapter(Context context, ArticleDetailsViewModel viewModel) {
@@ -57,7 +58,7 @@ public class ArticleListAdapter extends PagedListAdapter<Article, ArticleViewHol
 
        // Log.d(TAG, "ArticleListAdapter init");
 
-        rssItemDetailsViewModel =viewModel;
+        articleDetailsViewModel =viewModel;
          this.context = context;
     }
 
@@ -83,14 +84,14 @@ public class ArticleListAdapter extends PagedListAdapter<Article, ArticleViewHol
 
 
 
-        Article rssItem = getItem(position);
-        if (rssItem != null) {
+        Article article = getItem(position);
+        if (article != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    rssItemDetailsViewModel.select(rssItem);
+                    articleDetailsViewModel.select(article);
 
-                    //Toast.makeText(v.getContext(), "Selected item: " + rssItem.getTitle(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(), "Selected item: " + article.getTitle(), Toast.LENGTH_SHORT).show();
 
                      NavController navController = Navigation.findNavController((Activity) v.getContext(), R.id.nav_host_fragment);
                      navController.navigate(R.id.action_to_details);
@@ -98,7 +99,7 @@ public class ArticleListAdapter extends PagedListAdapter<Article, ArticleViewHol
 
                 }
             });
-            holder.bind(rssItem);
+            holder.bind(article);
         } else {
             // Null defines a placeholder item - PagedListAdapter automatically
             // invalidates this row when the actual object is loaded from the

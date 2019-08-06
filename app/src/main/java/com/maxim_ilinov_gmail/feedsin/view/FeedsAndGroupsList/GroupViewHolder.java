@@ -7,8 +7,8 @@ import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.maxim_ilinov_gmail.feedsin.model.GroupForList;
-import com.maxim_ilinov_gmail.feedsin.model.RvItem;
+import com.maxim_ilinov_gmail.feedsin.BR;
+import com.maxim_ilinov_gmail.feedsin.model.GroupEntity;
 
 
 public class GroupViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -20,7 +20,7 @@ public class GroupViewHolder extends RecyclerView.ViewHolder implements View.OnC
     private Context context;
 
 
-    private GroupForList groupForList;
+    private GroupEntity groupEntity;
 
     public GroupViewHolder(ViewDataBinding binding, Context context) {
 
@@ -32,14 +32,14 @@ public class GroupViewHolder extends RecyclerView.ViewHolder implements View.OnC
         itemView.setOnClickListener(this);
     }
 
-    public void bind(GroupForList groupForList) {
+    public void bind(GroupEntity groupEntity) {
 
         // Log.d(TAG, "in bind of ArticleViewHolder");
 
-        binding.setVariable(com.maxim_ilinov_gmail.feedsin.BR.item, groupForList);
+        binding.setVariable(BR.itemGroupEntity, groupEntity);
 
 
-        this.groupForList = groupForList;
+        this.groupEntity = groupEntity;
 
     }
 

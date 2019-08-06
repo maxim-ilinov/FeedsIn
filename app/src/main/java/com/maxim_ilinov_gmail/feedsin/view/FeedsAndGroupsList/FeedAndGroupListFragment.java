@@ -16,6 +16,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -25,6 +26,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.maxim_ilinov_gmail.feedsin.R;
 import com.maxim_ilinov_gmail.feedsin.viewmodel.FeedAndGroupListViewModel;
+import com.maxim_ilinov_gmail.feedsin.viewmodel.FeedPropsViewModel;
+import com.maxim_ilinov_gmail.feedsin.viewmodel.GroupPropsViewModel;
 
 import static android.view.ViewGroup.getChildMeasureSpec;
 import static androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_LOCKED_CLOSED;
@@ -33,13 +36,26 @@ public class FeedAndGroupListFragment extends Fragment {
 
 
 
+
     private static final String TAG = "FeedAndGroupListFrag";
+
+
     private FeedAndGroupListViewModel viewModel;
+
+
+
+
+
     private DrawerLayout mDrawer;
 
     private RecyclerView recyclerView;
 
     private FeedAndGroupListAdapter adapter;
+
+    private FeedPropsViewModel feedPropsViewModel;
+
+    private GroupPropsViewModel groupPropsViewModel;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -64,10 +80,14 @@ public class FeedAndGroupListFragment extends Fragment {
 
 
 
-        viewModel = ViewModelProviders.of(this).get(FeedAndGroupListViewModel.class);
+        viewModel = ViewModelProviders.of(getActivity()).get(FeedAndGroupListViewModel.class);
 
 
-        adapter = new FeedAndGroupListAdapter(getActivity(), viewModel);
+        feedPropsViewModel = ViewModelProviders.of(getActivity()).get(FeedPropsViewModel.class);
+
+        groupPropsViewModel = ViewModelProviders.of(getActivity()).get(GroupPropsViewModel.class);
+
+        adapter = new FeedAndGroupListAdapter(getActivity(), viewModel, feedPropsViewModel, groupPropsViewModel);
 
         //adapter = new FeedAndGroupListAdapter(getContext(),)
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),

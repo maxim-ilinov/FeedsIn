@@ -1,5 +1,6 @@
 package com.maxim_ilinov_gmail.feedsin.model;
 
+import androidx.annotation.Nullable;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.Index;
@@ -11,7 +12,7 @@ import java.util.List;
 
 @Entity(indices = {@Index(value = {"name"}, unique = true)})
 
-public class Group {
+public class GroupEntity implements RvItem {
     @Ignore
     private static final String DEF_GROUP_NAME = "Ungrouped";
 
@@ -27,20 +28,20 @@ public class Group {
     private List<FeedEntity> feedEntities;
 
 
-    public Group(String name) {
+    public GroupEntity(String name) {
         this.name = name;
     }
 
-    public static List<Group> populateData() {
+    public static List<GroupEntity> populateData() {
 
-        List<Group> groups = new ArrayList();
+        List<GroupEntity> groupEntities = new ArrayList();
 
-        groups.add(new Group("Politics"));
-        groups.add(new Group("Movies"));
-        groups.add(new Group("Sports"));
+        groupEntities.add(new GroupEntity("Politics"));
+        groupEntities.add(new GroupEntity("Movies"));
+        groupEntities.add(new GroupEntity("Sports"));
 
 
-        return groups;
+        return groupEntities;
 
     }
 
@@ -76,4 +77,31 @@ public class Group {
         this.name = name;
     }
 
+
+    @Override
+    public int hashCode() {
+
+        return 7 * (name != null ? name.hashCode() : 0);
+
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof GroupEntity)) {
+            return false;
+        }
+
+        GroupEntity other = (GroupEntity) obj;
+
+        return this.name.equals(other.name);
+
+    }
 }

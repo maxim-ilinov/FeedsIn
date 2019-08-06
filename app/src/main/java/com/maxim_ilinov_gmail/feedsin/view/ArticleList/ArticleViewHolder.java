@@ -1,4 +1,4 @@
-package com.maxim_ilinov_gmail.feedsin.view;
+package com.maxim_ilinov_gmail.feedsin.view.ArticleList;
 
 import android.content.Context;
 import android.view.View;
@@ -16,29 +16,23 @@ public class ArticleViewHolder extends RecyclerView.ViewHolder implements View.O
 
     private final ViewDataBinding binding;
 
-    private Context context;
-
-
-    private Article rssItem;
 
     public ArticleViewHolder(ViewDataBinding binding, Context context) {
 
         super(binding.getRoot());
 
         this.binding = binding;
-        this.context = context;
 
-        itemView.setOnClickListener(this);
+        //itemView.setOnClickListener(this);
     }
 
-    public void bind(Article rssItem) {
+    public void bind(Article article) {
 
         // Log.d(TAG, "in bind of ArticleViewHolder");
 
-        binding.setVariable(BR.item, rssItem);
+        binding.setVariable(BR.itemArticle, article);
 
         //TODO remove later
-        this.rssItem = rssItem;
 
     }
 

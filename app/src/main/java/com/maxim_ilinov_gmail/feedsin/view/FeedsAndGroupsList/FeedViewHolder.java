@@ -6,8 +6,9 @@ import android.view.View;
 import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.maxim_ilinov_gmail.feedsin.model.Article;
-import com.maxim_ilinov_gmail.feedsin.model.FeedForList;
+
+import com.maxim_ilinov_gmail.feedsin.BR;
+import com.maxim_ilinov_gmail.feedsin.model.FeedEntity;
 
 
 public class FeedViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -19,7 +20,7 @@ public class FeedViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     private Context context;
 
 
-    private FeedForList feedForList;
+    private FeedEntity feedEntity;
 
     public FeedViewHolder(ViewDataBinding binding, Context context) {
 
@@ -28,17 +29,17 @@ public class FeedViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         this.binding = binding;
         this.context = context;
 
-        itemView.setOnClickListener(this);
+       // itemView.setOnClickListener(this);
     }
 
-    public void bind(FeedForList feedForList) {
+    public void bind(FeedEntity feedEntity) {
 
         // Log.d(TAG, "in bind of ArticleViewHolder");
 
-        binding.setVariable(com.maxim_ilinov_gmail.feedsin.BR.item, feedForList);
+        binding.setVariable(BR.itemFeedEntity, feedEntity);
 
         //TODO remove later
-        this.feedForList = feedForList;
+        this.feedEntity = feedEntity;
 
     }
 

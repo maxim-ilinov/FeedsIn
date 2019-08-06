@@ -12,7 +12,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.maxim_ilinov_gmail.feedsin.model.Article;
 import com.maxim_ilinov_gmail.feedsin.model.FeedEntity;
-import com.maxim_ilinov_gmail.feedsin.model.Group;
+import com.maxim_ilinov_gmail.feedsin.model.GroupEntity;
 
 import java.util.concurrent.Executors;
 
@@ -20,7 +20,7 @@ import java.util.concurrent.Executors;
 @Database(entities = {
         FeedEntity.class,
         Article.class,
-        Group.class
+        GroupEntity.class
 
         }, version = 1, exportSchema = false)
 @TypeConverters({DateConverter.class})
@@ -53,7 +53,7 @@ public abstract class RssRoomDatabase extends RoomDatabase {
                                     long[] groupIds;
                                     int[] feedIds;
 
-                                    groupIds= getInstance(context).getGroupDao().insertFeedGroups(Group.populateData());
+                                    groupIds= getInstance(context).getGroupDao().insertFeedGroups(GroupEntity.populateData());
                                     getInstance(context).getFeedDao().insertRssFeeds(FeedEntity.populateData(groupIds));
 
                                     //getInstance(context).getRssDao().updateFeed();

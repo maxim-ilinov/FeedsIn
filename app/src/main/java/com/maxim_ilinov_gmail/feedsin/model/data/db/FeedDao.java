@@ -21,7 +21,7 @@ public abstract class FeedDao {
     public abstract List<FeedForList> selectFeedsForList();
 
     @Query("SELECT * FROM FeedEntity where feedGroupId =:groupId")
-    public abstract List<FeedForList> selectFeedsForListByGroupId(long groupId);
+    public abstract List<FeedEntity> selectFeedsByGroupId(long groupId);
 
     @Query("UPDATE FeedEntity SET toBeShown =1 WHERE feedGroupId =:groupId")
     public abstract void setFeedsToBeShownForGroup(int groupId);
@@ -35,7 +35,7 @@ public abstract class FeedDao {
     @Query("select count(id) from feedentity")
     public abstract int countFeeds();
 
-    @Query("select sum(rows) from (select count(id) as rows from `group` union all select count(id) as rows from FeedEntity)")
+    @Query("select sum(rows) from (select count(id) as rows from GroupEntity union all select count(id) as rows from FeedEntity)")
     public abstract int countGroupsAndFeeds();
 
     @Update
@@ -67,6 +67,12 @@ public abstract class FeedDao {
 
     @Query("DELETE FROM FeedEntity")
     public abstract void deleteAllFeeds();
+
+    @Query("SELECT * FROM FeedEntity WHERE id=:feedId")
+    public abstract LiveData<FeedEntity> selectFeedByIdLiveData(int feedId);
+
+    @Query("SELECT * FROM FeedEntity WHERE id=:feedId")
+    public abstract FeedEntity selectFeedById(int feedId);
 
 
 }

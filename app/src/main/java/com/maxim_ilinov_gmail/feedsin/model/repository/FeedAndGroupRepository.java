@@ -2,7 +2,6 @@ package com.maxim_ilinov_gmail.feedsin.model.repository;
 
 
 import android.content.Context;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -11,32 +10,19 @@ import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 import androidx.paging.PositionalDataSource;
 
-import com.maxim_ilinov_gmail.feedsin.model.Article;
 import com.maxim_ilinov_gmail.feedsin.model.FeedEntity;
-import com.maxim_ilinov_gmail.feedsin.model.FeedForList;
-import com.maxim_ilinov_gmail.feedsin.model.Group;
+import com.maxim_ilinov_gmail.feedsin.model.GroupEntity;
 import com.maxim_ilinov_gmail.feedsin.model.GroupForDrawerMenu;
-import com.maxim_ilinov_gmail.feedsin.model.GroupForList;
 import com.maxim_ilinov_gmail.feedsin.model.GroupWithFeeds;
 import com.maxim_ilinov_gmail.feedsin.model.RvItem;
 import com.maxim_ilinov_gmail.feedsin.model.data.db.FeedDao;
 import com.maxim_ilinov_gmail.feedsin.model.data.db.GroupDao;
-import com.maxim_ilinov_gmail.feedsin.model.data.db.RssDao;
 import com.maxim_ilinov_gmail.feedsin.model.data.db.RssRoomDatabase;
-import com.maxim_ilinov_gmail.feedsin.model.data.webservices.RssWebservice;
-import com.maxim_ilinov_gmail.feedsin.model.data.webservices.RssWebserviceClient;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import static com.maxim_ilinov_gmail.feedsin.model.DateUtils.parseStringToDate;
 
 
 public class FeedAndGroupRepository {
@@ -108,7 +94,7 @@ public class FeedAndGroupRepository {
 
             if (feedDao.feedWithUrlCount(feedLink) == 0) {
 
-                //  ((MutableLiveData<Long>) insertedId).setValue((int)feedDao.insertFeedGroup(new Group(groupName)));
+                //  ((MutableLiveData<Long>) insertedId).setValue((int)feedDao.insertFeedGroup(new GroupEntity(groupName)));
                 feedDao.insertRssFeed(
                         new FeedEntity(feedName, feedLink));
 
@@ -122,7 +108,7 @@ public class FeedAndGroupRepository {
 
         executor.execute(() -> {
 
-            groupDao.insertFeedGroup(new Group(groupName));
+            groupDao.insertFeedGroup(new GroupEntity(groupName));
         });
 
     }
@@ -152,10 +138,10 @@ public class FeedAndGroupRepository {
 
 
 
-    public LiveData<List<Group>> getFeedGroups() {
+    public LiveData<List<GroupEntity>> getFeedGroupsLiveData() {
 
 
-        return groupDao.selectFeedGroups();
+        return groupDao.selectFeedGroupsLiveData();
     }
 
     public LiveData<List<GroupForDrawerMenu>> selectGroupsForDrawerMenu() {
@@ -190,27 +176,21 @@ public class FeedAndGroupRepository {
                             }
 
                             private int computeCount() {
-                                // actual count code here
 
-                                int countI = groupDao.countGroups() + feedDao.countFeeds();
-
-
-                                return countI;
+                                return groupDao.countGroups() + feedDao.countFeeds();
                             }
 
                             private List<RvItem> loadRangeInternal(int startPosition, int loadCount) {
-                                // actual load code here
 
-                                List<RvItem> rvItems = new ArrayList<RvItem>();
 
-                                for (GroupForList g : groupDao.selectGroupsForList(startPosition, loadCount)) {
+                                List<RvItem> rvItems = new ArrayList<>();
+
+                                for (GroupEntity g : groupDao.selectGroupsForPaging(startPosition, loadCount)) {
                                     rvItems.add(g);
 
                                     //todo check for null
 
-                                    for (FeedForList f : feedDao.selectFeedsForListByGroupId(g.getId())) {
-                                        rvItems.add(f);
-                                    }
+                                    rvItems.addAll(feedDao.selectFeedsByGroupId(g.getId()));
 
 
                                 }
@@ -248,7 +228,7 @@ public class FeedAndGroupRepository {
 
     }
 
-    public void setFeedsToBeShownForGroup(Group fg) {
+    public void setFeedsToBeShownForGroup(GroupEntity fg) {
 
         executor.execute(() -> {
             feedDao.setFeedsToBeShownForGroup(fg.getId());
@@ -256,7 +236,7 @@ public class FeedAndGroupRepository {
         });
     }
 
-    public void unsetFeedsToBeShownForGroup(Group fg) {
+    public void unsetFeedsToBeShownForGroup(GroupEntity fg) {
 
         executor.execute(() -> {
             feedDao.unsetFeedsToBeShownForGroup(fg.getId());
@@ -281,5 +261,20 @@ public class FeedAndGroupRepository {
 
         });
 
+    }
+
+    public LiveData<FeedEntity> getFeedByIdLiveData(int feedId) {
+
+        return  feedDao.selectFeedByIdLiveData(feedId);
+
+    }
+    public FeedEntity getFeedById(int feedId) {
+
+        return  feedDao.selectFeedById(feedId);
+
+    }
+    public LiveData<GroupEntity> getGroupById(int groupId) {
+
+        return groupDao.getGroupById(groupId);
     }
 }

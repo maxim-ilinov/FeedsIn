@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -17,18 +18,20 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.maxim_ilinov_gmail.feedsin.R;
-import com.maxim_ilinov_gmail.feedsin.model.Article;
-import com.maxim_ilinov_gmail.feedsin.model.FeedForList;
-import com.maxim_ilinov_gmail.feedsin.model.GroupForList;
+import com.maxim_ilinov_gmail.feedsin.model.FeedEntity;
+import com.maxim_ilinov_gmail.feedsin.model.GroupEntity;
 import com.maxim_ilinov_gmail.feedsin.model.RvItem;
-import com.maxim_ilinov_gmail.feedsin.view.ArticleViewHolder;
-import com.maxim_ilinov_gmail.feedsin.viewmodel.ArticleDetailsViewModel;
+import com.maxim_ilinov_gmail.feedsin.viewmodel.FeedPropsViewModel;
+import com.maxim_ilinov_gmail.feedsin.viewmodel.GroupPropsViewModel;
 
 public class FeedAndGroupListAdapter extends PagedListAdapter<RvItem, RecyclerView.ViewHolder> {
 
     private static final String TAG = "FeedAndGroupListAdapter";
 
-   // private ViewModel viewModel;
+    private ViewModel viewModel;
+
+
+
 
     private static DiffUtil.ItemCallback<RvItem> DIFF_CALLBACK =
 
@@ -38,23 +41,23 @@ public class FeedAndGroupListAdapter extends PagedListAdapter<RvItem, RecyclerVi
                 // Item details may have changed if reloaded from the database,
                 // but ID is fixed.
                 @Override
-                public boolean areItemsTheSame(RvItem oldItem, RvItem newItem) {
+                public boolean areItemsTheSame(@NonNull RvItem oldItem, @NonNull RvItem newItem) {
 
                    /* Log.d(TAG, "areItemsTheSame");
                     Log.d(TAG, "oldItem desc= " + oldItem.getDescription());
                     Log.d(TAG, "newItem desc= " + newItem.getDescription());*/
 
 
-                    if (oldItem instanceof GroupForList)
+                    if (oldItem instanceof GroupEntity)
                     {
 
-                        return ((GroupForList)oldItem).getId() == ((GroupForList)newItem).getId();
+                        return ((GroupEntity)oldItem).getId() == ((GroupEntity)newItem).getId();
                     }
 
-                    if (oldItem instanceof FeedForList)
+                    if (oldItem instanceof FeedEntity)
                     {
 
-                        return ((FeedForList)oldItem).getId() == ((FeedForList)newItem).getId();
+                        return ((FeedEntity)oldItem).getId() == ((FeedEntity)newItem).getId();
                     }
 
                     //todo fix this
@@ -63,20 +66,20 @@ public class FeedAndGroupListAdapter extends PagedListAdapter<RvItem, RecyclerVi
                 }
 
                 @Override
-                public boolean areContentsTheSame(RvItem oldItem,
-                                                  RvItem newItem) {
+                public boolean areContentsTheSame(@NonNull RvItem oldItem,
+                                                  @NonNull RvItem newItem) {
                    /* Log.d(TAG, "areContentsTheSame");
                     Log.d(TAG, "oldItem desc= " + oldItem.getDescription());
                     Log.d(TAG, "newItem desc= " + newItem.getDescription());*/
 
-                   if (oldItem instanceof GroupForList)
+                   if (oldItem instanceof GroupEntity)
                    {
-                       return ((GroupForList)oldItem).equals((GroupForList)newItem);
+                       return ((GroupEntity)oldItem).equals((GroupEntity)newItem);
                    }
 
-                    if (oldItem instanceof FeedForList)
+                    if (oldItem instanceof FeedEntity)
                     {
-                        return ((FeedForList)oldItem).equals((FeedForList)newItem);
+                        return ((FeedEntity)oldItem).equals((FeedEntity)newItem);
                     }
                     //todo fix this
 
@@ -87,20 +90,30 @@ public class FeedAndGroupListAdapter extends PagedListAdapter<RvItem, RecyclerVi
 
     private Context context;
 
-    protected FeedAndGroupListAdapter(Context context, ViewModel viewModel) {
+    private FeedPropsViewModel feedPropsViewModel;
+
+    private GroupPropsViewModel groupPropsViewmodel;
+
+
+    protected FeedAndGroupListAdapter(Context context, ViewModel viewModel, FeedPropsViewModel feedPropsViewModel, GroupPropsViewModel groupPropsViewmodel) {
 
             super(DIFF_CALLBACK);
 
             // Log.d(TAG, "ArticleListAdapter init");
 
-          //  this.viewModel = viewModel;
+            this.viewModel = viewModel;
+
+        this.feedPropsViewModel = feedPropsViewModel;
+
+        this.groupPropsViewmodel = groupPropsViewmodel;
+
             this.context = context;
     }
 
     @Override
     public int getItemViewType(int position) {
 
-        if (getItem(position) instanceof GroupForList)
+        if (getItem(position) instanceof GroupEntity)
         {
             return 0;
         }
@@ -150,19 +163,21 @@ public class FeedAndGroupListAdapter extends PagedListAdapter<RvItem, RecyclerVi
                     GroupViewHolder groupViewHolder = (GroupViewHolder) holder;
 
                     groupViewHolder.itemView.setOnClickListener(v -> {
-//                rssItemDetailsViewModel.select(rssItem);
-//
-//                //Toast.makeText(v.getContext(), "Selected item: " + rssItem.getTitle(), Toast.LENGTH_SHORT).show();
-//
-//                 NavController navController = Navigation.findNavController((Activity) v.getContext(), R.id.nav_host_fragment);
-//                 navController.navigate(R.id.action_to_details);
+
+                        groupPropsViewmodel.select((GroupEntity)rvItem);
+
+                Toast.makeText(v.getContext(), "Selected item: " + ((GroupEntity)rvItem).getName(), Toast.LENGTH_SHORT).show();
+
+                NavController navController = Navigation.findNavController((Activity) v.getContext(), R.id.nav_host_fragment);
+             navController.navigate(R.id.action_organizeFeedsFragment_to_feedgroupPropsFragment);
 
 
                     });
 
-                    Log.d(TAG, "Item's of type GroupForList name: " + ((GroupForList) rvItem).getName());
+                    Log.d(TAG, "Item's of type GroupEntity name: " + ((GroupEntity)rvItem).getName());
 
-                    groupViewHolder.bind((GroupForList) rvItem);
+
+                    groupViewHolder.bind((GroupEntity) rvItem);
 
                     break;
 
@@ -170,18 +185,19 @@ public class FeedAndGroupListAdapter extends PagedListAdapter<RvItem, RecyclerVi
                     FeedViewHolder feedViewHolder = (FeedViewHolder) holder;
 
                     feedViewHolder.itemView.setOnClickListener(v -> {
-//                rssItemDetailsViewModel.select(rssItem);
-//
-//                //Toast.makeText(v.getContext(), "Selected item: " + rssItem.getTitle(), Toast.LENGTH_SHORT).show();
-//
-//                 NavController navController = Navigation.findNavController((Activity) v.getContext(), R.id.nav_host_fragment);
-//                 navController.navigate(R.id.action_to_details);
+                    feedPropsViewModel.setCurrentFeed((FeedEntity) rvItem);
+
+                        Toast.makeText(v.getContext(), "Selected item: " + ((FeedEntity)rvItem).getCustomTitle(), Toast.LENGTH_SHORT).show();
+
+                        NavController navController = Navigation.findNavController((Activity) v.getContext(), R.id.nav_host_fragment);
+                        navController.navigate(R.id.action_organizeFeedsFragment_to_feedPropsFragment);
+
 
 
                     });
-                    Log.d(TAG, "Item's of type FeedForList name: " + ((FeedForList) rvItem).getCustomTitle());
+                    Log.d(TAG, "Item's of type FeedForList name: " + ((FeedEntity) rvItem).getCustomTitle());
 
-                    feedViewHolder.bind((FeedForList) rvItem);
+                    feedViewHolder.bind((FeedEntity) rvItem);
 
                     break;
             }

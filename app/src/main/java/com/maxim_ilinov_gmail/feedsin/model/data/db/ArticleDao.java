@@ -36,7 +36,7 @@ public abstract class ArticleDao {
     @Query("SELECT * from Article WHERE rssFeedId IN (:feedIds)")
     public abstract LiveData<List<Article>> selectArticlesByFeedIds(int[] feedIds);
 
-    @Query("SELECT ri.* FROM FeedEntity rf, Article ri, `Group` fg WHERE ri.rssFeedId = rf.id and fg.id = rf.feedGroupId and  fg.checked = 1 order by pubDateNorm desc")
+    @Query("SELECT ri.* FROM FeedEntity rf, Article ri, GroupEntity fg WHERE ri.rssFeedId = rf.id and fg.id = rf.feedGroupId and  fg.checked = 1 order by pubDateNorm desc")
     public abstract DataSource.Factory<Integer, Article> selectArticlesForSelectedFeedsPl();
 
 

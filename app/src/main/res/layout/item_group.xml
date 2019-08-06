@@ -12,8 +12,8 @@
 
 
         <variable
-            name="item"
-            type="com.maxim_ilinov_gmail.feedsin.model.GroupForList"/>
+            name="itemGroupEntity"
+            type="com.maxim_ilinov_gmail.feedsin.model.GroupEntity"/>
     </data>
 
     <LinearLayout
@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:text="@{item.getName() + ' ' + '#' + Integer.toString(item.getId())}"
+                android:text="@{itemGroupEntity.getName() + ' ' + '#' + Integer.toString(itemGroupEntity.getId())}"
                 android:textColor="?attr/textColorAlertDialogListItem"
                 android:textStyle="bold"
                 tools:text="Group Name" />
@@ -73,7 +73,7 @@ android:layout_weight="1"
 android:text="@{Integer.toString(item.getId())}"
 android:textColor="?attr/textColorAlertDialogListItem"
 android:textStyle="bold"
-tools:text="Group Id" />
+tools:text="GroupEntity Id" />
 
 <TextView
 android:id="@+id/tv_title"
@@ -85,4 +85,4 @@ android:layout_weight="1"
 android:text="@{item.getName()}"
 android:textColor="?attr/textColorAlertDialogListItem"
 android:textStyle="bold"
-tools:text="Group name" />-->
+tools:text="GroupEntity name" />-->

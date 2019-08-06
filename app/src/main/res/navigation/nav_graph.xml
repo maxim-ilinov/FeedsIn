@@ -23,7 +23,7 @@
 
         <fragment
             android:id="@+id/rssItemsListFragment"
-            android:name="com.maxim_ilinov_gmail.feedsin.view.ArticleListFragment"
+            android:name="com.maxim_ilinov_gmail.feedsin.view.ArticleList.ArticleListFragment"
 
 
             tools:layout="@layout/fragment_article_list">
@@ -31,11 +31,7 @@
 
             <action
                 android:id="@+id/action_to_details"
-                app:destination="@+id/rssItemDetailsFragment"
-                app:enterAnim="@anim/slide_in_right"
-                app:exitAnim="@anim/slide_out_left"
-                app:popEnterAnim="@anim/slide_in_left"
-                app:popExitAnim="@anim/slide_out_right" />
+                app:destination="@+id/rssItemDetailsFragment" />
             <action
                 android:id="@+id/action_rssItemsListFragment_to_settingsFragment"
                 app:destination="@id/settingsFragment" />

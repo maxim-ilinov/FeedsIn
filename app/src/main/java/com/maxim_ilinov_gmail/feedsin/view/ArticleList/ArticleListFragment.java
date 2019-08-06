@@ -1,4 +1,4 @@
-package com.maxim_ilinov_gmail.feedsin.view;
+package com.maxim_ilinov_gmail.feedsin.view.ArticleList;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -16,8 +16,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -42,10 +40,6 @@ public class ArticleListFragment extends Fragment {
     private SwipeRefreshLayout rssItemsListSwipeRefreshLayout;
 
     private ArticleListViewModel viewModel;
-
-    private ArticleDetailsViewModel articleDetailsViewModelmodel;
-
-    private DrawerLayout mDrawer;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,11 +87,11 @@ public class ArticleListFragment extends Fragment {
 
         viewModel = ViewModelProviders.of(getActivity()).get(ArticleListViewModel.class);
 
-        articleDetailsViewModelmodel = ViewModelProviders.of(getActivity()).get(ArticleDetailsViewModel.class);
+        ArticleDetailsViewModel articleDetailsViewModel = ViewModelProviders.of(getActivity()).get(ArticleDetailsViewModel.class);
 
 
 
-        adapterPl = new ArticleListAdapter(getActivity(), articleDetailsViewModelmodel);
+        adapterPl = new ArticleListAdapter(getActivity(), articleDetailsViewModel);
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
                 DividerItemDecoration.VERTICAL);
@@ -189,12 +183,12 @@ public class ArticleListFragment extends Fragment {
 
     }
 
-    public void onClickN(View v) {
+    /*public void onClickN(View v) {
 
         NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
 
         navController.navigate(R.id.action_to_details, null);
-    }
+    }*/
 
     private void updateData() {
 
@@ -206,7 +200,7 @@ public class ArticleListFragment extends Fragment {
     }
 
     private void setupToolbar() {
-        mDrawer = getActivity().findViewById(R.id.drawer_layout);
+        DrawerLayout mDrawer = getActivity().findViewById(R.id.drawer_layout);
 
         // mDrawer.setEnabled(true);
 

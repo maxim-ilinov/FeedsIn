@@ -14,7 +14,7 @@ import androidx.room.Update;
 import com.maxim_ilinov_gmail.feedsin.model.Article;
 import com.maxim_ilinov_gmail.feedsin.model.FeedEntity;
 import com.maxim_ilinov_gmail.feedsin.model.FeedForList;
-import com.maxim_ilinov_gmail.feedsin.model.Group;
+import com.maxim_ilinov_gmail.feedsin.model.GroupEntity;
 import com.maxim_ilinov_gmail.feedsin.model.GroupForDrawerMenu;
 import com.maxim_ilinov_gmail.feedsin.model.GroupForList;
 import com.maxim_ilinov_gmail.feedsin.model.GroupWithFeeds;
@@ -47,7 +47,7 @@ public  abstract class RssDao {
     @Query("SELECT * from Article WHERE rssFeedId IN (:feedIds)")
     public abstract LiveData<List<Article>> selectItemsByFeedIds(int[] feedIds);
 
-    @Query("SELECT ri.* FROM FeedEntity rf, Article ri, `Group` fg WHERE ri.rssFeedId = rf.id and fg.id = rf.feedGroupId and  fg.checked = 1 order by pubDateNorm desc")
+    @Query("SELECT ri.* FROM FeedEntity rf, Article ri, GroupEntity fg WHERE ri.rssFeedId = rf.id and fg.id = rf.feedGroupId and  fg.checked = 1 order by pubDateNorm desc")
     public abstract DataSource.Factory<Integer, Article> selectItemsForSelectedFeedsPl();
 
 
@@ -55,7 +55,7 @@ public  abstract class RssDao {
     //groups
 
 
-    @Query("SELECT * FROM `group` LIMIT :loadCount OFFSET :startPosition")
+    @Query("SELECT * FROM GroupEntity LIMIT :loadCount OFFSET :startPosition")
     public abstract List<GroupForList> selectGroupsForList(int startPosition, int loadCount);
 
     @Query("SELECT * FROM FeedEntity")
@@ -66,20 +66,20 @@ public  abstract class RssDao {
 
 
     @Insert (onConflict = OnConflictStrategy.IGNORE)
-    public abstract long[] insertFeedGroups(List<Group> groups);
+    public abstract long[] insertFeedGroups(List<GroupEntity> groupEntities);
 
 
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    public abstract long insertFeedGroup(Group feedGroup);
+    public abstract long insertFeedGroup(GroupEntity feedGroupEntity);
 
-    @Query("UPDATE `Group` SET checked = 1 WHERE id =:feedGroupId")
+    @Query("UPDATE GroupEntity SET checked = 1 WHERE id =:feedGroupId")
     public abstract void setFeedGroupChecked(long feedGroupId);
 
-    @Query("UPDATE `Group` SET checked = 0 WHERE id =:feedGroupId")
+    @Query("UPDATE GroupEntity SET checked = 0 WHERE id =:feedGroupId")
     public abstract void unsetFeedGroupChecked(long feedGroupId);
 
-    @Query("select * from `Group` where checked=1")
+    @Query("select * from GroupEntity where checked=1")
     public abstract LiveData<List<GroupWithFeeds>> getCheckedFeedGroups();
 
 
@@ -100,38 +100,38 @@ public  abstract class RssDao {
 
 
 
-    @Query("select id from `Group` where name=:groupName")
+    @Query("select id from GroupEntity where name=:groupName")
     public abstract long getGroupId(String groupName);
 
-    @Query("select id from `Group` order BY id ASC LIMIT 1")
+    @Query("select id from GroupEntity order BY id ASC LIMIT 1")
     public abstract long getFirstRssFeedGroupId();
 
-    @Query("select count(id) from `Group` where id=:groupId")
+    @Query("select count(id) from GroupEntity where id=:groupId")
     public abstract long countRssFeedGroupsWithId(int groupId);
 
-    /*@Query("SELECT * FROM Group ORDER BY id")
-    LiveData <List<Group>> selectAllRssFeedGroups();
+    /*@Query("SELECT * FROM GroupEntity ORDER BY id")
+    LiveData <List<GroupEntity>> selectAllRssFeedGroups();
     */
 
- @Query ("select count(id) from `group`")
+ @Query ("select count(id) from GroupEntity")
  public abstract int countGroups();
 
     @Query ("select count(id) from feedentity")
     public abstract int countFeeds();
 
 
- @Query ("select sum(rows) from (select count(id) as rows from `group` union all select count(id) as rows from FeedEntity)")
+ @Query ("select sum(rows) from (select count(id) as rows from GroupEntity union all select count(id) as rows from FeedEntity)")
  public abstract int countGroupsAndFeeds();
 
     @Transaction
-    @Query("SELECT * from `Group`")
+    @Query("SELECT * from GroupEntity")
     public abstract LiveData<List<GroupWithFeeds>> selectGroupsWithAllFeeds();
 
-    @Query("SELECT * from `Group`")
-    public abstract LiveData<List<Group>> selectFeedGroups();
+    @Query("SELECT * from GroupEntity")
+    public abstract LiveData<List<GroupEntity>> selectFeedGroups();
 
 
-    @Query("SELECT id,name from `Group`")
+    @Query("SELECT id,name from GroupEntity")
     public abstract LiveData<List<GroupForDrawerMenu>> selectGroupsForDrawerMenu();
 
     public LiveData<List<GroupForDrawerMenu>> selectDistinctGroupsForDrawerMenu()

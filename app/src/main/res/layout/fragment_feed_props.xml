@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:tools="http://schemas.android.com/tools"
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name = "viewmodel"
+            type = "com.maxim_ilinov_gmail.feedsin.viewmodel.FeedPropsViewModel"/>
+
+    </data>
+
+<LinearLayout
+
+
     android:id="@+id/Layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".view.FeedPropsFragment">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,16 +27,17 @@
             android:id="@+id/feed_title_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/feed_title"
-            tools:text="Title" />
+            tools:text="Title"
+
+            android:text="@string/feed_title"             />
 
         <EditText
             android:id="@+id/feed_title_editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            tools:text="Habr the best" />
+
+            tools:text="Habr the best"
+            android:text='@{viewmodel.getCurrentFeed !=null ? viewmodel.currentFeed.getCustomTitle : "shit"}'/>
 
     </LinearLayout>
 
@@ -50,6 +61,7 @@
             android:inputType="textUri|textMultiLine"
             android:maxLines="3"
             android:minLines="1"
+            android:text="@{viewmodel.getCurrentFeed().getRssFeedLink()}"
             tools:text="https://habr.com/rss/hub/apps_design/all/?hl=ru&amp;fl=ru" />
 
     </LinearLayout>
@@ -68,7 +80,14 @@
         <Spinner
             android:id="@+id/group_spinner"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:entries="@{viewmodel.listGroupNames}"
+            app:selection = "@{(int)viewmodel.getCurrentFeed().getFeedGroupId()}"
+
+           />
+<!--        android:entries="@{viewmodel.listGroupNames}"-->
+
     </LinearLayout>
 
 </LinearLayout>
+</layout>

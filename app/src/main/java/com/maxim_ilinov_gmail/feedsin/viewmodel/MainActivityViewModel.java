@@ -7,9 +7,8 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.maxim_ilinov_gmail.feedsin.model.FeedEntity;
-import com.maxim_ilinov_gmail.feedsin.model.Group;
+import com.maxim_ilinov_gmail.feedsin.model.GroupEntity;
 import com.maxim_ilinov_gmail.feedsin.model.GroupForDrawerMenu;
-import com.maxim_ilinov_gmail.feedsin.model.repository.ArticleRepository;
 import com.maxim_ilinov_gmail.feedsin.model.repository.FeedAndGroupRepository;
 
 
@@ -78,12 +77,12 @@ public class MainActivityViewModel extends AndroidViewModel {
 
     }
 
-    public void setFeedsToBeShownForGroup(Group fg) {
+    public void setFeedsToBeShownForGroup(GroupEntity fg) {
 
         feedAndGroupRepository.setFeedsToBeShownForGroup(fg);
     }
 
-    public void unsetFeedsToBeShownForGroup(Group fg) {
+    public void unsetFeedsToBeShownForGroup(GroupEntity fg) {
 
         feedAndGroupRepository.unsetFeedsToBeShownForGroup(fg);
     }
