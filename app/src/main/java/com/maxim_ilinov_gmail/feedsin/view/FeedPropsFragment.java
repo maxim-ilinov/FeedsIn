@@ -8,8 +8,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,15 +20,21 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
+import androidx.databinding.InverseBindingAdapter;
+import androidx.databinding.InverseBindingListener;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.maxim_ilinov_gmail.feedsin.R;
 import com.maxim_ilinov_gmail.feedsin.databinding.FragmentFeedPropsBinding;
 import com.maxim_ilinov_gmail.feedsin.model.FeedEntity;
+import com.maxim_ilinov_gmail.feedsin.model.GroupEntity;
 import com.maxim_ilinov_gmail.feedsin.viewmodel.FeedPropsViewModel;
+
+import java.util.List;
 
 import static androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_LOCKED_CLOSED;
 
@@ -124,10 +132,8 @@ public class FeedPropsFragment extends Fragment {
 
     }
 
-    @BindingAdapter({"selection"})
-    public static void setSelection(Spinner spinner, int selection) {
-        spinner.setSelection(selection);
-    }
+
+
 
 
 }

@@ -81,11 +81,13 @@
             android:id="@+id/group_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:entries="@{viewmodel.listGroupNames}"
-            app:selection = "@{(int)viewmodel.getCurrentFeed().getFeedGroupId()}"
 
-           />
-<!--        android:entries="@{viewmodel.listGroupNames}"-->
+            app:selectedGroup = "@{viewmodel.currentGroup}"
+            app:listOfGroups = "@{viewmodel.listGroups}"
+            />
+<!--            -->
+
+
 
     </LinearLayout>
 
