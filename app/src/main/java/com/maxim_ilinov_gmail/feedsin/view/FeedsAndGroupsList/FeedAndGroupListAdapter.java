@@ -185,7 +185,7 @@ public class FeedAndGroupListAdapter extends PagedListAdapter<RvItem, RecyclerVi
                     FeedViewHolder feedViewHolder = (FeedViewHolder) holder;
 
                     feedViewHolder.itemView.setOnClickListener(v -> {
-                    feedPropsViewModel.setCurrentFeed((FeedEntity) rvItem);
+                    feedPropsViewModel.setCurrentFeedMutable((FeedEntity) rvItem);
 
                         Toast.makeText(v.getContext(), "Selected item: " + ((FeedEntity)rvItem).getCustomTitle(), Toast.LENGTH_SHORT).show();
 

@@ -2,20 +2,10 @@ package com.maxim_ilinov_gmail.feedsin.viewmodel;
 
 
 import android.app.Application;
-import android.content.Context;
 import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.arch.core.util.Function;
-import androidx.databinding.BindingAdapter;
-import androidx.databinding.InverseBindingListener;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -34,15 +24,25 @@ public class FeedPropsViewModel extends AndroidViewModel {
 
     private static final String TAG = "FeedPropsViewModel";
 
-    private final MutableLiveData<FeedEntity> currentFeed = new MutableLiveData<>();
+    private final MutableLiveData<FeedEntity> currentFeedMutable = new MutableLiveData<>();
+
+    private final MutableLiveData<GroupEntity> currentGroupMutable = new MutableLiveData<>();
+
+  // private final LiveData<FeedEntity> currentFeed;
+
     private final LiveData<GroupEntity> currentGroup;
+
+    private LiveData<List<GroupEntity>> listGroups;
+
     private FeedAndGroupRepository feedAndGroupRepository;
+
     private LiveData<Integer> currentFeedId = new MutableLiveData();
     private FeedEntity changedFeed;
     private GroupEntity curentFeedGroupEntity;
-    private LiveData<List<GroupEntity>> listGroups;
+
     private LiveData<List<String>> listGroupNames;
     private int currentPosition;
+
 
     public FeedPropsViewModel(@NonNull Application application) {
         super(application);
@@ -69,123 +69,75 @@ public class FeedPropsViewModel extends AndroidViewModel {
             @Override
             public List<GroupEntity> apply(List<GroupEntity> input) {
 
+                Log.d(TAG, "inside List<GroupEntity> apply(List<GroupEntity> input), value of input: " + input.toString());
 
                 return input;
             }
         });
 
-
-
-        currentGroup = Transformations.switchMap(currentFeed, new Function<FeedEntity, LiveData<GroupEntity>>() {
-
-
-            @Override
-            public LiveData<GroupEntity> apply(FeedEntity input) {
-                return feedAndGroupRepository.getGroupById((int)input.getFeedGroupId());
-            }
-        });
-
-
-    }
-
-    /*@BindingAdapter({"selection"})
-    public static void setSelection(Spinner spinner, int selection) {
-        spinner.setSelection(selection);
-    }
-*/
-   /* @BindingAdapter(value = {"listGroupNames", "selectedGroup", "selectedGroupAttrChanged"}, requireAll = false)
-    public static void setListGroupNames(Spinner spinner, LiveData<List<String>> listGroupNames, GroupEntity selectedGroup, InverseBindingListener listener) {
-
-
-        List<String> groupNames = listGroupNames.getValue();
-
-        if (groupNames == null) return;
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(spinner.getContext(), android.R.layout.simple_spinner_item, groupNames);
-
-        spinner.setAdapter(adapter);
-
-        setCurrentSelection(spinner, selectedGroup);
-
-    }*/
-
-    private static boolean setCurrentSelection(Spinner spinner, GroupEntity selectedGroup) {
-
-        Log.d(TAG, "selectedGroup = " + selectedGroup.getName());
-
-        for (int index = 0; index < spinner.getAdapter().getCount(); index++) {
-
-            Log.d(TAG, "spinner item = " + ((GroupEntity)spinner.getItemAtPosition(index)).getName());
-
-
-            if (((GroupEntity)spinner.getItemAtPosition(index)).getName().equals(selectedGroup.getName())) {
-
-                Log.d(TAG, "matched spinner item = " + ((GroupEntity)spinner.getItemAtPosition(index)).getName());
-
-                spinner.setSelection(index);
-
-                return true;
-            }
+        if (currentFeedMutable.getValue() != null) {
+            Log.d(TAG, "currentFeed value is not null and value.toString = " + (currentFeedMutable.getValue()).toString());
+        }
+        else
+        {
+            Log.d(TAG, "currentFeed value is null!");
         }
 
-        return false;
-    }
-
-    @BindingAdapter(value = {"listOfGroups", "selectedGroup", "selectedGroupAttrChanged"}, requireAll = false)
-    public static void setListOfGroups(Spinner spinner, LiveData<List<GroupEntity>> listGroups, LiveData<GroupEntity> selectedGroup, InverseBindingListener listener) {
-
-        List<GroupEntity> listGroupValues = listGroups.getValue();
-
-        if (listGroupValues == null) return;
-
-        ArrayAdapter<GroupEntity> adapter = new GroupNameAdapter(spinner.getContext(), android.R.layout.simple_spinner_item, listGroupValues);
-
-        spinner.setAdapter(adapter);
-
-        setCurrentSelection(spinner, selectedGroup.getValue());
-
-        setSpinnerListener(spinner, listener);
-    }
-
-
-
-
-    private static void setSpinnerListener(Spinner spinner, InverseBindingListener listener) {
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+     /*   currentFeed = Transformations.map(currentFeedMutable, new Function<FeedEntity, FeedEntity>() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public FeedEntity apply(FeedEntity input) {
 
-                listener.onChange();
+                Log.d(TAG, "inside currentFeed = Transformations.map(currentFeedMutable");
+
+                return input;
             }
+        });*/
+
+
+        currentGroup = Transformations.switchMap(currentFeedMutable, new Function<FeedEntity, LiveData<GroupEntity>>() {
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+                    public LiveData<GroupEntity> apply(FeedEntity input) {
 
-                listener.onChange();
+                        Log.d(TAG, "inside currentGroup LiveData<GroupEntity> apply(FeedEntity input), value of input: " + input.toString());
 
-            }
-        });
+                       // ??? currentGroupMutable.postValue(currentGroup.getValue());
+
+                        return feedAndGroupRepository.getGroupById((int) input.getFeedGroupId());
+
+
+                    }
+                });
+
+
+
+
 
     }
 
 
-    public LiveData<GroupEntity> getCurrentGroup() {
+    public LiveData<GroupEntity> getCurrentGroupMutable() {
+        return currentGroupMutable;
+    }
+
+    public LiveData<GroupEntity> getCurrentGroup ()
+    {
         return currentGroup;
     }
-
-
-
-    public LiveData<FeedEntity> getCurrentFeed() {
-
-        return currentFeed;
+    public void setCurrentGroupMutable(GroupEntity value) {
+         currentGroupMutable.postValue(value);
     }
 
-    public void setCurrentFeed(FeedEntity item) {
+    public LiveData<FeedEntity> getCurrentFeedMutable() {
+
+        return currentFeedMutable;
+    }
+
+    public void setCurrentFeedMutable(FeedEntity item) {
 
         Log.d(TAG, "currentFeed value set to: " + item.getCustomTitle());
 
-        currentFeed.postValue(item);
+        currentFeedMutable.postValue(item);
     }
 
     public int getCurrentPosition() {
@@ -198,58 +150,6 @@ public class FeedPropsViewModel extends AndroidViewModel {
 
     public LiveData<List<String>> getListGroupNames() {
         return listGroupNames;
-    }
-
-    static class GroupNameAdapter extends ArrayAdapter<GroupEntity> {
-
-
-        List<GroupEntity> groupList;
-
-        GroupNameAdapter(@NonNull Context context, int resource, @NonNull List<GroupEntity> groupList) {
-            super(context, resource, groupList);
-
-            this.groupList = groupList;
-        }
-
-        @Override
-        public int getCount() {
-            return groupList.size();
-        }
-
-        @Nullable
-        @Override
-          public GroupEntity getItem(int position) {
-            return groupList.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return (long) position;
-        }
-
-        @NonNull
-        @Override
-        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-
-            TextView textView = (TextView) super.getView(position, convertView, parent);
-
-            textView.setText(groupList.get(position).getName());
-
-            return textView;
-
-        }
-
-
-        @Override
-        public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-
-            TextView textView = (TextView) super.getView(position, convertView, parent);
-
-            textView.setText(groupList.get(position).getName());
-
-            return textView;
-
-        }
     }
 
 

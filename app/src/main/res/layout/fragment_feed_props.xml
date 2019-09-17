@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
 
             tools:text="Habr the best"
-            android:text='@{viewmodel.getCurrentFeed !=null ? viewmodel.currentFeed.getCustomTitle : "shit"}'/>
+            android:text="@={viewmodel.currentFeedMutable.customTitle}"/>
 
     </LinearLayout>
 
@@ -61,7 +61,7 @@
             android:inputType="textUri|textMultiLine"
             android:maxLines="3"
             android:minLines="1"
-            android:text="@{viewmodel.getCurrentFeed().getRssFeedLink()}"
+            android:text="@={viewmodel.currentFeedMutable.rssFeedLink}"
             tools:text="https://habr.com/rss/hub/apps_design/all/?hl=ru&amp;fl=ru" />
 
     </LinearLayout>
@@ -83,10 +83,14 @@
             android:layout_height="wrap_content"
 
             app:selectedGroup = "@{viewmodel.currentGroup}"
-            app:listOfGroups = "@{viewmodel.listGroups}"
-            />
-<!--            -->
 
+            app:listOfGroups = "@{viewmodel.listGroups}"
+
+
+            />
+
+<!--      app:selectedGroup = "@={viewmodel.currentGroup}"
+            android:entries = "@{viewmodel.listGroupNames}"    -->
 
 
     </LinearLayout>
