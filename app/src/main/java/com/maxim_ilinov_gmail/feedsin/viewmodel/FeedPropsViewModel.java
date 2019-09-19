@@ -30,7 +30,7 @@ public class FeedPropsViewModel extends AndroidViewModel {
 
   // private final LiveData<FeedEntity> currentFeed;
 
-    private final LiveData<GroupEntity> currentGroup;
+    //private final LiveData<GroupEntity> currentGroup;
 
     private LiveData<List<GroupEntity>> listGroups;
 
@@ -50,7 +50,7 @@ public class FeedPropsViewModel extends AndroidViewModel {
 
         feedAndGroupRepository = FeedAndGroupRepository.getInstance(application);
 
-        listGroupNames = Transformations.map(feedAndGroupRepository.getFeedGroupsLiveData(),
+        /*listGroupNames = Transformations.map(feedAndGroupRepository.getFeedGroupsLiveData(),
                 new Function<List<GroupEntity>, List<String>>() {
                     @Override
                     public List<String> apply(List<GroupEntity> input) {
@@ -63,7 +63,7 @@ public class FeedPropsViewModel extends AndroidViewModel {
 
                         return output;
                     }
-                });
+                });*/
 
         listGroups = Transformations.map(feedAndGroupRepository.getFeedGroupsLiveData(), new Function<List<GroupEntity>, List<GroupEntity>>() {
             @Override
@@ -94,7 +94,7 @@ public class FeedPropsViewModel extends AndroidViewModel {
         });*/
 
 
-        currentGroup = Transformations.switchMap(currentFeedMutable, new Function<FeedEntity, LiveData<GroupEntity>>() {
+       /* currentGroup = Transformations.switchMap(currentFeedMutable, new Function<FeedEntity, LiveData<GroupEntity>>() {
 
             @Override
                     public LiveData<GroupEntity> apply(FeedEntity input) {
@@ -107,7 +107,7 @@ public class FeedPropsViewModel extends AndroidViewModel {
 
 
                     }
-                });
+                });*/
 
 
 
@@ -120,10 +120,10 @@ public class FeedPropsViewModel extends AndroidViewModel {
         return currentGroupMutable;
     }
 
-    public LiveData<GroupEntity> getCurrentGroup ()
+   /* public LiveData<GroupEntity> getCurrentGroup ()
     {
         return currentGroup;
-    }
+    }*/
     public void setCurrentGroupMutable(GroupEntity value) {
          currentGroupMutable.postValue(value);
     }

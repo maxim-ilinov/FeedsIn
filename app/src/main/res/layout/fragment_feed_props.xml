@@ -82,7 +82,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
-            app:selectedGroup = "@{viewmodel.currentGroup}"
+            app:selectedGroup = "@={viewmodel.currentFeedMutable.feedGroupId}"
 
             app:listOfGroups = "@{viewmodel.listGroups}"
 

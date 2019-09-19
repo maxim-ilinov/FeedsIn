@@ -61,7 +61,7 @@ public class FeedPropsFragment extends Fragment {
 
     @BindingAdapter(value = {"listOfGroups", "selectedGroup", "selectedGroupAttrChanged"}, requireAll = false)
     public static void setListOfGroups(Spinner spinner, LiveData<List<GroupEntity>> listGroups,
-                                       LiveData<GroupEntity> selectedGroup, InverseBindingListener listener) {
+                                       Long feedGroupId, InverseBindingListener listener) {
 
         List<GroupEntity> listGroupValues = listGroups.getValue();
 
@@ -79,29 +79,34 @@ public class FeedPropsFragment extends Fragment {
 
         spinner.setAdapter(adapter);
 
-        GroupEntity selectedGroupValue = selectedGroup.getValue();
 
-        if (selectedGroupValue ==null) {
+
+        if (feedGroupId ==null) {
             Log.d(TAG, "selectedGroupValue is null");
 
             return;
         }
 
-        setCurrentSelection(spinner, selectedGroupValue);
+        setCurrentSelection(spinner, feedGroupId);
 
-        //setSpinnerListener(spinner, listener);
+        setSpinnerListener(spinner, listener);
+
+
+
     }
 
-    private static boolean setCurrentSelection(Spinner spinner, @NonNull GroupEntity selectedGroup) {
 
-        Log.d(TAG, "selectedGroup = " + selectedGroup.getName());
+
+    private static boolean setCurrentSelection(Spinner spinner, @NonNull Long selectedGroup) {
+
+        Log.d(TAG, "selectedGroup id = " + selectedGroup);
 
         for (int index = 0; index < spinner.getAdapter().getCount(); index++) {
 
             Log.d(TAG, "spinner item = " + ((GroupEntity) spinner.getItemAtPosition(index)).getName());
 
 
-            if (((GroupEntity) spinner.getItemAtPosition(index)).getName().equals(selectedGroup.getName())) {
+            if (((GroupEntity) spinner.getItemAtPosition(index)).getId() == selectedGroup) {
 
                 Log.d(TAG, "matched spinner item = " + ((GroupEntity) spinner.getItemAtPosition(index)).getName());
 
@@ -114,13 +119,16 @@ public class FeedPropsFragment extends Fragment {
         return false;
     }
 
-    /*private static void setSpinnerListener(Spinner spinner, InverseBindingListener listener) {
+    private static void setSpinnerListener(Spinner spinner, InverseBindingListener listener) {
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 listener.onChange();
+
+
+
             }
 
             @Override
@@ -131,15 +139,15 @@ public class FeedPropsFragment extends Fragment {
             }
         });
 
-    }*/
+    }
 
     @InverseBindingAdapter(attribute = "selectedGroup", event = "selectedGroupAttrChanged")
-    public static GroupEntity getSelectedGroup(Spinner spinner) {
+    public static Long getSelectedGroup(Spinner spinner) {
 
-        Log.d(TAG, "spinner.getSelectedItem().toString(): " + spinner.getSelectedItem().toString());
+        Log.d(TAG, "(Long)spinner.getSelectedItem(): " + ((GroupEntity)spinner.getSelectedItem()).getName());
 
 
-        return (GroupEntity)spinner.getSelectedItem();
+        return (long)((GroupEntity) spinner.getSelectedItem()).getId();
 
     }
 
