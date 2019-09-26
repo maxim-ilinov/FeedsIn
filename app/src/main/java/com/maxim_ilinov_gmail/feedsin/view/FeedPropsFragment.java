@@ -11,9 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,11 +30,13 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.maxim_ilinov_gmail.feedsin.R;
 import com.maxim_ilinov_gmail.feedsin.databinding.FragmentFeedPropsBinding;
+import com.maxim_ilinov_gmail.feedsin.model.FeedEntity;
 import com.maxim_ilinov_gmail.feedsin.model.GroupEntity;
 import com.maxim_ilinov_gmail.feedsin.viewmodel.FeedPropsViewModel;
 
@@ -54,7 +58,7 @@ public class FeedPropsFragment extends Fragment {
 
     private TextView feedCustomTitle;
 
-
+    private Button bt;
     public FeedPropsFragment() {
         // Required empty public constructor
     }
@@ -155,6 +159,10 @@ public class FeedPropsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+
+
+
+
         Log.d(TAG, "onCreateView");
 
 
@@ -165,7 +173,18 @@ public class FeedPropsFragment extends Fragment {
 
         binding.setViewmodel(viewModel);
 
-        binding.setLifecycleOwner(getActivity());
+        binding.setLifecycleOwner(getViewLifecycleOwner());
+
+
+        bt = binding.buttonChangeTitle;
+
+        bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                viewModel.getCurrentFeedMutable().setValue(new FeedEntity("custom title", "custom link"));
+            }
+        });
 
 
         return binding.getRoot();
@@ -202,6 +221,9 @@ public class FeedPropsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         setupToolbar();
         setHasOptionsMenu(true);
+
+
+
 
 
     }

@@ -9,6 +9,7 @@ import androidx.arch.core.util.Function;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.Transformations;
 
 import com.maxim_ilinov_gmail.feedsin.model.FeedEntity;
@@ -110,7 +111,12 @@ public class FeedPropsViewModel extends AndroidViewModel {
                 });*/
 
 
-
+        currentFeedMutable.observeForever( new Observer<FeedEntity>() {
+            @Override
+            public void onChanged(FeedEntity feedEntity) {
+                Log.d(TAG,"observeforeverCurrentFeedMutable toString: " + feedEntity.toString());
+            }
+        });
 
 
     }
@@ -128,7 +134,7 @@ public class FeedPropsViewModel extends AndroidViewModel {
          currentGroupMutable.postValue(value);
     }
 
-    public LiveData<FeedEntity> getCurrentFeedMutable() {
+    public MutableLiveData<FeedEntity> getCurrentFeedMutable() {
 
         return currentFeedMutable;
     }
@@ -137,7 +143,9 @@ public class FeedPropsViewModel extends AndroidViewModel {
 
         Log.d(TAG, "currentFeed value set to: " + item.getCustomTitle());
 
-        currentFeedMutable.postValue(item);
+        currentFeedMutable.setValue(item);
+
+        
     }
 
     public int getCurrentPosition() {
