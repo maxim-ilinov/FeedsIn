@@ -187,6 +187,14 @@ public class FeedPropsFragment extends Fragment {
         });
 
 
+        viewModel.getCurrentFeedMutable().observe(getViewLifecycleOwner(), new Observer<FeedEntity>() {
+            @Override
+            public void onChanged(FeedEntity feedEntity) {
+                Log.d(TAG,"observeCurrentFeedMutable toString: " + feedEntity.toString());
+            }
+        });
+
+
         return binding.getRoot();
 
         // Inflate the layout for this fragment
