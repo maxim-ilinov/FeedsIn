@@ -16,7 +16,6 @@ import com.maxim_ilinov_gmail.feedsin.model.FeedEntity;
 import com.maxim_ilinov_gmail.feedsin.model.GroupEntity;
 import com.maxim_ilinov_gmail.feedsin.model.repository.FeedAndGroupRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -27,9 +26,11 @@ public class FeedPropsViewModel extends AndroidViewModel {
 
     private final MutableLiveData<FeedEntity> currentFeedMutable = new MutableLiveData<>();
 
+    private final MutableLiveData<String> currentFeed_RssLink = new MutableLiveData<>();
+
     private final MutableLiveData<GroupEntity> currentGroupMutable = new MutableLiveData<>();
 
-  // private final LiveData<FeedEntity> currentFeed;
+    // private final LiveData<FeedEntity> currentFeed;
 
     //private final LiveData<GroupEntity> currentGroup;
 
@@ -78,9 +79,7 @@ public class FeedPropsViewModel extends AndroidViewModel {
 
         if (currentFeedMutable.getValue() != null) {
             Log.d(TAG, "currentFeed value is not null and value.toString = " + (currentFeedMutable.getValue()).toString());
-        }
-        else
-        {
+        } else {
             Log.d(TAG, "currentFeed value is null!");
         }
 
@@ -111,10 +110,12 @@ public class FeedPropsViewModel extends AndroidViewModel {
                 });*/
 
 
-        currentFeedMutable.observeForever( new Observer<FeedEntity>() {
+        currentFeedMutable.observeForever(new Observer<FeedEntity>() {
             @Override
             public void onChanged(FeedEntity feedEntity) {
-                Log.d(TAG,"observeforeverCurrentFeedMutable toString: " + feedEntity.toString());
+                Log.d(TAG, "observeforeverCurrentFeedMutable toString: " + feedEntity.toString());
+
+                setCurrentFeed_RssLink(feedEntity.getRssFeedLink());
             }
         });
 
@@ -126,14 +127,19 @@ public class FeedPropsViewModel extends AndroidViewModel {
         return currentGroupMutable;
     }
 
-   /* public LiveData<GroupEntity> getCurrentGroup ()
-    {
-        return currentGroup;
-    }*/
+    /* public LiveData<GroupEntity> getCurrentGroup ()
+     {
+         return currentGroup;
+     }*/
     public void setCurrentGroupMutable(GroupEntity value) {
-         currentGroupMutable.postValue(value);
+        currentGroupMutable.postValue(value);
     }
 
+
+    public void setCurrentFeed_RssLink(String value)
+    {
+        currentFeed_RssLink.setValue(value);
+    }
     public MutableLiveData<FeedEntity> getCurrentFeedMutable() {
 
         return currentFeedMutable;
@@ -145,7 +151,11 @@ public class FeedPropsViewModel extends AndroidViewModel {
 
         currentFeedMutable.setValue(item);
 
-        
+
+    }
+
+    public MutableLiveData<String> getCurrentFeed_RssLink() {
+        return currentFeed_RssLink;
     }
 
     public int getCurrentPosition() {

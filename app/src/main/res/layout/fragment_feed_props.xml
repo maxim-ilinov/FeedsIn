@@ -61,7 +61,7 @@
             android:inputType="textUri|textMultiLine"
             android:maxLines="3"
             android:minLines="1"
-            android:text="@={viewmodel.currentFeedMutable.rssFeedLink}"
+            android:text="@={viewmodel.currentFeed_RssLink}"
             tools:text="https://habr.com/rss/hub/apps_design/all/?hl=ru&amp;fl=ru" />
 
     </LinearLayout>
