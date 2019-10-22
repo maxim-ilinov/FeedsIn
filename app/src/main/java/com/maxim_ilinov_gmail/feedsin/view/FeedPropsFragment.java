@@ -208,6 +208,14 @@ public class FeedPropsFragment extends Fragment {
             }
         });
 
+        viewModel.getCurrentFeed_RssLink().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                Log.d(TAG,"CurrentFeed_RssLink changed to: " + s);
+            }
+        });
+
+
 
         return binding.getRoot();
 
