@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
 
             tools:text="Habr the best"
-            android:text="@={viewmodel.currentFeedMutable.customTitle}"/>
+            android:text="@={viewmodel.currentFeed_CustomTitle}"/>
 
     </LinearLayout>
 
@@ -82,7 +82,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
-            app:selectedGroup = "@={viewmodel.currentFeedMutable.feedGroupId}"
+            app:selectedGroup = "@={viewmodel.currentFeed_GroupId.getValue()}"
 
             app:listOfGroups = "@{viewmodel.listGroups}"
 

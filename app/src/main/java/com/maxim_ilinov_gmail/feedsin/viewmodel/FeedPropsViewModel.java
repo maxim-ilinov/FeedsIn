@@ -24,26 +24,16 @@ public class FeedPropsViewModel extends AndroidViewModel {
 
     private static final String TAG = "FeedPropsViewModel";
 
-    private final MutableLiveData<FeedEntity> currentFeedMutable = new MutableLiveData<>();
-
-    private final MutableLiveData<String> currentFeed_RssLink = new MutableLiveData<>();
-
-    private final MutableLiveData<GroupEntity> currentGroupMutable = new MutableLiveData<>();
-
-    // private final LiveData<FeedEntity> currentFeed;
-
-    //private final LiveData<GroupEntity> currentGroup;
-
+    private FeedAndGroupRepository feedAndGroupRepository;
     private LiveData<List<GroupEntity>> listGroups;
 
-    private FeedAndGroupRepository feedAndGroupRepository;
+    private final MutableLiveData<FeedEntity> currentFeed = new MutableLiveData<>();
+    private final MutableLiveData<String> currentFeed_CustomTitle = new MutableLiveData<>();
+    private final MutableLiveData<String> currentFeed_RssLink = new MutableLiveData<>();
+    private final MutableLiveData<Long> currentFeed_GroupId = new MutableLiveData<>();
+    private final MutableLiveData<GroupEntity> currentGroupMutable = new MutableLiveData<>();
 
-    private LiveData<Integer> currentFeedId = new MutableLiveData();
-    private FeedEntity changedFeed;
-    private GroupEntity curentFeedGroupEntity;
 
-    private LiveData<List<String>> listGroupNames;
-    private int currentPosition;
 
 
     public FeedPropsViewModel(@NonNull Application application) {
@@ -52,20 +42,7 @@ public class FeedPropsViewModel extends AndroidViewModel {
 
         feedAndGroupRepository = FeedAndGroupRepository.getInstance(application);
 
-        /*listGroupNames = Transformations.map(feedAndGroupRepository.getFeedGroupsLiveData(),
-                new Function<List<GroupEntity>, List<String>>() {
-                    @Override
-                    public List<String> apply(List<GroupEntity> input) {
 
-                        List<String> output = new ArrayList<>();
-
-                        for (GroupEntity g : input) {
-                            output.add(g.getName());
-                        }
-
-                        return output;
-                    }
-                });*/
 
         listGroups = Transformations.map(feedAndGroupRepository.getFeedGroupsLiveData(), new Function<List<GroupEntity>, List<GroupEntity>>() {
             @Override
@@ -77,47 +54,25 @@ public class FeedPropsViewModel extends AndroidViewModel {
             }
         });
 
-        if (currentFeedMutable.getValue() != null) {
-            Log.d(TAG, "currentFeed value is not null and value.toString = " + (currentFeedMutable.getValue()).toString());
+        if (currentFeed.getValue() != null) {
+            Log.d(TAG, "currentFeed value is not null and value.toString = " + (currentFeed.getValue()).toString());
         } else {
             Log.d(TAG, "currentFeed value is null!");
         }
 
-     /*   currentFeed = Transformations.map(currentFeedMutable, new Function<FeedEntity, FeedEntity>() {
-            @Override
-            public FeedEntity apply(FeedEntity input) {
-
-                Log.d(TAG, "inside currentFeed = Transformations.map(currentFeedMutable");
-
-                return input;
-            }
-        });*/
 
 
-       /* currentGroup = Transformations.switchMap(currentFeedMutable, new Function<FeedEntity, LiveData<GroupEntity>>() {
-
-            @Override
-                    public LiveData<GroupEntity> apply(FeedEntity input) {
-
-                        Log.d(TAG, "inside currentGroup LiveData<GroupEntity> apply(FeedEntity input), value of input: " + input.toString());
-
-                       // ??? currentGroupMutable.postValue(currentGroup.getValue());
-
-                        return feedAndGroupRepository.getGroupById((int) input.getFeedGroupId());
 
 
-                    }
-                });*/
 
-
-        currentFeedMutable.observeForever(new Observer<FeedEntity>() {
+        /*currentFeed.observeForever(new Observer<FeedEntity>() {
             @Override
             public void onChanged(FeedEntity feedEntity) {
                 Log.d(TAG, "observeforeverCurrentFeedMutable toString: " + feedEntity.toString());
 
                 setCurrentFeed_RssLink(feedEntity.getRssFeedLink());
             }
-        });
+        });*/
 
 
     }
@@ -127,29 +82,25 @@ public class FeedPropsViewModel extends AndroidViewModel {
         return currentGroupMutable;
     }
 
-    /* public LiveData<GroupEntity> getCurrentGroup ()
-     {
-         return currentGroup;
-     }*/
+
     public void setCurrentGroupMutable(GroupEntity value) {
         currentGroupMutable.postValue(value);
     }
 
+    public MutableLiveData<FeedEntity> getCurrentFeed() {
 
-    public void setCurrentFeed_RssLink(String value)
-    {
-        currentFeed_RssLink.setValue(value);
-    }
-    public MutableLiveData<FeedEntity> getCurrentFeedMutable() {
-
-        return currentFeedMutable;
+        return currentFeed;
     }
 
-    public void setCurrentFeedMutable(FeedEntity item) {
+    public void setCurrentFeed(@NonNull FeedEntity item) {
 
         Log.d(TAG, "currentFeed value set to: " + item.getCustomTitle());
 
-        currentFeedMutable.setValue(item);
+        currentFeed.setValue(item);
+
+        currentFeed_CustomTitle.setValue(item.getCustomTitle());
+        currentFeed_RssLink.setValue(item.getRssFeedLink());
+        currentFeed_GroupId.setValue((Long) item.getFeedGroupId());
 
 
     }
@@ -158,17 +109,32 @@ public class FeedPropsViewModel extends AndroidViewModel {
         return currentFeed_RssLink;
     }
 
-    public int getCurrentPosition() {
-        return currentPosition;
+    public void setCurrentFeed_RssLink(String value)
+    {
+        currentFeed_RssLink.setValue(value);
     }
 
     public LiveData<List<GroupEntity>> getListGroups() {
         return listGroups;
     }
 
-    public LiveData<List<String>> getListGroupNames() {
-        return listGroupNames;
+    public MutableLiveData<String> getCurrentFeed_CustomTitle() {
+        return currentFeed_CustomTitle;
+    }
+
+    public MutableLiveData<Long> getCurrentFeed_GroupId() {
+        return currentFeed_GroupId;
     }
 
 
+    public void setCurrentFeed_CustomTitle(String value) {
+        currentFeed_CustomTitle.setValue(value);
+    }
+
+    public void  setCurrentFeed_GroupId(Long value) {
+
+        if (currentFeed_GroupId.getValue() != value) {
+            currentFeed_GroupId.setValue(value);
+        }
+    }
 }

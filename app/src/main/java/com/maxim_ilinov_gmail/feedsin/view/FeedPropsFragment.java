@@ -12,10 +12,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,13 +23,10 @@ import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.InverseBindingAdapter;
 import androidx.databinding.InverseBindingListener;
-import androidx.databinding.ViewDataBinding;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.maxim_ilinov_gmail.feedsin.R;
@@ -69,6 +64,8 @@ public class FeedPropsFragment extends Fragment {
 
         List<GroupEntity> listGroupValues = listGroups.getValue();
 
+
+
         Log.d(TAG, "inside @BindingAdapter(value = {\"listOfGroups\", \"selectedGroup\", \"selectedGroupAttrChanged\"}");
 
         if (listGroupValues == null)
@@ -105,22 +102,29 @@ public class FeedPropsFragment extends Fragment {
 
         Log.d(TAG, "selectedGroup id = " + selectedGroup);
 
-        for (int index = 0; index < spinner.getAdapter().getCount(); index++) {
-
-            Log.d(TAG, "spinner item = " + ((GroupEntity) spinner.getItemAtPosition(index)).getName());
+        Log.d(TAG, "((GroupEntity) spinner.getSelectedItem()).getId() = "  +((GroupEntity) spinner.getSelectedItem()).getId());
 
 
-            if (((GroupEntity) spinner.getItemAtPosition(index)).getId() == selectedGroup) {
 
-                Log.d(TAG, "matched spinner item = " + ((GroupEntity) spinner.getItemAtPosition(index)).getName());
+      if (  ((GroupEntity) spinner.getSelectedItem()).getId() != selectedGroup) {
 
-                spinner.setSelection(index);
+          for (int index = 0; index < spinner.getAdapter().getCount(); index++) {
 
-                return true;
-            }
-        }
+              Log.d(TAG, "spinner item = " + ((GroupEntity) spinner.getItemAtPosition(index)).getName());
 
-        return false;
+
+              if (((GroupEntity) spinner.getItemAtPosition(index)).getId() == selectedGroup) {
+
+                  Log.d(TAG, "matched spinner item = " + ((GroupEntity) spinner.getItemAtPosition(index)).getName());
+
+                  spinner.setSelection(index);
+
+                  return true;
+              }
+          }
+      }
+          return false;
+
     }
 
     private static void setSpinnerListener(Spinner spinner, InverseBindingListener listener) {
@@ -182,12 +186,22 @@ public class FeedPropsFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                viewModel.getCurrentFeedMutable().setValue(new FeedEntity("custom title", "custom link"));
+                Log.d(TAG, "CurrentLinkValue = " + viewModel.getCurrentFeed_RssLink().getValue() );
+
+                //viewModel.getCurrentFeed().setValue(new FeedEntity("custom title", "custom link"));
+            }
+        });
+
+        viewModel.getCurrentFeed_RssLink().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                Log.d(TAG, "CurrentLinkValue observed = " + s );
             }
         });
 
 
-        viewModel.getCurrentFeedMutable().observe(getViewLifecycleOwner(), new Observer<FeedEntity>() {
+
+        viewModel.getCurrentFeed().observe(getViewLifecycleOwner(), new Observer<FeedEntity>() {
             @Override
             public void onChanged(FeedEntity feedEntity) {
                 Log.d(TAG,"observeCurrentFeedMutable toString: " + feedEntity.toString());
