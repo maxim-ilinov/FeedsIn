@@ -26,6 +26,7 @@ import androidx.databinding.InverseBindingListener;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -60,10 +61,10 @@ public class FeedPropsFragment extends Fragment {
 
     @BindingAdapter(value = {"listOfGroups", "selectedGroup", "selectedGroupAttrChanged"}, requireAll = false)
     public static void setListOfGroups(Spinner spinner, LiveData<List<GroupEntity>> listGroups,
-                                       Long feedGroupId, InverseBindingListener listener) {
+                                       MutableLiveData<Long> feedGroupId, InverseBindingListener listener) {
 
         List<GroupEntity> listGroupValues = listGroups.getValue();
-
+        Long groupIdLong = feedGroupId.getValue();
 
 
         Log.d(TAG, "inside @BindingAdapter(value = {\"listOfGroups\", \"selectedGroup\", \"selectedGroupAttrChanged\"}");
@@ -74,6 +75,13 @@ public class FeedPropsFragment extends Fragment {
             return;
         }
 
+        if (groupIdLong == null)
+        {
+            Log.d(TAG, "groupIdLong is null");
+            return;
+        }
+
+
 
         ArrayAdapter<GroupEntity> adapter = new FeedPropsFragment.GroupNameAdapter(spinner.getContext(),
                 android.R.layout.simple_spinner_dropdown_item, listGroupValues);
@@ -82,13 +90,15 @@ public class FeedPropsFragment extends Fragment {
 
 
 
-        if (feedGroupId ==null) {
+        if (feedGroupId == null) {
             Log.d(TAG, "selectedGroupValue is null");
 
             return;
         }
 
-        setCurrentSelection(spinner, feedGroupId);
+
+
+        setCurrentSelection(spinner, groupIdLong);
 
         setSpinnerListener(spinner, listener);
 
@@ -129,20 +139,25 @@ public class FeedPropsFragment extends Fragment {
 
     private static void setSpinnerListener(Spinner spinner, InverseBindingListener listener) {
 
+
+        if (spinner.getOnItemSelectedListener() == listener) {
+            return;
+        }
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
+                Log.d(TAG, "in onItemSelected of setSpinnerListener, position = "+ position +" , id = " + id);
+
                 listener.onChange();
-
-
 
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
-                listener.onChange();
+//                listener.onChange();
 
             }
         });
