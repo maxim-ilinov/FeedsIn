@@ -55,6 +55,7 @@ public class FeedPropsFragment extends Fragment {
     private TextView feedCustomTitle;
 
     private Button bt;
+
     public FeedPropsFragment() {
         // Required empty public constructor
     }
@@ -63,24 +64,26 @@ public class FeedPropsFragment extends Fragment {
     public static void setListOfGroups(Spinner spinner, LiveData<List<GroupEntity>> listGroups,
                                        MutableLiveData<Long> feedGroupId, InverseBindingListener listener) {
 
+
+
         List<GroupEntity> listGroupValues = listGroups.getValue();
         Long groupIdLong = feedGroupId.getValue();
 
 
         Log.d(TAG, "inside @BindingAdapter(value = {\"listOfGroups\", \"selectedGroup\", \"selectedGroupAttrChanged\"}");
 
-        if (listGroupValues == null)
-        {
+
+
+
+        if (listGroupValues == null) {
             Log.d(TAG, "listGroupValues is null");
             return;
         }
 
-        if (groupIdLong == null)
-        {
+        if (groupIdLong == null) {
             Log.d(TAG, "groupIdLong is null");
             return;
         }
-
 
 
         ArrayAdapter<GroupEntity> adapter = new FeedPropsFragment.GroupNameAdapter(spinner.getContext(),
@@ -89,51 +92,52 @@ public class FeedPropsFragment extends Fragment {
         spinner.setAdapter(adapter);
 
 
-
-        if (feedGroupId == null) {
-            Log.d(TAG, "selectedGroupValue is null");
-
-            return;
-        }
-
-
+        if (((GroupEntity) spinner.getSelectedItem()).getId() == groupIdLong) {
+            Log.d(TAG, "spinner.getSelectedItem()).getId() == selectedGroup !!! Canceling binding...");
+            return ;
+        } ;
 
         setCurrentSelection(spinner, groupIdLong);
 
         setSpinnerListener(spinner, listener);
 
 
-
     }
-
 
 
     private static boolean setCurrentSelection(Spinner spinner, @NonNull Long selectedGroup) {
 
         Log.d(TAG, "selectedGroup id = " + selectedGroup);
 
-        Log.d(TAG, "((GroupEntity) spinner.getSelectedItem()).getId() = "  +((GroupEntity) spinner.getSelectedItem()).getId());
+        Log.d(TAG, "((GroupEntity) spinner.getSelectedItem()).getId() = " + ((GroupEntity) spinner.getSelectedItem()).getId());
 
 
+        if (((GroupEntity) spinner.getSelectedItem()).getId() == selectedGroup) {
+            Log.d(TAG, "spinner.getSelectedItem()).getId() == selectedGroup !!!");
+            return false;
+        } else {
+            Log.d(TAG, "spinner.getSelectedItem()).getId() != selectedGroup !!!");
+        }
 
-      if (  ((GroupEntity) spinner.getSelectedItem()).getId() != selectedGroup) {
 
-          for (int index = 0; index < spinner.getAdapter().getCount(); index++) {
+        if (((GroupEntity) spinner.getSelectedItem()).getId() != selectedGroup) {
 
-              Log.d(TAG, "spinner item = " + ((GroupEntity) spinner.getItemAtPosition(index)).getName());
+            for (int index = 0; index < spinner.getAdapter().getCount(); index++) {
+
+                Log.d(TAG, "spinner item = " + ((GroupEntity) spinner.getItemAtPosition(index)).getName());
 
 
-              if (((GroupEntity) spinner.getItemAtPosition(index)).getId() == selectedGroup) {
+                if (((GroupEntity) spinner.getItemAtPosition(index)).getId() == selectedGroup) {
 
-                  Log.d(TAG, "matched spinner item = " + ((GroupEntity) spinner.getItemAtPosition(index)).getName());
+                    Log.d(TAG, "matched spinner item = " + ((GroupEntity) spinner.getItemAtPosition(index)).getName());
 
-                  spinner.setSelection(index);
+                    spinner.setSelection(index);
 
-                  return true;
-              }
-          }
-      }
-          return false;
+                    return true;
+                }
+            }
+        }
+        return false;
 
     }
 
@@ -148,7 +152,9 @@ public class FeedPropsFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                Log.d(TAG, "in onItemSelected of setSpinnerListener, position = "+ position +" , id = " + id);
+                Log.d(TAG, "in onItemSelected of setSpinnerListener, position = " + position + " , id = " + id);
+
+                Log.d(TAG, "((GroupEntity)spinner.getSelectedItem()).getId() = " + ((GroupEntity) spinner.getSelectedItem()).getId());
 
                 listener.onChange();
 
@@ -165,21 +171,21 @@ public class FeedPropsFragment extends Fragment {
     }
 
     @InverseBindingAdapter(attribute = "selectedGroup", event = "selectedGroupAttrChanged")
-    public static Long getSelectedGroup(Spinner spinner) {
+    public static Long getSelectedGroupId(Spinner spinner) {
 
-        Log.d(TAG, "(Long)spinner.getSelectedItem(): " + ((GroupEntity)spinner.getSelectedItem()).getName());
+        Log.d(TAG, "inside @InverseBindingAdapter(attribute = \"selectedGroup\", event = \"selectedGroupAttrChanged\")");
 
 
-        return (long)((GroupEntity) spinner.getSelectedItem()).getId();
+        Log.d(TAG, "(Long)spinner.getSelectedItem().getId(): " + ((GroupEntity) spinner.getSelectedItem()).getId());
+
+
+        return (long) ((GroupEntity) spinner.getSelectedItem()).getId();
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
-
 
 
         Log.d(TAG, "onCreateView");
@@ -201,35 +207,28 @@ public class FeedPropsFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Log.d(TAG, "CurrentLinkValue = " + viewModel.getCurrentFeed_RssLink().getValue() );
+                Log.d(TAG, "CurrentLinkValue = " + viewModel.getCurrentFeed_RssLink().getValue());
 
                 //viewModel.getCurrentFeed().setValue(new FeedEntity("custom title", "custom link"));
             }
         });
 
-        viewModel.getCurrentFeed_RssLink().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                Log.d(TAG, "CurrentLinkValue observed = " + s );
-            }
-        });
 
 
 
         viewModel.getCurrentFeed().observe(getViewLifecycleOwner(), new Observer<FeedEntity>() {
             @Override
             public void onChanged(FeedEntity feedEntity) {
-                Log.d(TAG,"observeCurrentFeedMutable toString: " + feedEntity.toString());
+                Log.d(TAG, "observeCurrentFeedMutable toString: " + feedEntity.toString());
             }
         });
 
         viewModel.getCurrentFeed_RssLink().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                Log.d(TAG,"CurrentFeed_RssLink changed to: " + s);
+                Log.d(TAG, "CurrentFeed_RssLink changed to: " + s);
             }
         });
-
 
 
         return binding.getRoot();
@@ -266,9 +265,6 @@ public class FeedPropsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         setupToolbar();
         setHasOptionsMenu(true);
-
-
-
 
 
     }
