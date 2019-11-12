@@ -60,17 +60,14 @@ public class FeedPropsFragment extends Fragment {
         // Required empty public constructor
     }
 
-    @BindingAdapter(value = {"listOfGroups", "selectedGroup", "selectedGroupAttrChanged"}, requireAll = false)
-    public static void setListOfGroups(Spinner spinner, LiveData<List<GroupEntity>> listGroups,
-                                       MutableLiveData<Long> feedGroupId, InverseBindingListener listener) {
+    @BindingAdapter( {"listOfGroups"})
+    public static void setListOfGroups(Spinner spinner, LiveData<List<GroupEntity>> listGroups) {
 
+        Log.d(TAG, "inside setListOfGroups BindingAdapter");
 
 
         List<GroupEntity> listGroupValues = listGroups.getValue();
-        Long groupIdLong = feedGroupId.getValue();
 
-
-        Log.d(TAG, "inside @BindingAdapter(value = {\"listOfGroups\", \"selectedGroup\", \"selectedGroupAttrChanged\"}");
 
 
 
@@ -80,10 +77,7 @@ public class FeedPropsFragment extends Fragment {
             return;
         }
 
-        if (groupIdLong == null) {
-            Log.d(TAG, "groupIdLong is null");
-            return;
-        }
+
 
 
         ArrayAdapter<GroupEntity> adapter = new FeedPropsFragment.GroupNameAdapter(spinner.getContext(),
@@ -92,10 +86,31 @@ public class FeedPropsFragment extends Fragment {
         spinner.setAdapter(adapter);
 
 
-        if (((GroupEntity) spinner.getSelectedItem()).getId() == groupIdLong) {
+
+    }
+    @BindingAdapter(value = {"selectedGroup", "selectedGroupAttrChanged"}, requireAll = false)
+    public static void setSelectedGroup(Spinner spinner,
+                                        MutableLiveData<Long> feedGroupId,
+                                        InverseBindingListener listener) {
+
+        Log.d(TAG, "inside setSelectedGroup bindingAdapter");
+
+
+        Long groupIdLong = feedGroupId.getValue();
+
+
+
+        if (groupIdLong == null) {
+            Log.d(TAG, "groupIdLong is null");
+            return;
+        }
+
+
+
+        /*if (((GroupEntity) spinner.getSelectedItem()).getId() == groupIdLong) {
             Log.d(TAG, "spinner.getSelectedItem()).getId() == selectedGroup !!! Canceling binding...");
             return ;
-        } ;
+        } ;*/
 
         setCurrentSelection(spinner, groupIdLong);
 
@@ -106,6 +121,14 @@ public class FeedPropsFragment extends Fragment {
 
 
     private static boolean setCurrentSelection(Spinner spinner, @NonNull Long selectedGroup) {
+
+        Log.d(TAG, "setCurrentSelection started");
+
+        if ( spinner.getSelectedItem() == null)
+        {
+            return false;
+        }
+
 
         Log.d(TAG, "selectedGroup id = " + selectedGroup);
 
@@ -143,10 +166,10 @@ public class FeedPropsFragment extends Fragment {
 
     private static void setSpinnerListener(Spinner spinner, InverseBindingListener listener) {
 
-
-        if (spinner.getOnItemSelectedListener() == listener) {
+        Log.d(TAG, "setSpinnerListener");
+      /*  if (spinner.getOnItemSelectedListener() == listener) {
             return;
-        }
+        }*/
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -173,7 +196,7 @@ public class FeedPropsFragment extends Fragment {
     @InverseBindingAdapter(attribute = "selectedGroup", event = "selectedGroupAttrChanged")
     public static Long getSelectedGroupId(Spinner spinner) {
 
-        Log.d(TAG, "inside @InverseBindingAdapter(attribute = \"selectedGroup\", event = \"selectedGroupAttrChanged\")");
+        Log.d(TAG, "inside getSelectedGroupId InverseBindingAdapter");
 
 
         Log.d(TAG, "(Long)spinner.getSelectedItem().getId(): " + ((GroupEntity) spinner.getSelectedItem()).getId());
