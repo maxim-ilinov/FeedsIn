@@ -137,4 +137,18 @@ public class FeedPropsViewModel extends AndroidViewModel {
             currentFeed_GroupId.setValue(value);
         }
     }
+
+    public void updateFeedWithCurrentValues() {
+
+        feedAndGroupRepository.updateFeedWithAllValues(new FeedEntity(
+                currentFeed_CustomTitle.getValue(),
+                currentFeed_RssLink.getValue(),
+                currentFeed_GroupId.getValue()));
+
+
+
+
+
+
+    }
 }

@@ -1,12 +1,14 @@
 package com.maxim_ilinov_gmail.feedsin.view;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -14,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,6 +32,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.maxim_ilinov_gmail.feedsin.R;
 import com.maxim_ilinov_gmail.feedsin.databinding.FragmentFeedPropsBinding;
@@ -314,6 +319,38 @@ public class FeedPropsFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
 
         // menu.clear();
+
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        Log.d(TAG, item.toString());
+
+        NavController navController = Navigation.findNavController((Activity)getActivity(), R.id.nav_host_fragment);
+
+        switch (item.getItemId()) {
+
+
+            case R.id.save_feed:
+
+
+                Toast.makeText(getContext(),"Saving values...",Toast.LENGTH_SHORT).show();
+
+                viewModel.updateFeedWithCurrentValues();
+
+                navController.navigate(R.id.);
+
+                return true;
+
+
+
+            default:
+                return super.onOptionsItemSelected(item);
+
+
+        }
 
 
     }

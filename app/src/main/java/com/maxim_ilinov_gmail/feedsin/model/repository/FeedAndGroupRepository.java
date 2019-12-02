@@ -277,4 +277,15 @@ public class FeedAndGroupRepository {
 
         return groupDao.getGroupById(groupId);
     }
+
+    public void updateFeedWithAllValues(FeedEntity feedEntity) {
+
+        executor.execute(() -> {
+
+
+
+            feedDao.updateFeed(feedEntity);
+        });
+
+    }
 }
