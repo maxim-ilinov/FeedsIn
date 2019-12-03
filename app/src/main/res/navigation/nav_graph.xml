@@ -65,7 +65,11 @@
     <fragment
         android:id="@+id/feedPropsFragment"
         android:name="com.maxim_ilinov_gmail.feedsin.view.FeedPropsFragment"
-        tools:layout="@layout/fragment_feed_props" />
+        tools:layout="@layout/fragment_feed_props" >
+        <action
+            android:id="@+id/action_feedPropsFragment_to_organizeFeedsFragment"
+            app:destination="@id/organizeFeedsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/aboutFragment"
         android:name="com.maxim_ilinov_gmail.feedsin.view.AboutFragment"

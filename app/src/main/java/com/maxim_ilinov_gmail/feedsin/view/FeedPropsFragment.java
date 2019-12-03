@@ -340,7 +340,7 @@ public class FeedPropsFragment extends Fragment {
 
                 viewModel.updateFeedWithCurrentValues();
 
-                navController.navigate(R.id.);
+                navController.navigate(R.id.action_feedPropsFragment_to_organizeFeedsFragment);
 
                 return true;
 
