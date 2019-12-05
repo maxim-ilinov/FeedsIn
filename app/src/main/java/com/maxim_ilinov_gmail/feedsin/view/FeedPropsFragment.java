@@ -237,14 +237,14 @@ public class FeedPropsFragment extends Fragment {
 
                 Log.d(TAG, "CurrentLinkValue = " + viewModel.getCurrentFeed_RssLink().getValue());
 
-                //viewModel.getCurrentFeed().setValue(new FeedEntity("custom title", "custom link"));
+                //viewModel.getCurrentFeedLDMutable().setValue(new FeedEntity("custom title", "custom link"));
             }
         });
 
 
 
 
-        viewModel.getCurrentFeed().observe(getViewLifecycleOwner(), new Observer<FeedEntity>() {
+        viewModel.getCurrentFeedLDMutable().observe(getViewLifecycleOwner(), new Observer<FeedEntity>() {
             @Override
             public void onChanged(FeedEntity feedEntity) {
                 Log.d(TAG, "observeCurrentFeedMutable toString: " + feedEntity.toString());
