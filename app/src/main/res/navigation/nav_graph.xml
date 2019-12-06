@@ -68,6 +68,8 @@
         tools:layout="@layout/fragment_feed_props" >
         <action
             android:id="@+id/action_feedPropsFragment_to_organizeFeedsFragment"
+            app:popUpTo="@+id/organizeFeedsFragment"
+            app:popUpToInclusive="true"
             app:destination="@id/organizeFeedsFragment" />
     </fragment>
     <fragment
