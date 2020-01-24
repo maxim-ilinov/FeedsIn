@@ -7,11 +7,15 @@
     <data>
         <variable name = "viewmodel"
             type = "com.maxim_ilinov_gmail.feedsin.viewmodel.FeedPropsViewModel"/>
+        <variable name="handler" type="com.maxim_ilinov_gmail.feedsin.view.HandlerViewFocusChange"/>
 
     </data>
 
 <LinearLayout
-
+    app:onFocusChangeListener="@{handler.onFocusChangeListener}"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
 
     android:id="@+id/Layout"
     android:layout_width="match_parent"
@@ -34,10 +38,11 @@
         <EditText
             android:id="@+id/feed_title_editText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="64dp"
 
-            tools:text="Habr the best"
-            android:text="@={viewmodel.currentFeed_CustomTitle}"/>
+            android:text="@={viewmodel.currentFeed_CustomTitle}"
+            app:onFocusChangeListener="@{handler.onFocusChangeListener}"
+            tools:text="Habr the best" />
 
     </LinearLayout>
 

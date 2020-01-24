@@ -125,6 +125,7 @@ public class FeedPropsFragment extends Fragment {
     }
 
 
+
     private static boolean setCurrentSelection(Spinner spinner, @NonNull Long selectedGroup) {
 
         Log.d(TAG, "setCurrentSelection started");
@@ -228,6 +229,7 @@ public class FeedPropsFragment extends Fragment {
 
         binding.setLifecycleOwner(getViewLifecycleOwner());
 
+        binding.setHandler(new HandlerViewFocusChange());
 
         bt = binding.buttonChangeTitle;
 
