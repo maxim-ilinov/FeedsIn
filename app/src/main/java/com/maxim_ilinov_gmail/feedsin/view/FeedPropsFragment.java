@@ -231,7 +231,7 @@ public class FeedPropsFragment extends Fragment {
 
         binding.setHandler(new HandlerViewFocusChange());
 
-        bt = binding.buttonChangeTitle;
+      /*  bt = binding.buttonChangeTitle;
 
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -241,7 +241,7 @@ public class FeedPropsFragment extends Fragment {
 
                 //viewModel.getCurrentFeedLDMutable().setValue(new FeedEntity("custom title", "custom link"));
             }
-        });
+        });*/
 
 
 

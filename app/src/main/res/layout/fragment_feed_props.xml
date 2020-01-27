@@ -67,6 +67,7 @@
             android:maxLines="3"
             android:minLines="1"
             android:text="@={viewmodel.currentFeed_RssLink}"
+            app:onFocusChangeListener="@{handler.onFocusChangeListener}"
             tools:text="https://habr.com/rss/hub/apps_design/all/?hl=ru&amp;fl=ru" />
 
     </LinearLayout>
@@ -99,12 +100,6 @@
 
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/button_changeTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Change title" />
 
 </LinearLayout>
 </layout>
