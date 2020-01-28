@@ -70,27 +70,17 @@ public class FeedPropsFragment extends Fragment {
 
         Log.d(TAG, "inside setListOfGroups BindingAdapter");
 
-
         List<GroupEntity> listGroupValues = listGroups.getValue();
-
-
-
-
 
         if (listGroupValues == null) {
             Log.d(TAG, "listGroupValues is null");
             return;
         }
 
-
-
-
         ArrayAdapter<GroupEntity> adapter = new FeedPropsFragment.GroupNameAdapter(spinner.getContext(),
                 android.R.layout.simple_spinner_dropdown_item, listGroupValues);
 
         spinner.setAdapter(adapter);
-
-
 
     }
     @BindingAdapter(value = {"selectedGroup", "selectedGroupAttrChanged"}, requireAll = false)
@@ -134,6 +124,7 @@ public class FeedPropsFragment extends Fragment {
         {
             return false;
         }
+
 
 
         Log.d(TAG, "selectedGroup id = " + selectedGroup);
