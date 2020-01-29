@@ -19,7 +19,12 @@
     <fragment
         android:id="@+id/feedgroupPropsFragment"
         android:name="com.maxim_ilinov_gmail.feedsin.view.GroupPropsFragment"
-        tools:layout="@layout/fragment_group_props" />
+        tools:layout="@layout/fragment_group_props" >
+        <action
+            android:id="@+id/action_feedgroupPropsFragment_pop"
+            app:popUpTo="@id/feedgroupPropsFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 
         <fragment
             android:id="@+id/rssItemsListFragment"
@@ -71,6 +76,10 @@
             app:popUpTo="@+id/organizeFeedsFragment"
             app:popUpToInclusive="true"
             app:destination="@id/organizeFeedsFragment" />
+        <action
+            android:id="@+id/action_feedPropsFragment_pop"
+            app:popUpTo="@id/feedPropsFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/aboutFragment"

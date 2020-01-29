@@ -29,7 +29,7 @@ public class FeedPropsViewModel extends AndroidViewModel {
     private final MutableLiveData<FeedEntity> currentFeedLDMutable = new MutableLiveData<>();
     private final MutableLiveData<GroupEntity> currentGroupLDMutable = new MutableLiveData<>();
 
-    //databinding code generation cannot set values to object properties.. :( so we use these ones
+    //databinding code generation cannot create code to set values to class properties.. :( so we use these ones
 
     private final MutableLiveData<String> currentFeed_CustomTitle = new MutableLiveData<>();
     private final MutableLiveData<String> currentFeed_RssLink = new MutableLiveData<>();

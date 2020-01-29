@@ -16,6 +16,8 @@ import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,12 +70,26 @@ public class GroupPropsFragment extends Fragment {
 
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
 
-        String title="GroupEntity props";
-        String subtitle="create or edit";
+        String title="Group properties";
+        String subtitle="create new or edit existing";
 
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_close_black_24dp);
 
         actionBar.setTitle(title);
         actionBar.setSubtitle(subtitle);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+
+
+        inflater.inflate(R.menu.group_props_menu, menu);
+
+        super.onCreateOptionsMenu(menu, inflater);
+
+        // menu.clear();
+
+
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -90,9 +106,9 @@ public class GroupPropsFragment extends Fragment {
 
                 Toast.makeText(getContext(),"Saving values...",Toast.LENGTH_SHORT).show();
 
-                viewModel.updateFeedWithCurrentValues();
+               // viewModel.updateFeedWithCurrentValues();
 
-                navController.navigate(R.id.action_feedPropsFragment_to_organizeFeedsFragment);
+                navController.navigate(R.id.action_feedgroupPropsFragment_pop);
 
                 return true;
 

@@ -1,14 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.GroupPropsFragment">
+<layout xmlns:tools="http://schemas.android.com/tools"
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name = "viewmodel"
+            type = "com.maxim_ilinov_gmail.feedsin.viewmodel.FeedPropsViewModel"/>
+        <variable name="handler" type="com.maxim_ilinov_gmail.feedsin.view.HandlerViewFocusChange"/>
+
+    </data>
+
+    <LinearLayout
+        app:onFocusChangeListener="@{handler.onFocusChangeListener}"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+
+        android:id="@+id/Layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="feedgroup fragment" />
+        android:orientation="vertical">
 
-</FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/group_title_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Title"
+
+                android:text="@string/feed_title"             />
+
+            <EditText
+                android:id="@+id/group_title_editText"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+
+                android:text="@={viewmodel.currentFeed_CustomTitle}"
+                app:onFocusChangeListener="@{handler.onFocusChangeListener}"
+                tools:text="Group name here" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</layout>
