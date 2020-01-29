@@ -22,26 +22,20 @@ public class FeedPropsViewModel extends AndroidViewModel {
 
 
     private static final String TAG = "FeedPropsViewModel";
-
-    private FeedAndGroupRepository feedAndGroupRepository;
-    private LiveData<List<GroupEntity>> listGroups;
-
     private final MutableLiveData<FeedEntity> currentFeedLDMutable = new MutableLiveData<>();
     private final MutableLiveData<GroupEntity> currentGroupLDMutable = new MutableLiveData<>();
-
-    //databinding code generation cannot create code to set values to class properties.. :( so we use these ones
-
     private final MutableLiveData<String> currentFeed_CustomTitle = new MutableLiveData<>();
     private final MutableLiveData<String> currentFeed_RssLink = new MutableLiveData<>();
+
+    //databinding code generation cannot create code to set values of class properties.. :( so we use these ones
     private final MutableLiveData<Long> currentFeed_GroupId = new MutableLiveData<>();
+    private FeedAndGroupRepository feedAndGroupRepository;
+    private LiveData<List<GroupEntity>> listGroups;
 
     public FeedPropsViewModel(@NonNull Application application) {
         super(application);
 
-
         feedAndGroupRepository = FeedAndGroupRepository.getInstance(application);
-
-
 
         listGroups = Transformations.map(feedAndGroupRepository.getFeedGroupsLiveData(), new Function<List<GroupEntity>, List<GroupEntity>>() {
             @Override
@@ -59,28 +53,11 @@ public class FeedPropsViewModel extends AndroidViewModel {
             Log.d(TAG, "currentFeedLDMutable value is null!");
         }
 
-
-
-
-
-
-        /*currentFeedLDMutable.observeForever(new Observer<FeedEntity>() {
-            @Override
-            public void onChanged(FeedEntity feedEntity) {
-                Log.d(TAG, "observeforeverCurrentFeedMutable toString: " + feedEntity.toString());
-
-                setCurrentFeed_RssLink(feedEntity.getRssFeedLink());
-            }
-        });*/
-
-
     }
-
 
     public LiveData<GroupEntity> getCurrentGroupLDMutable() {
         return currentGroupLDMutable;
     }
-
 
     public void setCurrentGroupLDMutable(GroupEntity value) {
         currentGroupLDMutable.postValue(value);
@@ -109,8 +86,7 @@ public class FeedPropsViewModel extends AndroidViewModel {
         return currentFeed_RssLink;
     }
 
-    public void setCurrentFeed_RssLink(String value)
-    {
+    public void setCurrentFeed_RssLink(String value) {
         currentFeed_RssLink.setValue(value);
     }
 
@@ -122,16 +98,15 @@ public class FeedPropsViewModel extends AndroidViewModel {
         return currentFeed_CustomTitle;
     }
 
-    public MutableLiveData<Long> getCurrentFeed_GroupId() {
-        return currentFeed_GroupId;
-    }
-
-
     public void setCurrentFeed_CustomTitle(String value) {
         currentFeed_CustomTitle.setValue(value);
     }
 
-    public void  setCurrentFeed_GroupId(Long value) {
+    public MutableLiveData<Long> getCurrentFeed_GroupId() {
+        return currentFeed_GroupId;
+    }
+
+    public void setCurrentFeed_GroupId(Long value) {
 
         if (currentFeed_GroupId.getValue() != value) {
             currentFeed_GroupId.setValue(value);
@@ -140,28 +115,18 @@ public class FeedPropsViewModel extends AndroidViewModel {
 
     public void updateFeedWithCurrentValues() {
 
-       FeedEntity fe = currentFeedLDMutable.getValue();
+        FeedEntity fe = currentFeedLDMutable.getValue();
 
 
+        fe.setCustomTitle(currentFeed_CustomTitle.getValue());
 
-       fe.setCustomTitle(currentFeed_CustomTitle.getValue());
+        fe.setRssFeedLink(currentFeed_RssLink.getValue());
 
-       fe.setRssFeedLink(currentFeed_RssLink.getValue());
+        fe.setFeedGroupId(currentFeed_GroupId.getValue());
 
-       fe.setFeedGroupId(currentFeed_GroupId.getValue());
-
-
-
-
-        Log.d(TAG, "**** going to save changes to current fedd: " + fe.toString());
-
+        Log.d(TAG, "**** going to save changes to current feed: " + fe.toString());
 
         feedAndGroupRepository.updateFeedWithAllValues(fe);
-
-
-
-
-
 
     }
 }

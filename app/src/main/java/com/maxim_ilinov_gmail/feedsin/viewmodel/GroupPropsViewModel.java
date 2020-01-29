@@ -34,12 +34,13 @@ public class GroupPropsViewModel extends AndroidViewModel {
 
     private int currentPosition;
 
+    private final MutableLiveData<GroupEntity> currentGroupLDMutable = new MutableLiveData<>();
+
     public GroupPropsViewModel(@NonNull Application application) {
         super(application);
 
 
         feedAndGroupRepository = FeedAndGroupRepository.getInstance(application);
-
 
 
     }

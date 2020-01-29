@@ -101,7 +101,7 @@ public class FeedAndGroupListFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
 
-        viewModel.getRvItemsForFeedAndGroupsList().observe(this, rvItems ->
+        viewModel.getRvItemsForFeedAndGroupsList().observe(getViewLifecycleOwner(), rvItems ->
                 {
 
                     adapter.submitList(rvItems);

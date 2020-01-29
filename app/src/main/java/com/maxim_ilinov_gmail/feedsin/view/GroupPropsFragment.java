@@ -101,7 +101,7 @@ public class GroupPropsFragment extends Fragment {
         switch (item.getItemId()) {
 
 
-            case R.id.save_feed:
+            case R.id.save_group:
 
 
                 Toast.makeText(getContext(),"Saving values...",Toast.LENGTH_SHORT).show();
