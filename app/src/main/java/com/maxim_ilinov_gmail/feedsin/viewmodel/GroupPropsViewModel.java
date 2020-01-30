@@ -20,19 +20,10 @@ public class GroupPropsViewModel extends AndroidViewModel {
 
     private static final String TAG = "GroupPropsViewModel";
 
-    private final MutableLiveData<GroupEntity> currentGroup = new MutableLiveData<>();
 
     private FeedAndGroupRepository feedAndGroupRepository;
 
-    private LiveData<Integer> currentGroupId = new MutableLiveData();
 
-    private FeedEntity changedGroup;
-
-    private LiveData<List<GroupEntity>> listGroups;
-
-    private LiveData<List<String>> listGroupNames;
-
-    private int currentPosition;
 
     private final MutableLiveData<GroupEntity> currentGroupLDMutable = new MutableLiveData<>();
 
@@ -47,18 +38,16 @@ public class GroupPropsViewModel extends AndroidViewModel {
 
     public void select(GroupEntity item) {
 
-        if (currentGroup != null) {
-            currentGroup.setValue(item);
+        if (currentGroupLDMutable != null) {
+            currentGroupLDMutable.setValue(item);
         }
 
     }
 
     public LiveData<GroupEntity> getSelected() {
 
-        return currentGroup;
+        return currentGroupLDMutable;
     }
 
-    public int getCurrentPosition() {
-        return currentPosition;
-    }
+
 }
