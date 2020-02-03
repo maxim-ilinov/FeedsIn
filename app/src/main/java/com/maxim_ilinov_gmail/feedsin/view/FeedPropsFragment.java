@@ -31,6 +31,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -211,7 +212,7 @@ public class FeedPropsFragment extends Fragment {
         Log.d(TAG, "onCreateView");
 
 
-        viewModel = ViewModelProviders.of(getActivity()).get(FeedPropsViewModel.class);
+        viewModel = new ViewModelProvider(getActivity()).get(FeedPropsViewModel.class);
 
         FragmentFeedPropsBinding binding = DataBindingUtil.inflate(inflater,
                 R.layout.fragment_feed_props, container, false);
