@@ -27,6 +27,9 @@ public class GroupPropsViewModel extends AndroidViewModel {
 
     private final MutableLiveData<GroupEntity> currentGroupLDMutable = new MutableLiveData<>();
 
+    //databinding code generation cannot create code to set values of class properties.. :( so we use these ones
+    private final MutableLiveData<String> currentGroup_Name = new MutableLiveData<>();
+
     public GroupPropsViewModel(@NonNull Application application) {
         super(application);
 
@@ -36,18 +39,36 @@ public class GroupPropsViewModel extends AndroidViewModel {
 
     }
 
+
+
     public void select(GroupEntity item) {
 
         if (currentGroupLDMutable != null) {
             currentGroupLDMutable.setValue(item);
+
+
+
+
+            setCurrentGroup_Name(currentGroupLDMutable.getValue().getName());
         }
 
     }
 
-    public LiveData<GroupEntity> getSelected() {
+    public MutableLiveData<GroupEntity> getSelected() {
 
         return currentGroupLDMutable;
     }
+
+    public MutableLiveData<String> getCurrentGroup_Name() {
+        return currentGroup_Name;
+    }
+
+    public void setCurrentGroup_Name(String name){
+
+        currentGroup_Name.setValue(name);
+
+    }
+
 
 
 }

@@ -84,7 +84,7 @@ public class FeedAndGroupListAdapter extends PagedListAdapter<RvItem, RecyclerVi
                     //todo fix this
 
                     return false;
-                   //1\throw new
+                   //throw new
                 }
             };
 
@@ -169,7 +169,8 @@ public class FeedAndGroupListAdapter extends PagedListAdapter<RvItem, RecyclerVi
                 Toast.makeText(v.getContext(), "Selected item: " + ((GroupEntity)rvItem).getName(), Toast.LENGTH_SHORT).show();
 
                 NavController navController = Navigation.findNavController((Activity) v.getContext(), R.id.nav_host_fragment);
-             navController.navigate(R.id.action_organizeFeedsFragment_to_feedgroupPropsFragment);
+
+                navController.navigate(R.id.action_organizeFeedsFragment_to_feedgroupPropsFragment);
 
 
                     });
@@ -185,11 +186,13 @@ public class FeedAndGroupListAdapter extends PagedListAdapter<RvItem, RecyclerVi
                     FeedViewHolder feedViewHolder = (FeedViewHolder) holder;
 
                     feedViewHolder.itemView.setOnClickListener(v -> {
+
                     feedPropsViewModel.setCurrentFeedLDMutable((FeedEntity) rvItem);
 
                         Toast.makeText(v.getContext(), "Selected item: " + ((FeedEntity)rvItem).getCustomTitle(), Toast.LENGTH_SHORT).show();
 
                         NavController navController = Navigation.findNavController((Activity) v.getContext(), R.id.nav_host_fragment);
+
                         navController.navigate(R.id.action_organizeFeedsFragment_to_feedPropsFragment);
 
 

@@ -24,13 +24,17 @@ public class FeedPropsViewModel extends AndroidViewModel {
     private static final String TAG = "FeedPropsViewModel";
     private final MutableLiveData<FeedEntity> currentFeedLDMutable = new MutableLiveData<>();
     private final MutableLiveData<GroupEntity> currentGroupLDMutable = new MutableLiveData<>();
-    private final MutableLiveData<String> currentFeed_CustomTitle = new MutableLiveData<>();
-    private final MutableLiveData<String> currentFeed_RssLink = new MutableLiveData<>();
-
-    //databinding code generation cannot create code to set values of class properties.. :( so we use these ones
-    private final MutableLiveData<Long> currentFeed_GroupId = new MutableLiveData<>();
     private FeedAndGroupRepository feedAndGroupRepository;
     private LiveData<List<GroupEntity>> listGroups;
+
+
+    //databinding code generation cannot create code to set values of class properties.. :( so we use these ones
+    private final MutableLiveData<String> currentFeed_CustomTitle = new MutableLiveData<>();
+    private final MutableLiveData<String> currentFeed_RssLink = new MutableLiveData<>();
+    private final MutableLiveData<Long> currentFeed_GroupId = new MutableLiveData<>();
+
+
+
 
     public FeedPropsViewModel(@NonNull Application application) {
         super(application);
@@ -74,9 +78,11 @@ public class FeedPropsViewModel extends AndroidViewModel {
 
         currentFeedLDMutable.setValue(item);
 
-        currentFeed_CustomTitle.setValue(item.getCustomTitle());
-        currentFeed_RssLink.setValue(item.getRssFeedLink());
-        currentFeed_GroupId.setValue((Long) item.getFeedGroupId());
+        setCurrentFeed_CustomTitle(item.getCustomTitle());
+
+        setCurrentFeed_RssLink(item.getRssFeedLink());
+
+        setCurrentFeed_GroupId((Long) item.getFeedGroupId());
 
 
     }

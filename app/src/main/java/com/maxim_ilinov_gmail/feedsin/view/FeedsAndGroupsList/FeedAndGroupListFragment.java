@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -78,14 +79,11 @@ public class FeedAndGroupListFragment extends Fragment {
 
 //        getActivity().invalidateOptionsMenu();
 
+        viewModel = new ViewModelProvider(getActivity()).get(FeedAndGroupListViewModel.class);
 
+        feedPropsViewModel = new ViewModelProvider(getActivity()).get(FeedPropsViewModel.class);
 
-        viewModel = ViewModelProviders.of(getActivity()).get(FeedAndGroupListViewModel.class);
-
-
-        feedPropsViewModel = ViewModelProviders.of(getActivity()).get(FeedPropsViewModel.class);
-
-        groupPropsViewModel = ViewModelProviders.of(getActivity()).get(GroupPropsViewModel.class);
+        groupPropsViewModel = new ViewModelProvider(getActivity()).get(GroupPropsViewModel.class);
 
         adapter = new FeedAndGroupListAdapter(getActivity(), viewModel, feedPropsViewModel, groupPropsViewModel);
 
@@ -132,7 +130,7 @@ public class FeedAndGroupListFragment extends Fragment {
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) { //top menu
 
         Log.d(TAG, item.toString());
 

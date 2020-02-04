@@ -10,6 +10,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -51,7 +52,7 @@ public class GroupPropsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        viewModel = ViewModelProviders.of(getActivity()).get(GroupPropsViewModel.class);
+        viewModel = new ViewModelProvider(getActivity()).get(GroupPropsViewModel.class);
 
         return inflater.inflate(R.layout.fragment_group_props, container, false);
     }

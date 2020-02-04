@@ -6,8 +6,9 @@
 
     <data>
         <variable name = "viewmodel"
-            type = "com.maxim_ilinov_gmail.feedsin.viewmodel.FeedPropsViewModel"/>
-        <variable name="handler" type="com.maxim_ilinov_gmail.feedsin.view.HandlerViewFocusChange"/>
+            type = "com.maxim_ilinov_gmail.feedsin.viewmodel.GroupPropsViewModel"/>
+        <variable name="handler"
+            type="com.maxim_ilinov_gmail.feedsin.view.HandlerViewFocusChange"/>
 
     </data>
 
@@ -40,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
 
-                android:text="@={viewmodel.currentFeed_CustomTitle}"
+                android:text="@={viewmodel.getCurrentGroup_Name}"
                 app:onFocusChangeListener="@{handler.onFocusChangeListener}"
                 tools:text="Group name here" />
 
