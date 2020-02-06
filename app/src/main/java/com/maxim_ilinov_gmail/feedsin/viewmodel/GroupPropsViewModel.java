@@ -2,17 +2,18 @@ package com.maxim_ilinov_gmail.feedsin.viewmodel;
 
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
+
 import androidx.lifecycle.MutableLiveData;
 
-import com.maxim_ilinov_gmail.feedsin.model.FeedEntity;
+
 import com.maxim_ilinov_gmail.feedsin.model.GroupEntity;
 import com.maxim_ilinov_gmail.feedsin.model.repository.FeedAndGroupRepository;
 
-import java.util.List;
+
 
 
 public class GroupPropsViewModel extends AndroidViewModel {
@@ -46,6 +47,7 @@ public class GroupPropsViewModel extends AndroidViewModel {
         if (currentGroupLDMutable != null) {
             currentGroupLDMutable.setValue(item);
 
+            Log.d(TAG, "currentGroupLDMutable value set to: " + item.getName());
 
 
 

@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -26,6 +27,9 @@ import android.widget.Toast;
 
 import com.maxim_ilinov_gmail.feedsin.R;
 
+import com.maxim_ilinov_gmail.feedsin.databinding.FragmentFeedPropsBinding;
+import com.maxim_ilinov_gmail.feedsin.databinding.FragmentGroupPropsBinding;
+import com.maxim_ilinov_gmail.feedsin.viewmodel.FeedPropsViewModel;
 import com.maxim_ilinov_gmail.feedsin.viewmodel.GroupPropsViewModel;
 
 import static androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_LOCKED_CLOSED;
@@ -54,7 +58,18 @@ public class GroupPropsFragment extends Fragment {
 
         viewModel = new ViewModelProvider(getActivity()).get(GroupPropsViewModel.class);
 
-        return inflater.inflate(R.layout.fragment_group_props, container, false);
+
+       FragmentGroupPropsBinding binding = DataBindingUtil.inflate(inflater,
+                R.layout.fragment_group_props, container, false);
+
+        binding.setViewmodel(viewModel);
+
+        binding.setLifecycleOwner(getViewLifecycleOwner());
+
+        binding.setHandler(new HandlerViewFocusChange());
+
+
+        return binding.getRoot();
     }
 
     @Override

@@ -237,7 +237,7 @@ public class FeedPropsFragment extends Fragment {
 
 
 
-
+/*
         viewModel.getCurrentFeedLDMutable().observe(getViewLifecycleOwner(), new Observer<FeedEntity>() {
             @Override
             public void onChanged(FeedEntity feedEntity) {
@@ -250,7 +250,7 @@ public class FeedPropsFragment extends Fragment {
             public void onChanged(String s) {
                 Log.d(TAG, "CurrentFeed_RssLink changed to: " + s);
             }
-        });
+        });*/
 
 
         return binding.getRoot();

@@ -83,8 +83,6 @@ public class FeedPropsViewModel extends AndroidViewModel {
         setCurrentFeed_RssLink(item.getRssFeedLink());
 
         setCurrentFeed_GroupId((Long) item.getFeedGroupId());
-
-
     }
 
 
