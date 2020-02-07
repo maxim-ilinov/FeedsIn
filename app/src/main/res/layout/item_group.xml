@@ -52,10 +52,10 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <CheckBox
+            <!--<CheckBox
                 android:id="@+id/cbGroup"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content" />-->
         </LinearLayout>
 
 

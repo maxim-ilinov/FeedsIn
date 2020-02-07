@@ -70,7 +70,19 @@ public class GroupPropsViewModel extends AndroidViewModel {
         currentGroup_Name.setValue(name);
 
     }
+    public void updateGroupWithCurrentValues() {
 
+        GroupEntity ge = currentGroupLDMutable.getValue();
+
+
+        ge.setName(currentGroup_Name.getValue());
+
+
+        Log.d(TAG, "**** going to save changes to current group: " + ge.toString());
+
+        feedAndGroupRepository.updateGroupWithAllValues(ge);
+
+    }
 
 
 }

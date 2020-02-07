@@ -122,7 +122,7 @@ public class GroupPropsFragment extends Fragment {
 
                 Toast.makeText(getContext(),"Saving values...",Toast.LENGTH_SHORT).show();
 
-               // viewModel.updateFeedWithCurrentValues();
+                viewModel.updateGroupWithCurrentValues();
 
                 navController.navigate(R.id.action_feedgroupPropsFragment_pop);
 

@@ -288,4 +288,15 @@ public class FeedAndGroupRepository {
         });
 
     }
+
+    public void updateGroupWithAllValues(GroupEntity groupEntity) {
+
+        executor.execute(() -> {
+
+
+
+            groupDao.updateGroup(groupEntity);
+        });
+
+    }
 }

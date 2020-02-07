@@ -8,7 +8,9 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Transaction;
+import androidx.room.Update;
 
+import com.maxim_ilinov_gmail.feedsin.model.FeedEntity;
 import com.maxim_ilinov_gmail.feedsin.model.GroupEntity;
 import com.maxim_ilinov_gmail.feedsin.model.GroupForDrawerMenu;
 import com.maxim_ilinov_gmail.feedsin.model.GroupForList;
@@ -18,6 +20,9 @@ import java.util.List;
 
 @Dao
 public abstract class GroupDao {
+
+    @Update(onConflict = OnConflictStrategy.IGNORE)
+    public abstract void updateGroup(GroupEntity rssGroupEntity);
 
 
     @Query("SELECT * FROM GroupEntity LIMIT :loadCount OFFSET :startPosition")

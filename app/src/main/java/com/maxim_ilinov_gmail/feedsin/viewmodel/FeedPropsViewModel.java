@@ -112,7 +112,7 @@ public class FeedPropsViewModel extends AndroidViewModel {
 
     public void setCurrentFeed_GroupId(Long value) {
 
-        if (!currentFeed_GroupId.getValue().equals(value)) {
+        if (currentFeed_GroupId.getValue() != value) {
             currentFeed_GroupId.setValue(value);
         }
     }
