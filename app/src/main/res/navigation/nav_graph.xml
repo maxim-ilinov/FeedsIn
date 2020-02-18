@@ -80,6 +80,10 @@
             android:id="@+id/action_feedPropsFragment_pop"
             app:popUpTo="@id/feedPropsFragment"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="editExisting"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
     <fragment
         android:id="@+id/aboutFragment"
