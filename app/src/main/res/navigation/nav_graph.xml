@@ -24,6 +24,10 @@
             android:id="@+id/action_feedgroupPropsFragment_pop"
             app:popUpTo="@id/feedgroupPropsFragment"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="editExisting"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
 
         <fragment
@@ -71,11 +75,6 @@
         android:id="@+id/feedPropsFragment"
         android:name="com.maxim_ilinov_gmail.feedsin.view.FeedPropsFragment"
         tools:layout="@layout/fragment_feed_props" >
-        <action
-            android:id="@+id/action_feedPropsFragment_to_organizeFeedsFragment"
-            app:popUpTo="@+id/organizeFeedsFragment"
-            app:popUpToInclusive="true"
-            app:destination="@id/organizeFeedsFragment" />
         <action
             android:id="@+id/action_feedPropsFragment_pop"
             app:popUpTo="@id/feedPropsFragment"
