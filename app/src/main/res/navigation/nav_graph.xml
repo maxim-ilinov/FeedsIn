@@ -70,6 +70,7 @@
                     <action
                         android:id="@+id/action_organizeFeedsFragment_to_seacrhContentFragment"
                         app:destination="@id/seacrhContentFragment" />
+
                 </fragment>
     <fragment
         android:id="@+id/feedPropsFragment"
