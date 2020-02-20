@@ -38,7 +38,7 @@ public class FeedViewHolder extends RecyclerView.ViewHolder implements View.OnCl
 
         binding.setVariable(BR.itemFeedEntity, feedEntity);
 
-        //TODO remove later... why, don't remember?
+        //TODO remove later... why, I don't remember...
         this.feedEntity = feedEntity;
 
     }

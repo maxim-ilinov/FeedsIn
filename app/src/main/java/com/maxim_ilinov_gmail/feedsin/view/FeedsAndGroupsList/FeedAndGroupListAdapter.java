@@ -21,6 +21,7 @@ import com.maxim_ilinov_gmail.feedsin.R;
 import com.maxim_ilinov_gmail.feedsin.model.FeedEntity;
 import com.maxim_ilinov_gmail.feedsin.model.GroupEntity;
 import com.maxim_ilinov_gmail.feedsin.model.RvItem;
+import com.maxim_ilinov_gmail.feedsin.view.FeedPropsFragmentDirections;
 import com.maxim_ilinov_gmail.feedsin.viewmodel.FeedPropsViewModel;
 import com.maxim_ilinov_gmail.feedsin.viewmodel.GroupPropsViewModel;
 
@@ -192,6 +193,16 @@ public class FeedAndGroupListAdapter extends PagedListAdapter<RvItem, RecyclerVi
                         Toast.makeText(v.getContext(), "Selected item: " + ((FeedEntity)rvItem).getCustomTitle(), Toast.LENGTH_SHORT).show();
 
                         NavController navController = Navigation.findNavController((Activity) v.getContext(), R.id.nav_host_fragment);
+
+
+
+
+                         action =
+                                FeedAndGroupListFragmentDirections.actionOrganizeFeedsFragmentToFeedPropsFragment();
+
+                        action.setAmount(amount)
+
+
 
                         navController.navigate(R.id.action_organizeFeedsFragment_to_feedPropsFragment);
 
