@@ -196,11 +196,13 @@ public class FeedAndGroupListAdapter extends PagedListAdapter<RvItem, RecyclerVi
 
 
 
+/*
 
                          action =
                                 FeedAndGroupListFragmentDirections.actionOrganizeFeedsFragmentToFeedPropsFragment();
 
                         action.setAmount(amount)
+*/
 
 
 
